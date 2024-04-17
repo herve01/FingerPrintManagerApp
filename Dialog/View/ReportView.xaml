@@ -1,0 +1,168 @@
+﻿<Window x:Class="FingerPrintManagerApp.Dialog.View.ReportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Visionneuse de rapports"
+        xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer"
+        xmlns:behaviour="clr-namespace:FingerPrintManagerApp.ViewModel.Behavior"
+        xmlns:vm="clr-namespace:FingerPrintManagerApp.ViewModel"
+        Background="White"
+        Tag="Visionneuse de rapports"
+        Height="700" 
+        Width="1300"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding ReportTitle, TargetNullValue='Report', FallbackValue='Report'}" 
+                   Grid.Column="1"
+                   FontWeight="ExtraBold" 
+                   FontSize="26" 
+                   Margin="10 5"
+                   HorizontalAlignment="Center"
+                   TextTrimming="WordEllipsis"
+                   Foreground="#000" />
+
+        <Border Height="1" Background="#eaeaea" Margin="0,0,0,5" Grid.Row="1" />
+
+        <Grid Grid.Row="2" Margin="10,0"
+              Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button ToolTip="Imprimer l'état" 
+                        Grid.Row="0" 
+                        Width="40" 
+                        Height="24" 
+                        Margin="5"
+                        Command="{Binding PrintCommand}"
+                        HorizontalAlignment="Left" 
+                        Style="{DynamicResource ButtonPrint}" />
+
+                <Button ToolTip="Exporter vers Excel" 
+                        Command="{Binding ExcelExportCommand}"
+                        Tag="M24.657059,21.64202L24.657059,24.793019 29.859102,24.793019 29.859102,21.64202z M24.657059,17.491021L24.657059,20.64202 29.859102,20.64202 29.859102,17.491021z M24.657059,13.340021L24.657059,16.491021 29.859102,16.491021 29.859102,13.340021z M13.054056,9.3130452L10.936008,9.421993 9.4030447,13.339044 7.9020019,9.7839925 5.8020201,9.7839925 8.0030155,14.915033 5.8040342,19.910025 7.6690302,20.058036 9.2030315,16.390984 10.803012,20.358023 10.804049,20.356986 13.272014,20.356986 10.53702,14.689996z M24.657059,9.1880452L24.657059,12.339045 29.859102,12.339045 29.859102,9.1880452z M24.657059,5.0370461L24.657059,8.1880452 29.859102,8.1880452 29.859102,5.0370461z M31.031412,3.4354717C31.182783,3.4359052,31.990089,3.497225,31.990089,4.7560403L31.990089,25.60204 31.989113,25.60204C31.989113,25.60204,32.17411,26.575001,30.946079,26.645009L19.072081,26.645009 19.072081,24.645009 23.606091,24.645009 23.606091,21.49401 19.072081,21.49401 19.072081,20.543021 23.606091,20.543021 23.606091,17.392022 19.072081,17.392022 19.072081,16.441033 23.606091,16.441033 23.606091,13.290033 19.072081,13.290033 19.072081,12.340022 23.606091,12.340022 23.606091,9.1890218 19.072081,9.1890218 19.072081,8.2390096 23.606091,8.2390096 23.606091,5.0870339 19.072081,5.0870339 19.072081,3.4360334 31.007114,3.4360334C31.007114,3.4360334,31.015755,3.4354267,31.031412,3.4354717z M18.405087,0L18.405087,30.476001 0,27.275014 0,3.0670151z"
+                        Grid.Row="0" 
+                        Width="40" 
+                        Height="24" 
+                        Margin="5"
+                        HorizontalAlignment="Left" 
+                        Background="#10893e"
+                        Style="{DynamicResource GlobalIconButtonStyle}"  />
+
+                <Button ToolTip="Exporter vers PDF" 
+                        Command="{Binding PDFExportCommand}"
+                        Tag="M5.9299736,21.917055C4.0279713,22.518063 2.5269704,23.919066 2.0269699,24.519058 2.0269699,24.419067 1.8269727,24.719055 1.826973,24.719055 1.8269727,24.719055 1.9269713,24.619064 2.0269699,24.519058 2.0269699,24.519058 2.0269699,24.619064 1.9269714,24.919069 1.6269755,25.720066 2.6269765,25.720066 2.6269765,25.720066 5.5299792,25.320055 5.9299736,21.917055 5.9299736,21.917055z M21.741993,19.115046C24.844992,21.61705 27.746996,21.016052 27.746996,21.016052 28.948,20.916052 27.145998,19.815052 27.145998,19.815052 25.544998,19.215044 23.743994,19.115046 22.642994,19.115046z M12.034983,12.310028C12.034983,12.310028,10.933984,17.814039,9.5329809,19.415049L17.338989,18.214043C17.338989,18.214043,13.435985,14.711036,12.034983,12.310028z M26.545998,6.0050121C26.745995,6.0050121,26.845993,6.105011,27.045998,6.2050171L28.246996,7.2060194C28.847994,7.7060204,29.747997,8.5070172,30.349003,9.0070191L31.550001,10.00802C32.150002,10.508022,32.150002,11.309027,31.550001,11.809028L30.349003,12.81003C29.747997,13.310031,28.747995,14.111035,28.146997,14.511038L26.945999,15.51204C26.345993,16.013041,25.844994,15.612039,25.844994,14.611036L25.844994,12.710031 18.73999,12.710031C18.238991,12.710031,17.838989,12.310028,17.838989,11.809028L17.838989,9.8080235C17.838989,9.3070221,18.238991,8.9070196,18.73999,8.9070196L26.045998,8.9070196 26.045998,7.0050149C26.045998,6.405015,26.245995,6.0050121,26.545998,6.0050121z M12.134981,2.2020016C12.034983,2.2020014 11.934984,2.3020077 11.833979,2.5020051 11.833979,2.5020051 11.433984,4.5030098 12.434984,7.9060178 12.434984,7.9060178 13.335986,5.2040153 12.634982,3.202004 12.734981,3.2020037 12.534983,2.2020014 12.134981,2.2020016z M11.233979,0C12.034983,-1.098806E-08 12.834987,1.6010019 12.834987,1.6010018 15.136983,6.6050124 12.934985,9.8080235 12.934985,9.8080235 15.236981,15.212036 19.84099,18.114044 19.84099,18.114044 24.343992,17.914045 27.646997,19.015047 27.646997,19.015047 30.248997,20.416052 29.347996,21.61705 29.347996,21.61705 26.645996,24.619064 18.73999,19.91605 18.73999,19.91605L8.5319805,21.61705C7.0309801,26.72106 2.0269699,27.822075 2.0269699,27.822075 -0.37503291,28.122065 0.024969007,25.720066 0.024969073,25.720066 1.8269727,21.717049 6.4299741,20.716047 6.4299741,20.716047 8.2319775,18.81505 11.233979,9.6070261 11.233979,9.6070261 8.2319775,2.9020076 10.332977,0.59999999 10.332977,0.59999993 10.633981,0.19999744 10.933984,-1.098806E-08 11.233979,0z"
+                        Grid.Row="0" 
+                        Width="40" 
+                        Height="24" 
+                        Margin="5"
+                        HorizontalAlignment="Left" 
+                        Background="#FFE80808"
+                        Style="{DynamicResource GlobalIconButtonStyle}"  />
+
+                <Button ToolTip="Exporter vers Word" 
+                        Command="{Binding WordExportCommand}"
+                        Tag="M14.800059,9.8040146L12.708993,9.9830307 11.430061,17.900021 9.7700264,10.255003 7.8089654,10.255003 6.2989546,17.548031 5.1679722,10.45703 3.4090601,10.45703 5.2440225,20.489987 7.2309624,20.540036 8.6899473,13.473997 10.375008,20.765988 12.435291,20.765988z M19.125013,3.5159909L31.597069,3.5159909 31.598045,3.5159909C31.819969,3.5159909,32.000023,3.6950068,32.001,3.9169914L32.001,26.697993C32.001,26.921992,31.821068,27.101008,31.598045,27.101008L19.125013,27.101008 19.125013,23.983029 29.032004,23.983029 29.032004,22.676022 19.125013,22.676022 19.125013,20.765011 29.032004,20.765011 29.032004,19.457028 19.125013,19.457028 19.125013,17.546017 29.032004,17.546017 29.032004,16.23901 19.125013,16.23901 19.125013,14.328 29.032004,14.328 29.032004,13.020994 19.125013,13.020994 19.125013,11.110045 29.032004,11.110045 29.032004,9.8020005 19.125013,9.8020005 19.125013,7.8909902 29.032004,7.8909902 29.032004,6.5830068 19.125013,6.5830068z M18.506972,0L18.506972,30.643 0,27.424006 0,3.0840449z"
+                        Grid.Row="0" 
+                        Width="40" 
+                        Height="24" 
+                        Margin="5"
+                        HorizontalAlignment="Left" 
+                        Background="#0063b1"
+                        Style="{DynamicResource GlobalIconButtonStyle}"  />
+
+            </StackPanel>
+
+            <Border Margin="10,5" 
+                    Background="#FFFBFBFB"
+                    VerticalAlignment="Center"
+                    CornerRadius="4"
+                    BorderBrush="#eaeaea"
+                    BorderThickness="1"
+                    Grid.Column="1" Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="Prev" 
+                        Height="30" 
+                        Width="30" 
+                        Margin="5,0" 
+                        VerticalAlignment="Center"
+                        Grid.Column="0"
+                        Command="{Binding FirstPageCommand}"
+                        ToolTip="Aller à la première page"
+                        Tag="M24.004971,5.0000025L10.908971,17.102008 24.004971,27.563012z M0,0.99900338L1.9950004,0.99900338 1.9950004,30.999004 0,30.999004z M25.99997,0L25.99997,32.000014 7.3789718,17.231008 7.3789718,17.230008z" 
+                        Template="{DynamicResource NavButtonTemplate}"/>
+
+                    <Button Height="30" 
+                            Width="30" 
+                            Margin="5,0" 
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding PreviousPageCommand}"
+                            ToolTip="Aller à la page précédente"
+                            Tag="M17.486965,0L18.834985,1.4790001 2.9700258,15.935999 19.001001,30.522996 17.654994,32.002002 0,15.936999z" 
+                            Template="{DynamicResource NavButtonTemplate}"/>
+
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Foreground="#757575" 
+                                   FontSize="14"
+                                   Text="{Binding CurrentPage, TargetNullValue='Page 1 sur 1', FallbackValue='Page 1 sur 1'}"/>
+                    </StackPanel>
+
+                    <Button Height="30" 
+                            Width="30" 
+                            Margin="5,0" 
+                            Grid.Column="3"
+                            VerticalAlignment="Center"
+                            Command="{Binding NextPageCommand}"
+                            ToolTip="Aller à la page suivante"
+                            Tag="M1.5139812,0L19.002,15.936999 1.3459509,32.002002 0,30.522996 16.030984,15.935999 0.16796924,1.4790001z" 
+                            Template="{DynamicResource NavButtonTemplate}"/>
+
+                    <Button Height="30" 
+                            Width="30" 
+                            Margin="5,0" 
+                            Grid.Column="4"
+                            VerticalAlignment="Center"
+                            Command="{Binding LastPageCommand}"
+                            ToolTip="Aller à la dernière page"
+                            Tag="M1.9949979,5L1.9949979,27.563004 15.091026,17.101997z M24.004949,1L25.999955,1 25.999955,31 24.004949,31z M0,0L18.620999,17.230003 18.620999,17.231003 0,32z" 
+                            Template="{DynamicResource NavButtonTemplate}"/>
+                </Grid>
+            </Border>
+        </Grid>
+        
+        <Viewer:CrystalReportsViewer 
+                Grid.Row="5" 
+                Margin="5" 
+                behaviour:ReportSourceBehavior.ReportSource="{Binding Path=DataContext.Report, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=FrameworkElement}}"
+            />
+
+        <Border Height="20"
+                HorizontalAlignment="Right"
+                Width="200"
+                Grid.Row="5"
+                Margin="0 15"
+                VerticalAlignment="Top" 
+                Background="White"
+               />
+    </Grid>
+</Window>

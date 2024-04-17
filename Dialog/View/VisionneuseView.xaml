@@ -1,0 +1,211 @@
+﻿<Window x:Class="FingerPrintManagerApp.Dialog.View.VisionneuseView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converter="clr-namespace:FingerPrintManagerApp.View.Converter"
+        xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="Visionneuse d'images" 
+        Height="450" 
+        Width="800"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        AllowsTransparency="True"
+        Background="#B0000000">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding NextCommand}"
+                    Key="Right" />
+        <KeyBinding Command="{Binding PrevCommand}"
+                    Key="Left" />
+    </Window.InputBindings>
+    <interactivity:Interaction.Triggers>
+        <interactivity:EventTrigger EventName="Loaded">
+            <interactivity:InvokeCommandAction Command="{Binding LoadCommand}" />
+        </interactivity:EventTrigger>
+    </interactivity:Interaction.Triggers>
+    
+    <Window.Resources>
+        <converter:ByteArrayToImageThumbnailConverter x:Key="imageThumbConverter" />
+        <converter:ByteArrayToImageConveter x:Key="imageConverter" />
+
+        <DataTemplate x:Key="pageTemplate" DataType="ListViewItem">
+            <Border Width="88"
+                    Name="brd"
+                    Height="104"
+                    BorderThickness="1"
+                    Padding="2"
+                    VerticalAlignment="Center" 
+                    Margin="3">
+                <Image MaxHeight="80" MaxWidth="80" 
+                           Source="{Binding Converter={StaticResource imageThumbConverter}}" >
+                    <Image.Effect>
+                        <DropShadowEffect Opacity="0.4" ShadowDepth="2"/>
+                    </Image.Effect>
+                </Image>
+
+            </Border>
+
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
+                    <Setter TargetName="brd" Property="Background" Value="#202888F3" />
+                    <Setter TargetName="brd" Property="BorderBrush" Value="#802888F3" />
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsMouveOver}" Value="True">
+                    <Setter TargetName="brd" Property="Background" Value="#302888F3" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+
+        </DataTemplate>
+
+        <Style TargetType="ListView" x:Key="imagesListStyle">
+            <Setter Property="ScrollViewer.CanContentScroll" 
+                    Value="True" />
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Border Background="{TemplateBinding Background}">
+                            <Grid>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" >
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="{Binding Title, FallbackValue='Visionneuse'}"
+                       Margin="10 0"
+                       VerticalAlignment="Center"
+                       Foreground="#999"
+                       FontSize="13"
+                       />
+            
+            <Button ToolTip="Fermer"
+                    Grid.Column="1"
+                    Width="30" 
+                    Height="30"
+                    Margin="10"
+                    Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    >
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Border" Background="Transparent">
+                            <Path x:Name="path" 
+                                      Data="M29.916016,0L31.999023,2.0700073 17.988037,16 32,29.930054 29.91803,32 15.905029,18.070007 2.0820313,31.812012 0,29.742004 13.822998,16 0.0010375977,2.2590332 2.0840454,0.18902588 15.905029,13.929016z" 
+                                      Stretch="Uniform" 
+                                      Fill="#FF999999" 
+                                      Width="12" 
+                                      Height="12" />
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0:0:0" Value="#ff0000" />
+                                            </ColorAnimationUsingKeyFrames>
+
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0:0:0" Value="#ffffff" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.ColumnSpan="3"
+                        >
+                <Image Stretch="None"
+                       MaxHeight="700"
+                       MaxWidth="1200"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" 
+                       Source="{Binding SelectedImage, Converter={StaticResource imageConverter}}"
+                   />
+
+            </Border>
+
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Prev"
+                    Margin="0" 
+                    Width="50"
+                    ToolTip="Image précédente"
+                    Background="Transparent"
+                    Foreground="White"
+                    Grid.Column="0" 
+                    Command="{Binding PrevCommand}"
+                    Tag="M17.486965,0L18.834985,1.4790001 2.9700258,15.935999 19.001001,30.522996 17.654994,32.002002 0,15.936999z"
+                    Style="{DynamicResource WhiteButtonSwapIconStyle}"
+                    />
+
+            <Button HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="0" 
+                        Width="50"
+                        Grid.Column="2"
+                        ToolTip="Image suivante"
+                        Background="Transparent"
+                        Foreground="White" 
+                        Command="{Binding NextCommand}"
+                        Tag="M1.5139812,0L19.002,15.936999 1.3459509,32.002002 0,30.522996 16.030984,15.935999 0.16796924,1.4790001z"
+                        Style="{DynamicResource WhiteButtonSwapIconStyle}"
+                        />
+        </Grid>
+
+        <ListView Grid.Row="2"
+                  ItemsSource="{Binding ImagesView}"
+                  SelectedValue="{Binding SelectedImage, Mode=TwoWay}"
+                  ItemTemplate="{StaticResource pageTemplate}"
+                  Style="{StaticResource imagesListStyle}"
+                  Background="Transparent"
+                  BorderBrush="Transparent"
+                  IsSynchronizedWithCurrentItem="True"
+                  Margin="5"
+                      />
+    </Grid>
+</Window>

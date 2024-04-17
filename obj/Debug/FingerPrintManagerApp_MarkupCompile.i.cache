@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\App.xaml
-1219584333
+17-1276469271
 
-8385576793
-13-1611544705
-MainWindow.xaml;
+156155551393
+3562070813
+Dialog\Service\DialogWindow.xaml;Dialog\View\CaptureView.xaml;Dialog\View\DialogWindow.xaml;Dialog\View\DialogYesNo.xaml;Dialog\View\MyMsgBox.xaml;Dialog\View\ReportView.xaml;Dialog\View\VisionneuseView.xaml;MainWindow.xaml;View\About.xaml;View\Control\CircleProgressBar.xaml;View\Control\Horloge.xaml;View\Main.xaml;View\MainWindowPresentationView.xaml;View\Theme\CalendarStyle.xaml;View\Theme\Dark.xaml;View\Theme\General.xaml;View\Theme\Light.xaml;
 
-False
+True
 

@@ -1,0 +1,195 @@
+﻿<Window x:Class="FingerPrintManagerApp.View.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="A propos de" 
+        Width="410"
+        SizeToContent="Height"
+        AllowsTransparency="True"
+        WindowStyle="None" 
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen" 
+        Loaded="Window_Loaded_1"
+        Name="about"
+        >
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                    <ColorAnimation To="#ff7002" Duration="0:0:2" Storyboard.TargetName="borderSplash" DecelerationRatio="0.5"
+                                    Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                    <ColorAnimation To="#FFCD0012" Duration="0:0:2" Storyboard.TargetName="borderSplash" DecelerationRatio="0.5"
+                                    Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                </Storyboard>
+            </BeginStoryboard>
+
+            <BeginStoryboard>
+                <Storyboard DecelerationRatio="0.6">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="scaleMe"
+                                                   Storyboard.TargetProperty="(ScaleTransform.ScaleX)">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"
+                                              />
+                    </DoubleAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="scaleMe"
+                                                   Storyboard.TargetProperty="(ScaleTransform.ScaleY)">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"
+                                              />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    <Window.Resources>
+        <Storyboard x:Key="winCloseAnim" DecelerationRatio="0.6">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="scaleMe"
+                                                   Storyboard.TargetProperty="(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"
+                                              />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="scaleMe"
+                                                   Storyboard.TargetProperty="(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"
+                                              />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Grid RenderTransformOrigin="1 0">
+        <Grid.RenderTransform>
+            <ScaleTransform x:Name="scaleMe"
+                            ScaleX="0"
+                            ScaleY="0" />
+        </Grid.RenderTransform>
+        <Border Name="brdShadow" Visibility="Visible" Background="#ffffff" Margin="15">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+            </Border.Effect>
+        </Border>
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border Name="borderSplash" >
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
+                        <GradientStop Color="#FF252525" Offset="0" />
+                        <GradientStop Color="#FF001125" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid  VerticalAlignment="Top" MouseDown="Grid_MouseDown_1">
+                    <Image Height="210" 
+                           Width="210" 
+                           Margin="5" Source="Image/Logo.png" />
+                    <Grid Margin="10,2" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Product Store" Name="txtEdition" FontSize="14" Foreground="#fff" />
+                        <TextBlock Grid.Column="1" Name="txtVersion" HorizontalAlignment="Right" Text="Version 1.0.1" FontSize="12" Foreground="#AAffffff" />
+                    </Grid>
+                    <Button Name="btClose" Visibility="Visible" Click="btClose_Click_1" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Fermer" Width="30" Height="30">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="Border" Background="Transparent">
+                                    <Path x:Name="path" 
+                                      Data="M29.916016,0L31.999023,2.0700073 17.988037,16 32,29.930054 29.91803,32 15.905029,18.070007 2.0820313,31.812012 0,29.742004 13.822998,16 0.0010375977,2.2590332 2.0840454,0.18902588 15.905029,13.929016z" 
+                                      Stretch="Uniform" 
+                                      Fill="#AAFFFFFF" 
+                                      Width="12" 
+                                      Height="12" />
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal" />
+                                            <VisualState Name="MouseOver">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0:0:0" Value="#DDff0000" />
+                                                    </ColorAnimationUsingKeyFrames>
+
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="path" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0:0:0" Value="#ffffff" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Border>
+
+                            </ControlTemplate>
+                        </Button.Template>
+
+                    </Button>
+                </Grid>
+
+            </Border>
+            
+            <StackPanel Grid.Row="1" Visibility="Visible" Name="stpLicence" Background="#fff">
+                <TextBlock Margin="10" FontSize="14" TextAlignment="Center"
+                           TextWrapping="Wrap" 
+                           Foreground="#000" 
+                           Name="txtFinEvaluation" >
+                    <Bold>Logiciel de Vente des livres</Bold> développé par <Bold>Argile Groupe</Bold>.
+                </TextBlock>
+
+                <Border Background="#eaeaea" Height="1" Margin="10,0,10,10" />
+                <TextBlock Margin="10,0" TextWrapping="Wrap" TextAlignment="Center">
+                    Ce logiciel gère les entrées et sorties des stocks d'articles. Il propose un ensemble d'interfaces conviviales
+                    qui vous permettent d'effectuer toutes les opérations en un temps pratiquement dérisoire. Les fonctions principales sont la Vente d'articles,
+                    l'Achat auprès des fournisseurs, Transfert des stocks Dépôt - Shop et la gestion de dépenses.
+                </TextBlock>
+
+                <Border Background="#eaeaea" Height="1" Margin="10" />
+                
+                
+                <StackPanel Orientation="Horizontal" Margin="20,2" HorizontalAlignment="Center">
+                    <Path Stretch="Uniform"
+                          Height="20"
+                          Width="20"
+                          Fill="Black"
+                          Data="M5.5813254,0C6.1813001,0,6.7823123,0.20001201,7.2823113,0.70098802L9.9843339,3.5029874C10.885272,4.4029806,10.885272,5.9049933,9.9843339,6.9049924L7.5833363,9.6069858C6.0813245,13.61098 8.283286,17.012985 11.586321,20.415966 14.888317,23.717964 18.391303,25.919988 22.29431,24.418983L24.996272,22.016977 25.096309,21.916971C25.596309,21.516977 26.297295,21.215984 26.897269,21.215984 27.498282,21.215984 28.098256,21.416971 28.599294,21.916971L31.301255,24.618965C32.202254,25.519964,32.202254,27.020971,31.301255,28.021976L31.20128,28.121982 28.599294,30.72397C22.494262,34.02597 14.688306,30.623964 7.9832992,23.917976 1.3783292,17.212997 -2.0246805,9.4070041 1.2782927,3.3030057L3.8803395,0.70098802 3.9803151,0.60000536C4.3803386,0.20001201,4.9812898,0,5.5813254,0z"
+                          />
+                    <TextBlock Text="+243 823122915, +243 970456050" HorizontalAlignment="Center" Margin="5,0" />
+                </StackPanel>
+
+                <StackPanel Visibility="Collapsed" Orientation="Horizontal" Margin="20,2" HorizontalAlignment="Center">
+                    <Path Stretch="Uniform"
+                          Height="20"
+                          Width="20"
+                          Fill="Black"
+                          Data="M0.0060119629,0L32,0 15.987,10.083973z M0.0050048828,0L0.0060119629,0 16.001984,13.281967 32,0 31.899994,19.054971 31.776001,19.015969 31.89801,19.085 0.0050048828,19.085 0.15600586,18.999001 0,19.054971z"
+                          />
+                    <TextBlock Text="argile_skul@gmail.com" HorizontalAlignment="Center" Margin="5,0" />
+                    <TextBlock Text=" (Provisoire)" Foreground="#999" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="20,2" HorizontalAlignment="Center">
+                    <Path Stretch="Uniform"
+                          Height="20"
+                          Width="20"
+                          Fill="Black"
+                          Data="M1.6459961,0L30.005003,0C30.913999,0,31.650999,0.81900024,31.650999,1.8289948L31.650999,30.170998C31.650999,31.181999,30.913999,32,30.005003,32L21.817991,32 21.817991,18.851997 25.751982,18.851997 25.751982,14.581001 21.817991,14.581001 21.817991,13.150002C21.817991,12.110001,22.645994,11.266998,23.670988,11.266998L25.751982,11.266998 25.751982,6.9980011 21.246977,6.9980011C18.509979,6.9980011,16.291992,9.2490005,16.291992,12.027L16.291992,14.581001 12.742003,14.581001 12.742003,18.851997 16.291992,18.851997 16.291992,32 1.6459961,32C0.73699956,32,7.5509888E-08,31.181999,0,30.170998L0,1.8289948C7.5509888E-08,0.81900024,0.73699956,0,1.6459961,0z"
+                          />
+                    <TextBlock Text="facebook.com/argilebookstore" HorizontalAlignment="Center" Margin="5,0" />
+                </StackPanel>
+                <Button Visibility="Collapsed" Name="txtLink" Content="groupeargile.com" Cursor="Hand" HorizontalAlignment="Center" Style="{DynamicResource ButtonlinkStyle}" />
+
+                <Border Background="#eaeaea" Height="1" Margin="10" />
+
+                <StackPanel Orientation="Horizontal" Margin="20 2 20 10" HorizontalAlignment="Center">
+                    <Path Stretch="Uniform"
+                          Height="12"
+                          Width="12"
+                          Fill="Black"
+                          Data="M16.276001,7.1439819C17.987,7.1439819 19.416992,7.5509949 20.570984,8.3649902 21.714996,9.1799927 22.613983,10.464996 23.251984,12.220001L19.865997,13.013C19.477997,11.996002 18.971985,11.259003 18.354004,10.798981 17.730988,10.339996 17.001007,10.109985 16.14798,10.109985 14.880981,10.109985 13.845001,10.587006 13.037994,11.541992 12.230988,12.494995 11.821991,13.988007 11.821991,16.020996 11.821991,18.054993 12.220978,19.552002 13.016998,20.511993 13.80899,21.472992 14.763977,21.953979 15.876984,21.953979 16.811981,21.953979 17.618988,21.677979 18.302979,21.127991 18.983002,20.578003 19.513977,19.662994 19.886993,18.381989L23.251984,19.509979C22.720978,21.264984 21.847992,22.608002 20.621979,23.540985 19.395996,24.473999 17.929993,24.940002 16.234985,24.940002 13.850006,24.940002 11.908997,24.16098 10.401978,22.600983 8.901001,21.041992 8.1499939,18.889984 8.1499939,16.147003 8.1499939,14.350983 8.4819946,12.748993 9.151001,11.34198 9.8199768,9.9360046 10.785004,8.8849792 12.046997,8.1879883 13.302979,7.4920044 14.712982,7.1439819 16.276001,7.1439819z M16.002991,3.1539917C13.802002,3.1539917 11.687988,3.7049866 9.6609802,4.8049927 7.6340027,5.9049988 6.04599,7.4809875 4.8919983,9.5359802 3.7330017,11.589996 3.1560059,13.744995 3.1560059,16 3.1560059,18.229004 3.7229919,20.359009 4.8559875,22.391998 5.9949951,24.424988 7.5780029,26.009979 9.6099854,27.143982 11.641998,28.278992 13.772003,28.846008 16.002991,28.846008 18.229004,28.846008 20.358002,28.278992 22.390991,27.143982 24.427979,26.009979 26.010986,24.424988 27.144989,22.391998 28.277985,20.359009 28.845001,18.229004 28.845001,16 28.845001,13.759003 28.268005,11.605988 27.113983,9.54599 25.959991,7.4849854 24.367004,5.9049988 22.339996,4.8049927 20.312988,3.7049866 18.199005,3.1539917 16.002991,3.1539917z M16.002991,0C18.744995,0 21.375,0.68899536 23.897003,2.0679932 26.414001,3.446991 28.395996,5.4140015 29.841003,7.9679871 31.279999,10.523987 32,13.200989 32,16 32,18.785004 31.29599,21.441986 29.880981,23.968994 28.46698,26.496002 26.496002,28.466003 23.968994,29.880005 21.440979,31.291992 18.78598,32 16.002991,32 13.214996,32 10.559998,31.291992 8.0319824,29.880005 5.5050049,28.466003 3.5339966,26.496002 2.125,23.968994 0.70999146,21.441986 0,18.785004 0,16 0,13.200989 0.72000122,10.523987 2.164978,7.9679871 3.6049805,5.4140015 5.5870056,3.446991 8.1040039,2.0679932 10.626007,0.68899536 13.255981,0 16.002991,0z"
+                          />
+                    <TextBlock Text="Tous droits réservés." HorizontalAlignment="Center" Margin="5,0" />
+                </StackPanel>
+            </StackPanel>
+
+            
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,418 @@
+﻿<Window x:Class="FingerPrintManagerApp.Dialog.View.CaptureView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="capture" 
+        Height="650" 
+        Background="Transparent" 
+        Width="594" 
+        AllowsTransparency="True" 
+        Loaded="Window_Loaded_1" 
+        ResizeMode="NoResize"  
+        WindowStartupLocation="CenterScreen"  
+        WindowStyle="None"
+        SnapsToDevicePixels="True">
+    <Window.Resources>
+        
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="380"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="5" Grid.Row="0" MouseDown="Border_MouseDown_1" BorderBrush="#19FFFFFF" BorderThickness="1">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="5" Opacity="0.4"/>
+            </Border.Effect>
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#E5515151" Offset="0"/>
+                    <GradientStop Color="#CC000000" Offset="0.996"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+        </Border>
+
+        <Button Name="btClose"  
+                ToolTip="Fermer"  
+                Width="30" 
+                Height="30" 
+                BorderBrush="#FFEFEFF2" 
+                Click="btClose_Click_1" 
+                Margin="0,0,0,5"
+                HorizontalAlignment="Right">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Name="border"
+                            Background="Transparent">
+                        <Path Width="14"
+                                  Name="path"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  Fill="#99ffffff"
+                                  Data="M29.916016,0L31.999023,2.0700073 17.988037,16 32,29.930054 29.91803,32 15.905029,18.070007 2.0820313,31.812012 0,29.742004 13.822998,16 0.0010375977,2.2590332 2.0840454,0.18902588 15.905029,13.929016z"/>
+                        
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal" />
+                                <VisualState Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="path"
+                                                                                  Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame Value="#FFFFFF" KeyTime="0:0:0" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame Value="#DA0000" KeyTime="0:0:0" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <Button Margin="10,5,0,0" 
+                        HorizontalAlignment="Left" 
+                        Height="30"  
+                        Name="btnChooseCamera" 
+                        Click="btnChooseCamera_Click_1">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="#AA007ACC" Opacity="0.4" Name="border" CornerRadius="4" Width="180" >
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Fill="#fff"
+                                          Margin="5"
+                                          Width="20"
+                                          Height="20"
+                                          Stretch="Uniform"
+                                        Data="M2.8999977,22.8L2.9999981,22.9C4.9999962,24.4 7.5999937,25.3 10.299991,25.3 13.099989,25.3 15.599987,24.4 17.599985,22.9L17.799984,22.8 17.799984,22.9C18.199984,23.5,18.499984,24.199999,18.499985,25L18.499985,28.199999C18.499984,30.3,16.899986,31.9,14.899987,32L14.899987,31.9C14.899987,29.4 12.799989,27.3 10.299991,27.3 7.7999935,27.3 5.699995,29.4 5.699995,31.9L5.699995,32C3.6999969,31.9,2.0999985,30.199999,2.0999985,28.199999L2.0999985,25C2.1999989,24.199999,2.3999987,23.4,2.8999977,22.8z M10.399992,12.2C11.79999,12.2 12.999989,13.4 12.999989,14.8 12.999989,16.199999 11.79999,17.4 10.399992,17.4 8.9999924,17.4 7.7999935,16.199999 7.7999935,14.8 7.7999935,13.4 8.9999924,12.2 10.399992,12.2z M10.399992,9.7C7.5999937,9.6999998 5.2999954,12 5.2999954,14.8 5.2999954,17.6 7.5999937,19.9 10.399992,19.9 13.199989,19.9 15.499987,17.6 15.499987,14.8 15.499987,12 13.199989,9.6999998 10.399992,9.7z M10.399992,0C11.79999,0,12.999989,1.1999998,12.999989,2.5999999L12.999989,3C17.499985,4.1999998 20.799982,8.1999998 20.799982,13.1 20.799982,18.8 16.099986,23.5 10.399992,23.5 4.699996,23.5 0,18.8 0,13.1 0,8.1999998 3.2999973,4.1999998 7.7999935,3L7.7999935,2.5999999C7.7999935,1.1999998,8.9999924,0,10.399992,0z" />
+                                    <TextBlock Text="Changer de caméra" FontSize="14" Foreground="White" Margin="5,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                                
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal" />
+                                        <VisualState Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="border"
+                                                                 Storyboard.TargetProperty="Opacity"
+                                                                 To="1" />
+                                                
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                              Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                    <EasingColorKeyFrame KeyTime="0" Value="#ee007ACC" />
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Popup Name="popupCamera" 
+                       AllowsTransparency="True" 
+                       HorizontalOffset="-10" 
+                       VerticalOffset="-10" 
+                       StaysOpen="{Binding ElementName=btnChooseCamera, Path=IsMouseOver}" 
+                           PlacementTarget="{Binding ElementName=btnChooseCamera}" Placement="Bottom">
+                    <Grid Margin="10">
+                        <Grid.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.4"/>
+                        </Grid.Effect>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Path Data="M0,16 L11,0 22,16z" Fill="#66000000" Margin="10,0" HorizontalAlignment="Left"/>
+                        <Border Background="#66000000" CornerRadius="8" Padding="10" Grid.Row="1">
+                            <StackPanel>
+                                <TextBlock Margin="0,7,0,3" HorizontalAlignment="Left" Text="Caméra" Foreground="White"/>
+                                <ComboBox Name="cmbCamera" 
+                                          Style="{DynamicResource ComboBoxOption}" 
+                                          Height="30" 
+                                          Width="200" 
+                                          Margin="0,0,0,3" 
+                                          HorizontalAlignment="Left" 
+                                          SelectionChanged="cmbCamera_SelectionChanged_1" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                </Popup>
+
+            </StackPanel>
+
+            <Grid Grid.Column="1" VerticalAlignment="Center">
+                <Button Name="btLoad"
+                        Cursor="Hand" 
+                        ToolTip="Charger l'image du disque" 
+                        Content="Prendre photo" 
+                        Grid.Row="1" 
+                        Padding="9"
+                        Visibility="Visible"
+                        Grid.ColumnSpan="2" 
+                        Width="40"
+                        Height="40"
+                        Click="btCharger_Click_1" 
+                        Tag="M9.5999776,12.699997L11.899997,15.099998 13.299991,14.300003 19.000005,20 22.899999,18 28.299995,20.699997 28.299995,25.699997 3.5999767,25.699997 3.5999767,18.599998z M20.500005,11.699997L21.199987,11.699997 21.000005,12.800003 20.699987,12.800003z M23.09998,10.699997L23.799993,11.599998 23.59998,11.800003 22.699987,11.099998z M18.699987,10.699997L19.199987,11.199997 18.299993,11.900002 18.000005,11.599998z M23.59998,8.5999985L24.699987,8.8000031 24.699987,9 23.59998,9.1999969z M18.09998,8.5999985L18.09998,9.3000031 17.000005,9 17.000005,8.8000031z M20.799993,7C21.899999,7 22.699987,7.9000015 22.699987,8.9000015 22.699987,10 21.799993,10.800003 20.799993,10.800003 19.699987,10.800003 18.899999,9.9000015 18.899999,8.9000015 18.899999,7.8000031 19.799993,7 20.799993,7z M23.500005,6.0999985L23.699987,6.3000031 23.000005,7.1999969 22.500005,6.6999969z M18.199987,6.0999985L19.09998,6.8000031 18.59998,7.3000031 18.000005,6.3000031z M20.699987,5L21.000005,5 21.199987,6.0999985 20.500005,6.0999985z M2.1999823,2.4000015L2.1999823,26.800003 29.400001,26.800003 29.400001,2.4000015z M0,0L31.900001,0 31.900001,32 0,32z"
+                        Style="{DynamicResource ButtonFlatIconStyle}">
+                </Button>
+
+                <Button Name="btClean"
+                        Cursor="Hand" 
+                        ToolTip="Lancer l'appareil photo" 
+                        Grid.Row="1" 
+                        Padding="9"
+                        Width="40"
+                        Height="40"
+                        Visibility="Collapsed"
+                        Grid.ColumnSpan="2" 
+                        Click="btCancel_Click" 
+                        Tag="M16,8.5999878C18.800018,8.5999878 21.100006,10.89999 21.100006,13.699992 21.100006,16.49998 18.800018,18.799996 16,18.799996 13.200012,18.799996 10.899994,16.49998 10.899994,13.699992 10.899994,10.89999 13.200012,8.5999878 16,8.5999878z M16,6.300001C11.899994,6.300001 8.6000061,9.5999878 8.6000061,13.699992 8.6000061,17.799996 11.899994,21.099984 16,21.099984 20.100006,21.099984 23.399994,17.799996 23.399994,13.699992 23.399994,9.5999878 20.100006,6.300001 16,6.300001z M25.400024,4.8999923L25.400024,6.6999949 29.200012,6.6999949 29.200012,4.8999923z M0,3.399993L9.3000183,3.399993 9.3000183,3.4999991 22.600006,3.4999991 22.600006,3.399993 32,3.399993 32,23.9 0,23.9z M9.3000183,0L22.600006,0 22.600006,3.399993 9.3000183,3.399993z"
+                        Style="{DynamicResource ButtonFlatIconStyle}"
+                        >
+                    
+                </Button>
+
+            </Grid>
+
+            <Button Name="btSave" 
+                    Grid.Column="2" 
+                    Cursor="Hand" 
+                    Click="btSave_Click" 
+                    ToolTip="Valider" 
+                    Margin="10,0" 
+                    Content="Valider" 
+                    HorizontalAlignment="Right"
+                    Width="40" 
+                    Height="40"
+                    Padding="9"
+                    Background="#3699ff"
+                    Foreground="#fff"
+                    Tag="F1M574.042,314.611L533.8,344.398 522.251,328.798 515.235,333.988 526.786,349.593 526.782,349.596 531.978,356.603 579.235,321.622 574.042,314.611z"
+                    Style="{DynamicResource ButtonFlatIconStyle}"
+                    >
+                
+            </Button>
+
+        </Grid>
+       
+        <Border Grid.Row="2"  BorderThickness="0,1,0,1"  BorderBrush="#19FFFFFF"  Name="brdPhoto" >
+            <Canvas Width="570" 
+                    Height="380" 
+                    Name="canvas" 
+                    Background="Transparent">
+                <Image Name="imgSource" 
+                       Width="{Binding ElementName=canvas, Path=Width}" 
+                       Height="{Binding ElementName=canvas, Path=Height}" />
+                <Canvas Name="cvsCrop" Visibility="Collapsed">
+                    <Border Background="#AA000000" 
+                            Width="{Binding ElementName=canvas, Path=Width}" 
+                            Height="{Binding ElementName=canvas, Path=Height}" />
+                    <Border  MouseUp="clipRectangle_MouseUp_1" 
+                             MouseMove="clipRectangle_MouseMove_1" 
+                             MouseDown="clipRectangle_MouseDown_1" 
+                             Canvas.Top="0" 
+                             Canvas.Left="137" 
+                             Width="296" 
+                             Height="380" 
+                             Name="clipRectangle" 
+                             BorderBrush="#90fafafa" 
+                             BorderThickness="1" 
+                             Background="Transparent">
+                        <Image Name="croppedImg" />
+                    </Border>
+                </Canvas>
+            </Canvas>
+            
+        </Border>
+        
+        <Border Name="brTransform" HorizontalAlignment="Center" Grid.Row="3" Margin="5"  CornerRadius="5"  BorderThickness="1" BorderBrush="#4C000000">
+            <Border.Background>
+                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                     <GradientStop Color="#33FFFFFF" Offset="0"/>
+                      <GradientStop Color="#7FFFFFFF" Offset="1"/>
+                      <GradientStop Color="#3FFFFFFF" Offset="0.5"/>
+                      <GradientStop Color="#59FFFFFF" Offset="0.45"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button ToolTip="Pivoter vers la gauche" Width="50"  Click="transformButtonClick" Name="leftRotate" Grid.Column="0" Background="Transparent" BorderBrush="Transparent" Style="{DynamicResource rotateButton}">
+                        <Button.Content>
+                            <Path   Data="F1M-198.67,4280.19C-197.609,4277.78 -197.035,4275.17 -197.035,4272.46 -197.035,4267.33 -199.032,4262.51 -202.665,4258.88 -206.286,4255.25 -211.107,4253.26 -216.235,4253.26 -221.365,4253.26 -226.186,4255.25 -229.811,4258.88 -232.498,4261.57 -234.282,4264.92 -235.032,4268.56L-225.835,4278.86 -252.503,4278.86 -250.373,4251.38 -241.577,4261.22C-240.214,4258.14 -238.303,4255.3 -235.844,4252.85 -230.61,4247.61 -223.644,4244.72 -216.235,4244.72 -208.822,4244.72 -201.861,4247.61 -196.627,4252.85 -191.39,4258.08 -188.503,4265.05 -188.503,4272.46 -188.503,4275.11 -188.894,4277.71 -189.617,4280.19L-198.67,4280.19z" 
+                                      Stretch="Uniform" 
+                                      Width="15" 
+                                      Height="15" 
+                                      Margin="0,0,0,0" 
+                                      RenderTransformOrigin="0.5,0.5" Fill="#FF000011"/>
+                        </Button.Content>
+
+                    </Button>
+                    <Border Grid.Column="1" Width="1" Height="25" Background="#10000000" />
+                    <Button ToolTip="Pivoter vers la droite" Width="50" Click="transformButtonClick" Name="rightRotate" Grid.Column="2" Background="{x:Null}" BorderBrush="{x:Null}"  Style="{DynamicResource rotateButton}">
+
+                        <Button.Content>
+                            <Path Data="F1M-243.226,4097.97C-244.287,4095.56 -244.861,4092.95 -244.861,4090.24 -244.861,4085.11 -242.864,4080.28 -239.231,4076.66 -235.61,4073.03 -230.788,4071.03 -225.661,4071.03 -220.531,4071.03 -215.71,4073.03 -212.085,4076.66 -209.398,4079.35 -207.614,4082.7 -206.864,4086.34L-216.061,4096.64 -189.393,4096.64 -191.523,4069.15 -200.318,4079C-201.682,4075.92 -203.593,4073.08 -206.051,4070.63 -211.286,4065.39 -218.252,4062.5 -225.661,4062.5 -233.074,4062.5 -240.035,4065.39 -245.269,4070.63 -250.506,4075.86 -253.393,4082.83 -253.393,4090.24 -253.393,4092.89 -253.002,4095.49 -252.279,4097.97L-243.226,4097.97z" Stretch="Uniform" Fill="#FF000011" 
+                                  Width="15" 
+                                  Height="15" 
+                                  Margin="0,0,0,0" 
+                                  RenderTransformOrigin="0.5,0.5" />
+                        </Button.Content>
+                    </Button>
+                <Border Grid.Column="3"  Width="1" Height="25" Background="#10000000" />
+                <Button ToolTip="Agrandir la taille le cadre"  Click="sizeButtonClick" Name="btPlus" Width="50" Grid.Column="4" Background="{x:Null}" BorderBrush="{x:Null}"  Style="{DynamicResource rotateButton}">
+
+                    <Button.Content>
+                        <Path Data="M13.55896,0L18.461914,0 18.461914,13.557983 32,13.557983 32,18.481018 18.5,18.481018 18.5,32 13.55896,32 13.55896,18.481018 0,18.481018 0,13.557983 13.55896,13.557983z" Stretch="Uniform" Fill="#FF000011" 
+                                  Width="15" 
+                                  Height="15" 
+                                  Margin="0,0,0,0" 
+                                  RenderTransformOrigin="0.5,0.5" />
+                    </Button.Content>
+                </Button>
+
+                <Border Grid.Column="5"  Width="1" Height="25" Background="#10000000" />
+                <Button ToolTip="Diminuer la taille du cadre"  Click="sizeButtonClick" Name="btMinus" Width="50" Grid.Column="6" Background="{x:Null}" BorderBrush="{x:Null}"  Style="{DynamicResource rotateButton}">
+
+                    <Button.Content>
+                        <Path Data="M0,0L32,0 32,5.3 0,5.3z" Stretch="Uniform" Fill="#FF000011" 
+                                  Width="15" 
+                                  Height="15" 
+                                  Margin="0,0,0,0" 
+                                  RenderTransformOrigin="0.5,0.5" />
+                    </Button.Content>
+                </Button>
+
+            </Grid>
+            </Border>
+
+        <Grid Grid.Row="4" Margin="0,0,0,5" Button.Click="btDrag_Click"  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Name="btLeft" 
+                    ToolTip="Déplacer le cadre à gauche"
+                    Grid.Column="0" 
+                    Grid.Row="1"
+                    Style="{DynamicResource ButtonNavStyle}" 
+                    VerticalAlignment="Center"
+                    Tag="M15.854048,0L17.272997,1.4100033 2.8199543,15.950011 17.351,30.587004 15.932051,31.996001 0,15.949004z"/>
+            
+            <Button Name="btUp" 
+                    ToolTip="Déplacer le cadre en haut"
+                    Grid.Column="1" 
+                    Grid.Row="0" Style="{DynamicResource ButtonNavStyle}" 
+                    HorizontalAlignment="Center"
+                    Tag="M16.046999,0L31.994998,15.853991 30.585086,17.272997 16.046022,2.8200051 1.4090576,17.351 0,15.931994z"/>
+
+            <Button Name="btRight" 
+                    ToolTip="Déplacer le cadre à droite"
+                    Grid.Column="2" 
+                    VerticalAlignment="Center" 
+                    Grid.Row="1" 
+                    Style="{DynamicResource ButtonNavStyle}" 
+                    Tag="M1.4200482,0L17.351001,16.046996 1.4980513,31.996001 0.078979631,30.585997 14.531046,16.046019 0,1.4089964z"/>
+            
+            <Button Name="btDown" 
+                    ToolTip="Déplacer le cadre en bas"
+                    Grid.Column="1" 
+                    Grid.Row="2" 
+                    Style="{DynamicResource ButtonNavStyle}" 
+                    HorizontalAlignment="Center"
+                    Tag="M30.587915,0L31.995998,1.4199842 15.949964,17.351 0,1.4979873 1.4099131,0.078979151 15.949964,14.53102z"/>
+
+            <Button Name="btPhoto" Margin="5" Grid.Column="1" Grid.Row="1" Cursor="Hand" ToolTip="Capturer photo" Content="Prendre photo" Click="btPhoto_Click" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="60" 
+                                        BorderThickness="4"
+                                        BorderBrush="#fff"
+                                        Height="60" 
+                                        CornerRadius="30"
+                                        Background="Transparent"
+                                        Name="outBorder">
+                            <Border Width="40"
+                                            BorderBrush="#fff"
+                                            Height="40" 
+                                            CornerRadius="30"
+                                            Background="#fff"
+                                            Name="inBorder"/>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="inBorder"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame Value="#DADADA" KeyTime="0:0:1" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="inBorder"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame Value="#CC007ACC" KeyTime="0:0:1" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="inBorder"
+                                                                                  Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame Value="#30FFFFFF" KeyTime="0:0:1" />
+                                            </ColorAnimationUsingKeyFrames>
+
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="outBorder"
+                                                                                  Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame Value="#30FFFFFF" KeyTime="0:0:1" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+        </Grid>
+        
+    </Grid>
+</Window>

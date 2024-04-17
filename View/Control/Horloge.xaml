@@ -1,0 +1,3215 @@
+﻿<UserControl x:Class="ARG.Controls.Horloge"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ARG.Controls"
+             mc:Ignorable="d"
+             Loaded="UserControl_Loaded"
+             Unloaded="UserControl_Unloaded">
+    <UserControl.Resources>
+        <Color x:Key="WatchColor">#5f2cab</Color>
+        <SolidColorBrush x:Key="WatchBG" Color="{StaticResource WatchColor}" />
+        <Storyboard x:Key="sbseconds" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="second">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-84">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="-78">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="-72">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="-66">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="-60">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="-54">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:7" Value="-48">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:8" Value="-42">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:9" Value="-36">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:10" Value="-30">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:11" Value="-24">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:12" Value="-18">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:13" Value="-12">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:14" Value="-06">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:15" Value="-00">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:16" Value="6">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:17" Value="12">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:18" Value="18">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:19" Value="24">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:20" Value="30">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:21" Value="36">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:22" Value="42">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:23" Value="48">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:24" Value="54">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:25" Value="60">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:26" Value="66">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:27" Value="72">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:28" Value="78">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:29" Value="84">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:30" Value="90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:31" Value="96">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:32" Value="102">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:33" Value="108">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:34" Value="114">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:35" Value="120">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:36" Value="126">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:37" Value="132">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:38" Value="138">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:39" Value="144">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:40" Value="150">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:41" Value="156">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:42" Value="162">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:43" Value="168">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:44" Value="174">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:45" Value="180">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:46" Value="186">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:47" Value="192">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:48" Value="198">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:49" Value="204">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:50" Value="210">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:51" Value="216">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:52" Value="222">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:53" Value="228">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:54" Value="234">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:55" Value="240">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:56" Value="246">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:57" Value="252">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:58" Value="258">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:59" Value="264">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:1:00" Value="270">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseOut" Amplitude="0.4"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="sbminutes" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="minute">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-90"/>
+                <EasingDoubleKeyFrame KeyTime="0:1:00" Value="-84"/>
+                <EasingDoubleKeyFrame KeyTime="0:2:00" Value="-78"/>
+                <EasingDoubleKeyFrame KeyTime="0:3:00" Value="-72"/>
+                <EasingDoubleKeyFrame KeyTime="0:4:00" Value="-66"/>
+                <EasingDoubleKeyFrame KeyTime="0:5:00" Value="-60"/>
+                <EasingDoubleKeyFrame KeyTime="0:6:00" Value="-54"/>
+                <EasingDoubleKeyFrame KeyTime="0:7:00" Value="-48"/>
+                <EasingDoubleKeyFrame KeyTime="0:8:00" Value="-42"/>
+                <EasingDoubleKeyFrame KeyTime="0:9:00" Value="-36"/>
+                <EasingDoubleKeyFrame KeyTime="0:10:00" Value="-30"/>
+                <EasingDoubleKeyFrame KeyTime="0:11:00" Value="-24"/>
+                <EasingDoubleKeyFrame KeyTime="0:12:00" Value="-18"/>
+                <EasingDoubleKeyFrame KeyTime="0:13:00" Value="-12"/>
+                <EasingDoubleKeyFrame KeyTime="0:14:00" Value="-06"/>
+                <EasingDoubleKeyFrame KeyTime="0:15:00" Value="-00"/>
+                <EasingDoubleKeyFrame KeyTime="0:16:00" Value="6"/>
+                <EasingDoubleKeyFrame KeyTime="0:17:00" Value="12"/>
+                <EasingDoubleKeyFrame KeyTime="0:18:00" Value="18"/>
+                <EasingDoubleKeyFrame KeyTime="0:19:00" Value="24"/>
+                <EasingDoubleKeyFrame KeyTime="0:20:00" Value="30"/>
+                <EasingDoubleKeyFrame KeyTime="0:21:00" Value="36"/>
+                <EasingDoubleKeyFrame KeyTime="0:22:00" Value="42"/>
+                <EasingDoubleKeyFrame KeyTime="0:23:00" Value="48"/>
+                <EasingDoubleKeyFrame KeyTime="0:24:00" Value="54"/>
+                <EasingDoubleKeyFrame KeyTime="0:25:00" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:26:00" Value="66"/>
+                <EasingDoubleKeyFrame KeyTime="0:27:00" Value="72"/>
+                <EasingDoubleKeyFrame KeyTime="0:28:00" Value="78"/>
+                <EasingDoubleKeyFrame KeyTime="0:29:00" Value="84"/>
+                <EasingDoubleKeyFrame KeyTime="0:30:00" Value="90"/>
+                <EasingDoubleKeyFrame KeyTime="0:31:00" Value="96"/>
+                <EasingDoubleKeyFrame KeyTime="0:32:00" Value="102"/>
+                <EasingDoubleKeyFrame KeyTime="0:33:00" Value="108"/>
+                <EasingDoubleKeyFrame KeyTime="0:34:00" Value="114"/>
+                <EasingDoubleKeyFrame KeyTime="0:35:00" Value="120"/>
+                <EasingDoubleKeyFrame KeyTime="0:36:00" Value="126"/>
+                <EasingDoubleKeyFrame KeyTime="0:37:00" Value="132"/>
+                <EasingDoubleKeyFrame KeyTime="0:38:00" Value="138"/>
+                <EasingDoubleKeyFrame KeyTime="0:39:00" Value="144"/>
+                <EasingDoubleKeyFrame KeyTime="0:40:00" Value="150"/>
+                <EasingDoubleKeyFrame KeyTime="0:41:00" Value="156"/>
+                <EasingDoubleKeyFrame KeyTime="0:42:00" Value="162"/>
+                <EasingDoubleKeyFrame KeyTime="0:43:00" Value="168"/>
+                <EasingDoubleKeyFrame KeyTime="0:44:00" Value="174"/>
+                <EasingDoubleKeyFrame KeyTime="0:45:00" Value="180"/>
+                <EasingDoubleKeyFrame KeyTime="0:46:00" Value="186"/>
+                <EasingDoubleKeyFrame KeyTime="0:47:00" Value="192"/>
+                <EasingDoubleKeyFrame KeyTime="0:48:00" Value="198"/>
+                <EasingDoubleKeyFrame KeyTime="0:49:00" Value="204"/>
+                <EasingDoubleKeyFrame KeyTime="0:50:00" Value="210"/>
+                <EasingDoubleKeyFrame KeyTime="0:51:00" Value="216"/>
+                <EasingDoubleKeyFrame KeyTime="0:52:00" Value="222"/>
+                <EasingDoubleKeyFrame KeyTime="0:53:00" Value="228"/>
+                <EasingDoubleKeyFrame KeyTime="0:54:00" Value="234"/>
+                <EasingDoubleKeyFrame KeyTime="0:55:00" Value="240"/>
+                <EasingDoubleKeyFrame KeyTime="0:56:00" Value="246"/>
+                <EasingDoubleKeyFrame KeyTime="0:57:00" Value="252"/>
+                <EasingDoubleKeyFrame KeyTime="0:58:00" Value="258"/>
+                <EasingDoubleKeyFrame KeyTime="0:59:00" Value="264"/>
+                <EasingDoubleKeyFrame KeyTime="1:00:00" Value="270"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="sbhours">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="hour">
+                <EasingDoubleKeyFrame KeyTime="0:00:00" Value="-90"/>
+                <EasingDoubleKeyFrame KeyTime="0:15:00" Value="-82.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:30:00" Value="-75"/>
+                <EasingDoubleKeyFrame KeyTime="0:45:00" Value="-67.5"/>
+                <EasingDoubleKeyFrame KeyTime="1:00:00" Value="-60"/>
+                <EasingDoubleKeyFrame KeyTime="1:15:00" Value="-52.5"/>
+                <EasingDoubleKeyFrame KeyTime="1:30:00" Value="-45"/>
+                <EasingDoubleKeyFrame KeyTime="1:45:00" Value="-37.5"/>
+                <EasingDoubleKeyFrame KeyTime="2:00:00" Value="-30"/>
+                <EasingDoubleKeyFrame KeyTime="2:15:00" Value="-22.5"/>
+                <EasingDoubleKeyFrame KeyTime="2:30:00" Value="-15"/>
+                <EasingDoubleKeyFrame KeyTime="2:45:00" Value="-07.5"/>
+                <EasingDoubleKeyFrame KeyTime="3:00:00" Value="-00"/>
+                <EasingDoubleKeyFrame KeyTime="3:15:00" Value="07.5"/>
+                <EasingDoubleKeyFrame KeyTime="3:30:00" Value="15"/>
+                <EasingDoubleKeyFrame KeyTime="3:45:00" Value="22.5"/>
+                <EasingDoubleKeyFrame KeyTime="4:00:00" Value="30"/>
+                <EasingDoubleKeyFrame KeyTime="4:15:00" Value="37.5"/>
+                <EasingDoubleKeyFrame KeyTime="4:30:00" Value="45"/>
+                <EasingDoubleKeyFrame KeyTime="4:45:00" Value="52.5"/>
+                <EasingDoubleKeyFrame KeyTime="5:00:00" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="5:15:00" Value="67.5"/>
+                <EasingDoubleKeyFrame KeyTime="5:30:00" Value="75"/>
+                <EasingDoubleKeyFrame KeyTime="5:45:00" Value="82.5"/>
+                <EasingDoubleKeyFrame KeyTime="6:00:00" Value="90"/>
+                <EasingDoubleKeyFrame KeyTime="6:15:00" Value="97.5"/>
+                <EasingDoubleKeyFrame KeyTime="6:30:00" Value="105"/>
+                <EasingDoubleKeyFrame KeyTime="6:45:00" Value="112.5"/>
+                <EasingDoubleKeyFrame KeyTime="7:00:00" Value="120"/>
+                <EasingDoubleKeyFrame KeyTime="7:15:00" Value="127.5"/>
+                <EasingDoubleKeyFrame KeyTime="7:30:00" Value="135"/>
+                <EasingDoubleKeyFrame KeyTime="7:45:00" Value="142.5"/>
+                <EasingDoubleKeyFrame KeyTime="8:00:00" Value="150"/>
+                <EasingDoubleKeyFrame KeyTime="8:15:00" Value="157.5"/>
+                <EasingDoubleKeyFrame KeyTime="8:30:00" Value="165"/>
+                <EasingDoubleKeyFrame KeyTime="8:45:00" Value="172.5"/>
+                <EasingDoubleKeyFrame KeyTime="9:00:00" Value="180"/>
+                <EasingDoubleKeyFrame KeyTime="9:15:00" Value="187.5"/>
+                <EasingDoubleKeyFrame KeyTime="9:30:00" Value="195"/>
+                <EasingDoubleKeyFrame KeyTime="9:45:00" Value="202.5"/>
+                <EasingDoubleKeyFrame KeyTime="10:00:00" Value="210"/>
+                <EasingDoubleKeyFrame KeyTime="10:15:00" Value="217.5"/>
+                <EasingDoubleKeyFrame KeyTime="10:30:00" Value="225"/>
+                <EasingDoubleKeyFrame KeyTime="10:45:00" Value="232.5"/>
+                <EasingDoubleKeyFrame KeyTime="11:00:00" Value="240"/>
+                <EasingDoubleKeyFrame KeyTime="11:15:00" Value="247.5"/>
+                <EasingDoubleKeyFrame KeyTime="11:30:00" Value="255"/>
+                <EasingDoubleKeyFrame KeyTime="11:45:00" Value="262.5"/>
+                <EasingDoubleKeyFrame KeyTime="12:00:00" Value="270"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid>
+        <Border BorderThickness="10" 
+                CornerRadius="300" 
+                Width="320" 
+                Height="320">
+            <Border.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="#FFE4E5E7" Offset="0.433"/>
+                    <GradientStop Color="Black" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid Height="300" 
+                  Width="300" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center">
+                <Border CornerRadius="350">
+                    <Border.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="Black" Offset="0"/>
+                            <GradientStop Color="#FF1C1C1C" Offset="1"/>
+                            <GradientStop Color="#FF060606" Offset="0.786"/>
+                        </RadialGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <Grid>
+                    <Grid>
+                        <Border CornerRadius="3"
+                                Height="5"
+                                Width="20"
+                                Margin="10"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                            Height="5"
+                            Width="20"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                            Height="20"
+                            Width="5"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                                Height="20"
+                                Width="5"
+                                Margin="10"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="30"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="3"
+                            Height="5"
+                            Width="20"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                                Height="5"
+                                Width="20"
+                                Margin="10"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                            Height="20"
+                            Width="5"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                            Height="20"
+                            Width="5"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="60"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="3"
+                            Height="5"
+                            Width="20"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                            Height="5"
+                            Width="20"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                            Height="20"
+                            Width="5"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="3"
+                            Height="20"
+                            Width="5"
+                            Margin="10"
+                            Background="{StaticResource WatchBG}"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+
+                <Grid>
+                    <Grid>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="6"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="12"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="18"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="24"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="30"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="36"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="42"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Grid RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="6"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="48"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Grid RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="6"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="54"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Grid RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="6"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="60"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Grid RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="6"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="66"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Grid RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="6"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+                            </Grid>
+
+                            <Grid RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="6"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border CornerRadius="2"
+                                Height="4"
+                                Width="4"
+                                Margin="4"
+                                Background="{StaticResource WatchBG}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                                        </Border.Effect>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <TextBlock Text="12:30" 
+                           FontSize="100"
+                           HorizontalAlignment="Center"
+                           RenderTransformOrigin="0.5 0.5"
+                           VerticalAlignment="Center" 
+                           Foreground="#40DEDEDE"
+                           Name="txtTime"
+                           TextBlock.FontFamily="Digital-7"/>
+                <Border x:Name="hour" 
+                        CornerRadius="0 15 15 0" 
+                        Height="7" 
+                        Width="100" 
+                        HorizontalAlignment="Right" 
+                        RenderTransformOrigin="0,0.5" 
+                        Margin="0,145,49,145">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Width="25"
+                                Background="{StaticResource WatchBG}"
+                                Height="3"
+                                VerticalAlignment="Center"/>
+
+                        <Border Background="{StaticResource WatchBG}"
+                                Grid.Column="1"
+                                Height="7"
+                                VerticalAlignment="Center"
+                                CornerRadius="6 0 0 6"
+                                Margin="-1"/>
+                    </Grid>
+                    <Border.Effect>
+                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                    </Border.Effect>
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-60"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+                <Border x:Name="minute" 
+                        CornerRadius="0 15 15 0" 
+                        Height="7" 
+                        Width="130" 
+                        HorizontalAlignment="Right" 
+                        RenderTransformOrigin="0, 0.5" 
+                        Background="{x:Null}" 
+                        Margin="0,145,20.5,145">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Width="25"
+                                Background="{StaticResource WatchBG}"
+                                Height="3"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        <Border Background="{StaticResource WatchBG}"
+                                Grid.Column="1"
+                                Height="7"
+                                VerticalAlignment="Center"
+                                CornerRadius="6 0 0 6"
+                                Margin="-1"/>
+                    </Grid>
+                    <Border.Effect>
+                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                    </Border.Effect>
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+                <Border x:Name="second" 
+                        CornerRadius="0" 
+                        Height="3" 
+                        Width="140" 
+                        Visibility="Visible"
+                        Background="{StaticResource WatchBG}" 
+                        RenderTransformOrigin="0, 0.5" 
+                        Margin="152,148,8,149" >
+                    <Border.Effect>
+                        <DropShadowEffect Color="{DynamicResource WatchColor}"
+                                                  ShadowDepth="0"
+                                                  BlurRadius="3"/>
+                    </Border.Effect>
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-200"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+                <Ellipse Fill="#000" 
+                         Width="7" 
+                         Height="7" 
+                         Stroke="{StaticResource WatchBG}"
+                         StrokeThickness="2"
+                         HorizontalAlignment="Center" 
+                         VerticalAlignment="Center">
+                </Ellipse>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

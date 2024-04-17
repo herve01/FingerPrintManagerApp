@@ -35,8 +35,65 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\CrystalDecisions.CrystalReports.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\CrystalDecisions.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DirectX.Capture">
+      <HintPath>..\..\humager\Humager\bin\Debug\DirectX.Capture.dll</HintPath>
+    </Reference>
+    <Reference Include="libzkfpcsharp">
+      <HintPath>..\..\humager\Humager\bin\Debug\libzkfpcsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Drawing">
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Xaml.Behaviors">
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="SAPBusinessObjects.WPF.Viewer, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\SAPBusinessObjects.WPF.Viewer.dll</HintPath>
+    </Reference>
+    <Reference Include="SAPBusinessObjects.WPF.ViewerShared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\SAPBusinessObjects.WPF.ViewerShared.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -46,15 +103,182 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WebCam_Capture">
+      <HintPath>..\..\humager\Humager\bin\Debug\WebCam_Capture.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif">
+      <HintPath>..\..\arg_store\BookStore\Dependencies_\WpfAnimatedGif.dll</HintPath>
+    </Reference>
+    <Reference Include="Zen.Barcode.Core">
+      <HintPath>..\..\humager\Humager\bin\Debug\Zen.Barcode.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\Admin\EntryLog.cs" />
+    <Compile Include="Model\Admin\Enum.cs" />
+    <Compile Include="Model\Admin\PasswordStorage.cs" />
+    <Compile Include="Model\Admin\Setting.cs" />
+    <Compile Include="Model\Admin\User.cs" />
+    <Compile Include="Model\Admin\Util\DbUtil.cs" />
+    <Compile Include="Model\AppConfig.cs" />
+    <Compile Include="Model\Commune.cs" />
+    <Compile Include="Model\Continent.cs" />
+    <Compile Include="Model\Document.cs" />
+    <Compile Include="Model\Employe\Affectation.cs" />
+    <Compile Include="Model\Employe\Bureau.cs" />
+    <Compile Include="Model\Employe\Division.cs" />
+    <Compile Include="Model\Employe\DomaineEtude.cs" />
+    <Compile Include="Model\Employe\Employe.cs" />
+    <Compile Include="Model\Employe\EmployeEmpreinte.cs" />
+    <Compile Include="Model\Employe\EmployeEtude.cs" />
+    <Compile Include="Model\Employe\EmployeFonction.cs" />
+    <Compile Include="Model\Employe\EmployeGrade.cs" />
+    <Compile Include="Model\Employe\EnfantEmploye.cs" />
+    <Compile Include="Model\Employe\Entite.cs" />
+    <Compile Include="Model\Employe\Enum.cs" />
+    <Compile Include="Model\Employe\Fonction.cs" />
+    <Compile Include="Model\Employe\Grade.cs" />
+    <Compile Include="Model\Employe\NiveauEtude.cs" />
+    <Compile Include="Model\Enum.cs" />
+    <Compile Include="Model\Helper\GS Helper\AntiAliasMode.cs" />
+    <Compile Include="Model\Helper\GS Helper\Dpi.cs" />
+    <Compile Include="Model\Helper\GS Helper\ErrorCode.cs" />
+    <Compile Include="Model\Helper\GS Helper\GhostScriptAPI.cs" />
+    <Compile Include="Model\Helper\GS Helper\GhostScriptCommand.cs" />
+    <Compile Include="Model\Helper\GS Helper\GhostScriptException.cs" />
+    <Compile Include="Model\Helper\GS Helper\GridFitMode.cs" />
+    <Compile Include="Model\Helper\GS Helper\ImageFormat.cs" />
+    <Compile Include="Model\Helper\GS Helper\NativeMethods.cs" />
+    <Compile Include="Model\Helper\GS Helper\NativeStructs.cs" />
+    <Compile Include="Model\Helper\GS Helper\PaperSize.cs" />
+    <Compile Include="Model\Helper\GS Helper\Pdf2Image.cs" />
+    <Compile Include="Model\Helper\GS Helper\Pdf2ImageSettings.cs" />
+    <Compile Include="Model\Helper\GS Helper\PdfTrimMode.cs" />
+    <Compile Include="Model\Helper\GS Helper\StandardIOCallback.cs" />
+    <Compile Include="Model\Helper\ImageUtil.cs" />
+    <Compile Include="Model\Helper\NumberToLetter.cs" />
+    <Compile Include="Model\Helper\Util.cs" />
+    <Compile Include="Model\ModelBase.cs" />
+    <Compile Include="Model\OptionItem.cs" />
+    <Compile Include="Model\Page.cs" />
+    <Compile Include="Model\Pays.cs" />
+    <Compile Include="Model\Presence\Enum.cs" />
+    <Compile Include="Model\Presence\Periode.cs" />
+    <Compile Include="Model\Presence\Presence.cs" />
+    <Compile Include="Model\Province.cs" />
+    <Compile Include="Model\Size.cs" />
+    <Compile Include="Model\Util\AppUtil.cs" />
+    <Compile Include="Model\Util\BitmapFormat.cs" />
+    <Compile Include="Model\ValueValidator.cs" />
+    <Compile Include="Model\Zone.cs" />
+    <Compile Include="ViewModel\Behavior\EventToCommandBehavior.cs" />
+    <Compile Include="ViewModel\Behavior\ListViewZoomBehavior.cs" />
+    <Compile Include="ViewModel\Behavior\ReportSourceBehavior.cs" />
+    <Compile Include="ViewModel\Behavior\RoutedEventTrigger.cs" />
+    <Compile Include="ViewModel\Behavior\ScrollIntoViewBehavior.cs" />
+    <Compile Include="ViewModel\Behavior\TextBlockBehavior.cs" />
+    <Compile Include="ViewModel\Behavior\VisualTreeUtility.cs" />
+    <Compile Include="ViewModel\Command\AsyncCommand.cs" />
+    <Compile Include="ViewModel\Command\IAsyncCommand.cs" />
+    <Compile Include="ViewModel\Command\IErrorHandler.cs" />
+    <Compile Include="ViewModel\Command\RelayCommand.cs" />
+    <Compile Include="ViewModel\Contract\ICallerViewModel.cs" />
+    <Compile Include="ViewModel\Contract\IChooserViewModel.cs" />
+    <Compile Include="ViewModel\ControllerDialogViewModel.cs" />
+    <Compile Include="ViewModel\ControllerViewModel.cs" />
+    <Compile Include="ViewModel\Converter\AccountToAccountNameConverter.cs" />
+    <Compile Include="ViewModel\Converter\AccountToAccountNumberConverter.cs" />
+    <Compile Include="ViewModel\Converter\FirstLetterGroupConverter.cs" />
+    <Compile Include="ViewModel\Extension\StringExtensions.cs" />
+    <Compile Include="ViewModel\Extension\TaskExtensions.cs" />
+    <Compile Include="ViewModel\Helper\View.cs" />
+    <Compile Include="ViewModel\MainWindowPresenterViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\PageViewModel.cs" />
+    <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\VisionnesuseViewModel.cs" />
+    <Compile Include="View\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BindingProxy.cs" />
+    <Compile Include="View\Control\AlignableWrapPanel.cs" />
+    <Compile Include="View\Control\ARGMonthCalendar.cs" />
+    <Compile Include="View\Control\CircleProgressBar.xaml.cs">
+      <DependentUpon>CircleProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\CloseableTabItem.cs" />
+    <Compile Include="View\Control\HightlightTextBlock.cs" />
+    <Compile Include="View\Control\Horloge.xaml.cs">
+      <DependentUpon>Horloge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\MaskedTextBox.cs" />
+    <Compile Include="View\Converter\AccountNumberLengthToMarginConverter.cs" />
+    <Compile Include="View\Converter\BoolInversionToVisibilityConverter.cs" />
+    <Compile Include="View\Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="View\Converter\ByteArrayToImageConverter.cs" />
+    <Compile Include="View\Converter\ByteArrayToImageThumbnailConverter.cs" />
+    <Compile Include="View\Converter\DayAppointmentsConverter.cs" />
+    <Compile Include="View\Converter\DecimalInvertConverter.cs" />
+    <Compile Include="View\Converter\DoubleHalfConverter.cs" />
+    <Compile Include="View\Converter\DoubleToPercentageConverter.cs" />
+    <Compile Include="View\Converter\EditObjectMultiParamConverter.cs" />
+    <Compile Include="View\Converter\FirstLetterGroupConverter.cs" />
+    <Compile Include="View\Converter\ListViewItemPositionToBackgroundConverter.cs" />
+    <Compile Include="View\Converter\ListViewItemToPositionConverter.cs" />
+    <Compile Include="View\Converter\ListViewItemToPositionSeparatorVisibilityConverter.cs" />
+    <Compile Include="View\Converter\NullToVisibilityConverter.cs" />
+    <Compile Include="View\Converter\ObjectStateToColorConverter.cs" />
+    <Compile Include="View\Converter\PageWidthConverter.cs" />
+    <Compile Include="View\Converter\PathDataConverter.cs" />
+    <Compile Include="View\Converter\PercentageConverter.cs" />
+    <Compile Include="View\Converter\ToUpperCaseConverter.cs" />
+    <Compile Include="View\Converter\UserStateToVisibiityConverter.cs" />
+    <Compile Include="View\Converter\ValueToAngleConverter.cs" />
+    <Compile Include="View\Helper\Util.cs" />
+    <Compile Include="View\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindowPresentationView.xaml.cs">
+      <DependentUpon>MainWindowPresentationView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Dialog\Service\DialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialog\View\CaptureView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialog\View\DialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialog\View\DialogYesNo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialog\View\MyMsgBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialog\View\ReportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialog\View\VisionneuseView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,10 +287,90 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Dialog\Facade\DialogFacade.cs" />
+    <Compile Include="Dialog\Facade\IDialogFacade.cs" />
+    <Compile Include="Dialog\Service\DialogResult.cs" />
+    <Compile Include="Dialog\Service\DialogService.cs" />
+    <Compile Include="Dialog\Service\DialogViewModelBase.cs" />
+    <Compile Include="Dialog\Service\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\Service\FilePathProvider.cs" />
+    <Compile Include="Dialog\Service\FolderPathProvider.cs" />
+    <Compile Include="Dialog\Service\IFilePathProvider.cs" />
+    <Compile Include="Dialog\Service\IFolderPathProvider.cs" />
+    <Compile Include="Dialog\Service\IImageViewer.cs" />
+    <Compile Include="Dialog\Service\ILoginService.cs" />
+    <Compile Include="Dialog\Service\ImageViewer.cs" />
+    <Compile Include="Dialog\Service\IPhotoCapture.cs" />
+    <Compile Include="Dialog\Service\IPrinterProvider.cs" />
+    <Compile Include="Dialog\Service\IReportViewer.cs" />
+    <Compile Include="Dialog\Service\LoginService.cs" />
+    <Compile Include="Dialog\Service\PhotoCapture.cs" />
+    <Compile Include="Dialog\Service\PrinterProvider.cs" />
+    <Compile Include="Dialog\Service\ReportViewer.cs" />
+    <Compile Include="Dialog\Service\WebCam.cs" />
+    <Compile Include="Dialog\View\CaptureView.xaml.cs">
+      <DependentUpon>CaptureView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\View\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\View\DialogYesNo.xaml.cs">
+      <DependentUpon>DialogYesNo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\View\DialogYesNoViewModel.cs" />
+    <Compile Include="Dialog\View\MyMsgBox.xaml.cs">
+      <DependentUpon>MyMsgBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\View\ReportView.xaml.cs">
+      <DependentUpon>ReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\View\VisionneuseView.xaml.cs">
+      <DependentUpon>VisionneuseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extension\StringExtensions.cs" />
+    <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Control\CircleProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Control\Horloge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Main.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MainWindowPresentationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Theme\CalendarStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Theme\Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Theme\General.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Theme\Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -93,6 +397,39 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dao\" />
+    <Folder Include="Global\" />
+    <Folder Include="IoC\" />
+    <Folder Include="Modules\" />
+    <Folder Include="Util\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Image\arg_header.png" />
+    <Resource Include="View\Image\arg_header_invoice.png" />
+    <Resource Include="View\Image\arg_header_large.png" />
+    <Resource Include="View\Image\armoire_3cm.png" />
+    <Resource Include="View\Image\bg.jpg" />
+    <Resource Include="View\Image\book_thumb.PNG" />
+    <Resource Include="View\Image\emoji_good.png" />
+    <Resource Include="View\Image\emoji_triste.png" />
+    <Resource Include="View\Image\emoji_warn.png" />
+    <Resource Include="View\Image\enteteA4.jpg" />
+    <Resource Include="View\Image\enteteA4_Paysage.jpg" />
+    <Resource Include="View\Image\entete_carte_service.png" />
+    <Resource Include="View\Image\Logo.jpg" />
+    <Resource Include="View\Image\logo32x32.ico" />
+    <Resource Include="View\Image\logo64x64.ico" />
+    <Resource Include="View\Image\logo_3cm.png" />
+    <Resource Include="View\Image\man_avatar.png" />
+    <Resource Include="View\Image\preloader.gif" />
+    <Resource Include="View\Image\product_thumb.png" />
+    <Resource Include="View\Image\signature.png" />
+    <Resource Include="View\Image\woman_avatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TakePhoto1.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

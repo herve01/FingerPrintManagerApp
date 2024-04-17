@@ -1,0 +1,248 @@
+﻿<Window x:Class="FingerPrintManagerApp.MyMsgBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MubMsgBox" 
+        MinHeight="220" 
+        Width="380" 
+        SizeToContent="Height"
+        AllowsTransparency="True" 
+        Background="Transparent" 
+        WindowStyle="None" 
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="MyButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderThickness="1"
+                            CornerRadius="5"  Padding="5,0,5,0" BorderBrush="#FF57002F">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFFF54B1"/>
+                                    <GradientStop Color="#FF9B008C" Offset="0.996"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter
+                                x:Name="contentString"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                TextBlock.FontWeight="Bold"
+                                TextBlock.FontFamily="Segoe UI"
+                            TextBlock.Foreground="#FFFFFF"
+                                 />
+                        </Border>
+                        <!--Animation du texte sur le bouton-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="contentString" Property="TextBlock.Foreground" Value="#CCA7DCFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Border Margin="20"  
+                MouseDown="Border_MouseDown_1" 
+                Background="#f0f0f0">
+            <Border.Effect>
+                <DropShadowEffect Color="#FF000000" 
+                                  ShadowDepth="0" 
+                                  Opacity=".4"
+                                  Direction="270" 
+                                  BlurRadius="19"/>
+            </Border.Effect>
+
+        </Border>
+        <Border Margin="20"
+                BorderBrush="#2888F3"
+                BorderThickness="1"
+                Background="#f0f0f0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" Name="col3"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <Border Background="#fff"
+                        BorderThickness="0 0 0 1"
+                        BorderBrush="#eaeaea"
+                        MouseDown="Border_MouseDown_1">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Name="txtCaption" 
+                           Text="Message" 
+                       Foreground="#111" 
+                           VerticalAlignment="Center"
+                       Grid.Row="0"
+                       Margin="5,2" />
+                        <Button Name="btClose" 
+                                Click="Close_Click" 
+                                Grid.Row="0" 
+                                ToolTip="Fermer"
+                                Grid.Column="1"
+                                Width="30" 
+                                Height="30">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="Border" Background="Transparent">
+                                        <Path x:Name="path" 
+                                      Data="M29.916016,0L31.999023,2.0700073 17.988037,16 32,29.930054 29.91803,32 15.905029,18.070007 2.0820313,31.812012 0,29.742004 13.822998,16 0.0010375977,2.2590332 2.0840454,0.18902588 15.905029,13.929016z" 
+                                      Stretch="Uniform" 
+                                      Fill="#FF000000" 
+                                      Width="12" 
+                                      Height="12" />
+
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Normal" />
+                                                <VisualState Name="MouseOver">
+                                                    <Storyboard>
+                                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                            <EasingColorKeyFrame KeyTime="0:0:0" Value="#ff0000" />
+                                                        </ColorAnimationUsingKeyFrames>
+
+                                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="path" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)">
+                                                            <EasingColorKeyFrame KeyTime="0:0:0" Value="#ffffff" />
+                                                        </ColorAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Name="cvsIcone" 
+                          Margin="10" 
+                          Width="50" 
+                          Height="50"
+                          VerticalAlignment="Center">
+
+                        <Image Height="50"
+                               Width="50"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Name="imgWrong" 
+                               Source="/Humager;component/View/Image/emoji_triste.PNG" 
+                               Stretch="Uniform"
+                               />
+
+                        <Image Height="50"
+                               Width="50"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Name="imgWarn" 
+                               Source="/Humager;component/View/Image/emoji_warn.PNG" 
+                               Stretch="Uniform"
+                               />
+
+                        <Image Height="50"
+                               Width="50"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Name="imgOk" 
+                               Source="/Humager;component/View/Image/emoji_good.PNG" 
+                               Stretch="Uniform"
+                               />
+                    </Grid>
+
+                    <ScrollViewer Grid.Column="1"
+                                  HorizontalScrollBarVisibility="Hidden"
+                                  VerticalScrollBarVisibility="Auto">
+                        <TextBlock Name="txtMsg" 
+                                   Grid.Column="1" 
+                                   Text="5 images ont été correctement ajoutées 5 images ont été correctement ajoutées"  
+                                   TextWrapping="Wrap" 
+                                   VerticalAlignment="Center" 
+                                   Width="250"
+                                   FontSize="13" 
+                                   Margin="5 10 5 5" 
+                                   Foreground="#FF000000"/>
+                    </ScrollViewer>
+                    
+                </Grid>
+
+                <Border Background="#fff"
+                        Grid.Row="2"
+                        BorderBrush="#eaeaea"
+                        BorderThickness="0 1 0 0">
+                    <StackPanel Name="spButtons" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        
+                        <Button Content="OK" 
+                                Height="25" 
+                                Name="btOK" 
+                                Width="80" 
+                                IsDefault="True" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Center" 
+                                Margin="0,0,10,0" 
+                                Click="btOK_Click" 
+                                FontWeight="Bold"
+                                Template="{StaticResource BtnSaveMacStyle}"/>
+                        
+                        <Button Content="Oui" 
+                                Height="25" 
+                                Name="btYes" 
+                                Width="80" 
+                                IsDefault="True" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Center" 
+                                Margin="0,0,10,0" 
+                                Click="btYes_Click" 
+                                FontWeight="Bold"
+                                Template="{StaticResource BtnSaveMacStyle}"/>
+                        
+                        <Button Content="Non" 
+                                Height="25" 
+                                Name="btNo" 
+                                Width="80" 
+                                IsDefault="True" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Center" 
+                                Margin="0,0,10,0" 
+                                Click="btNo_Click" 
+                                FontWeight="DemiBold"
+                                Template="{StaticResource BtnActionMacStyle}" />
+                        
+                        <Button Content="Annuler" 
+                                Height="25" 
+                                Name="btCancel" 
+                                IsCancel="True" 
+                                Width="80" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Center" 
+                                IsDefault="True" 
+                                Margin="0,0,10,0" 
+                                Click="btCancel_Click" 
+                                FontWeight="DemiBold"
+                                Template="{StaticResource BtnActionMacStyle}" />
+
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

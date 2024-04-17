@@ -1,0 +1,98 @@
+﻿<Window x:Class="FingerPrintManagerApp.Dialog.View.DialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Title, FallbackValue='Humager', TargetNullValue='Humager'}"  
+        Name="popup" 
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner" 
+        WindowStyle="None" 
+        Height="300"
+        Width="300"
+        AllowsTransparency="True" 
+        Background="Transparent"
+        SizeChanged="Popup_SizeChanged">
+    <Grid>
+        <Border Margin="20" 
+            Name="bg" 
+            Background="#FfFFFFff" >
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" 
+                              BlurRadius="18" 
+                              Direction="0" 
+                              ShadowDepth="0" 
+                              Opacity="0.4"/>
+            </Border.Effect>
+        </Border>
+
+        <Border Margin="20"
+                BorderThickness="0"
+                Background="#fff"
+                BorderBrush="#2888F3">
+            <Grid Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Name="Header" 
+                      Background="#fefefe" 
+                      MouseDown="Header_MouseDown_1"
+                      Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Title}" 
+                               Foreground="#888"
+                               VerticalAlignment="Center"
+                               Margin="7 0"/>
+                    <Button ToolTip="Fermer"
+                            Grid.Column="1"
+                            Width="30" 
+                            Height="30"
+                            Command="{Binding CloseCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                            >
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="Border" Background="Transparent">
+                                    <Path x:Name="path" 
+                                      Data="M29.916016,0L31.999023,2.0700073 17.988037,16 32,29.930054 29.91803,32 15.905029,18.070007 2.0820313,31.812012 0,29.742004 13.822998,16 0.0010375977,2.2590332 2.0840454,0.18902588 15.905029,13.929016z" 
+                                      Stretch="Uniform" 
+                                      Fill="#FF000000" 
+                                      Width="12" 
+                                      Height="12" />
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal" />
+                                            <VisualState Name="MouseOver">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0:0:0" Value="#ff0000" />
+                                                    </ColorAnimationUsingKeyFrames>
+
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="path" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0:0:0" Value="#ffffff" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Border>
+
+                            </ControlTemplate>
+                        </Button.Template>
+
+                    </Button>
+                </Grid>
+                <ContentPresenter x:Name="ContentPresenter" 
+                                  Content="{Binding}"
+                                  Grid.Row="1">
+                    
+                </ContentPresenter>
+            </Grid>
+        </Border>
+    </Grid>
+
+</Window>
