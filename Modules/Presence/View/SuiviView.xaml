@@ -1,0 +1,528 @@
+﻿<UserControl x:Class="FingerPrintManagerApp.Modules.Presence.View.SuiviView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converter="clr-namespace:FingerPrintManagerApp.View.Converter"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com" 
+             xmlns:local="clr-namespace:FingerPrintManagerApp.View"
+             xmlns:control="clr-namespace:ARG.Controls"
+             xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
+             Background="{StaticResource Window.Background}"
+             mc:Ignorable="d" >
+    
+    <interactivity:Interaction.Triggers>
+        <interactivity:EventTrigger EventName="Loaded">
+            <interactivity:InvokeCommandAction Command="{Binding LoadCommand}" />
+        </interactivity:EventTrigger>
+    </interactivity:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+        <converter:MultipleCommandParamConverter x:Key="editObjectMultiParamConverter" />
+        <converter:ByteArrayToImageThumbnailConverter x:Key="byteArrayToImageThumbnailConverter" />
+        <converter:PercentageConverter x:Key="percentageConverter" />
+        <converter:ListViewItemToPositionConverter x:Key="listViewItemToPositionConverter" />
+        
+        <local:BindingProxy x:Key="proxy" Data="{Binding}" />
+
+        <DataTemplate x:Key="dtClasse" 
+                      DataType="ListViewItem">
+            <Border Padding="10 5" 
+                    Name="border" >
+                <Border.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Modifier" 
+                                  Command="{Binding Source={StaticResource proxy}, Path=Data.EditCommand}"
+                                  CommandParameter="{Binding}"/>
+
+                        <MenuItem Header="Supprimer" 
+                                  Command="{Binding Source={StaticResource proxy}, Path=Data.DeleteCommand}"
+                                  CommandParameter="{Binding}"/>
+                    </ContextMenu>
+                </Border.ContextMenu>
+                <StackPanel>
+                    <TextBlock Name="txtDes" 
+                               Text="{Binding ShortName}" 
+                               FontSize="14" />
+                </StackPanel>
+            </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
+                    <Setter TargetName="border" Property="Background" Value="#10000000" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <DataTemplate x:Key="dtInscription">
+            <Border Name="brd"
+                    Padding="10 5"
+                    Background="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Converter={StaticResource listViewItemPositionToBackgroundConverter}}">
+                <Grid Name="grid"
+                      TextBlock.Foreground="#000">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Height="40" 
+                            Width="40" 
+                            CornerRadius="20" 
+                            BorderBrush="#502888F3" 
+                            BorderThickness="1" 
+                            Name="brdImage"
+                            Background="Transparent">
+                        <Border.Clip>
+                            <EllipseGeometry Center="20 20"
+                                             RadiusX="19"
+                                             RadiusY="19" />
+                        </Border.Clip>
+                        <Grid>
+
+                            <Path Margin="10"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Fill="#BBB"
+                                  Stretch="Uniform"
+                                  Name="pathFille"
+                                  Visibility="{Binding Eleve.EstFille, Converter={StaticResource boolToVisibilityConverter}}"
+                                  Data="M15.152999,0C15.851,0 16.648,0.29899979 17.645,1.0970001 17.645,1.0970001 20.437,0.69799995 21.035,3.8880005L20.934999,4.3860006C20.934999,4.3860006 22.131,5.3830009 22.53,6.6790009 22.53,6.6790009 23.926,10.567002 22.330999,14.255002 22.330999,14.255002 22.032,16.847003 20.736,17.047003 20.736,17.047003 20.437,18.243003 19.638999,19.639004 19.638999,21.333004 20.336999,22.629004 20.336999,22.629004 22.929,25.421004 29.209,27.016006 29.209,27.016006 30.704,27.016006 31.999999,29.607005 31.999999,29.607005L15.950999,29.607005 0,29.607005C0,29.607005 1.2959995,27.016006 2.7919998,27.016006 2.7919998,27.016006 8.9719996,25.421004 11.664,22.629004 11.664,22.629004 11.963,22.031004 12.063,21.234004 10.567,19.938004 8.8729997,17.844003 8.0749998,14.255002 8.0749998,14.255002 7.5769997,19.140003 10.767,23.227004 10.767,23.227004 1.9939995,19.838003 5.5829992,7.5760014 5.5829992,7.5760012 6.8789997,3.1900005 12.461,2.3930006 12.461,2.1929998 13.259,0 15.152999,0z"
+                              />
+
+                            <Path Margin="10"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Fill="#BBB"
+                                  Stretch="Uniform"
+                                  Name="pathGarcon"
+                                  Visibility="{Binding Eleve.EstGarcon, Converter={StaticResource boolToVisibilityConverter}}"
+                                  Data="M13.799998,0C14.6,-6.4474079E-08 15.500002,0.10000609 16.699999,0.19998169 16.699999,0.19998172 21.799997,-0.10000622 22.399995,3.6000081 22.399995,3.6000078 22.899995,5.1999839 23.1,6.399997 23.1,6.399997 23.000002,9.1999863 22.699999,10.600011 22.899995,10.399998 23.199999,10.399998 23.299997,11.100012L23.299997,11.299993C23.500002,12.9 22.000002,13.799994 21.799997,13.500006 21.500002,14.4 21.1,15.400001 20.500002,16.400001L20.500002,18.600015 20.799997,18.699991 20.899995,20.400003 31.099998,25.000011 32,27.300001 0,27.300001 0.90000152,25.000011 11.000003,20.400003 11.100001,18.699991 11.500003,18.600015 11.500003,16.799995C10.799998,16.100014 10.2,15.100014 9.799998,13.799994 9.3999965,13.799994 8.1999995,13.000006 8.299998,11.699987L8.299998,11.500006C8.3999965,10.699986 8.6999995,10.799993 8.8999965,11.000006 8.1999995,9.0000046 6.6000015,4.1000078 9.6999995,3.0000015 9.6999995,3.0000015 9.0000026,-6.4474079E-08 13.799998,0z"
+                              />
+                            <Image Source="{Binding Path=Photo, Converter={StaticResource byteArrayToImageThumbnailConverter}}" />
+                        </Grid>
+
+                    </Border>
+
+                    <StackPanel Grid.Column="1" 
+                            HorizontalAlignment="Left"
+                            >
+                        <TextBlock Text="{Binding Eleve, FallbackValue='Eleve'}" 
+                                   FontSize="14"
+                                   TextTrimming="CharacterEllipsis"
+                                   Name="txtEleve"
+                           />
+
+                        <TextBlock Foreground="#999"
+                                   Text="{Binding Eleve.Sexe, FallbackValue='Sexe'}" 
+                                   Name="txtSexe"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
+                    <Setter TargetName="txtSexe" Property="Foreground" Value="#FFFFFFFF" />
+                    <Setter TargetName="txtEleve" Property="Foreground" Value="#FFFFFFFF" />
+                    <Setter TargetName="brd" Property="Background" Value="#FF2888F3" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="0.4*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="0.6*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="20 10"
+                        HorizontalAlignment="Center">
+                <TextBlock Margin="0,7,0,3" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left" 
+                           Text="Année-Scolaire" />
+
+                <Grid Width="260"
+                      HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox ItemsSource="{Binding AnneesView}"
+                              SelectedValue="{Binding SelectedAnnee, Mode=TwoWay}"
+                              DisplayMemberPath="Annee"
+                              IsSynchronizedWithCurrentItem="True"
+                              Height="30" 
+                              VerticalAlignment="Center" 
+                              HorizontalAlignment="Stretch" 
+                              Style="{DynamicResource ComboBoxOption}" />
+
+                    <Button Style="{DynamicResource ButtonFlatIconStyle}"
+                            ToolTip="Actualiser la liste des années"
+                            Cursor="Hand"
+                            Margin="5,0,0,0"
+                            Grid.Column="1"
+                            Width="30"
+                            Height="30"
+                            Command="{Binding RefreshAnneeCommand}"
+                            Tag="M1.6819987,14.044979L9.8970004,17.370966 6.3769976,19.284967C8.2400037,22.789972 11.896001,25.193962 16.141995,25.193962 20.631998,25.193962 24.487993,22.521967 26.233004,18.687982L29.466995,18.687982C27.558001,24.216972 22.313997,28.208 16.141995,28.208 10.761998,28.208 6.0890032,25.17498 3.7130042,20.731012L0,22.747003z M16.141995,0C21.460993,1.3985937E-07,26.084002,2.9670097,28.485001,7.3259868L32,5.3049912 30.530991,14.044979 22.236994,10.916013 25.860003,8.8339815C23.983004,5.3789963 20.351999,3.0140068 16.141995,3.0140066 11.653997,3.0140068 7.7980023,5.6860031 6.0520006,9.518979L2.8189999,9.518979C4.7280031,3.9899892,9.9719973,1.3985937E-07,16.141995,0z"/>
+                </Grid>
+                <TextBlock Margin="0,7,0,3" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left" 
+                           Text="Ecole" />
+
+                <Grid Width="260"
+                      HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox ItemsSource="{Binding EcolesView}"
+                              SelectedValue="{Binding SelectedEcole, Mode=TwoWay}"
+                              DisplayMemberPath="Denomination"
+                              IsSynchronizedWithCurrentItem="True"
+                              Height="30" 
+                              VerticalAlignment="Center" 
+                              HorizontalAlignment="Stretch" 
+                              Style="{DynamicResource ComboBoxOption}" />
+
+                    <Button Style="{DynamicResource ButtonFlatIconStyle}"
+                            ToolTip="Actualiser la liste des sections"
+                            Cursor="Hand"
+                            Margin="5,0,0,0"
+                            Grid.Column="1"
+                            Width="30"
+                            Height="30"
+                            Command="{Binding RefreshSectionCommand}"
+                            Tag="M1.6819987,14.044979L9.8970004,17.370966 6.3769976,19.284967C8.2400037,22.789972 11.896001,25.193962 16.141995,25.193962 20.631998,25.193962 24.487993,22.521967 26.233004,18.687982L29.466995,18.687982C27.558001,24.216972 22.313997,28.208 16.141995,28.208 10.761998,28.208 6.0890032,25.17498 3.7130042,20.731012L0,22.747003z M16.141995,0C21.460993,1.3985937E-07,26.084002,2.9670097,28.485001,7.3259868L32,5.3049912 30.530991,14.044979 22.236994,10.916013 25.860003,8.8339815C23.983004,5.3789963 20.351999,3.0140068 16.141995,3.0140066 11.653997,3.0140068 7.7980023,5.6860031 6.0520006,9.518979L2.8189999,9.518979C4.7280031,3.9899892,9.9719973,1.3985937E-07,16.141995,0z"/>
+                </Grid>
+            </StackPanel>
+
+            <Border Height="1"
+                    Grid.Row="1"
+                    Background="{DynamicResource Separator.Background}" />
+
+            <ListView Grid.Row="2"
+                      Background="Transparent"
+                      BorderBrush="Transparent"
+                      IsSynchronizedWithCurrentItem="True"
+                      SelectedValue="{Binding SelectedSubdivision}"
+                      ItemsSource="{Binding SubdivisionsView}"
+                      ItemTemplate="{StaticResource dtClasse}">
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Margin" Value="0 0 0 10" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                            <StackPanel>
+                                                <Border Background="{DynamicResource Item.Group.Background}"
+                                                        Padding="10 3"
+                                                                               >
+                                                    <StackPanel>
+                                                        <TextBlock  Text="{Binding Path=Name}" 
+                                                                        FontSize="16"
+                                                                        Foreground="#0078d7"
+                                                                        FontWeight="Bold"/>
+
+                                                        <TextBlock Text="{Binding Path=Name.Section.Intitule}"
+                                                                           TextBlock.FontSize="11"
+                                                                           TextBlock.Foreground="#999"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Border Height="1" Background="#dadada" Margin="0,0,0,0" />
+                                                <ItemsPresenter/>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </Grid>
+
+        <Border Width="1"
+                Background="{DynamicResource Separator.Background}"
+                Grid.Column="1" />
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Background="{DynamicResource Item.Presentation.Background}"
+                    Padding="10">
+                <StackPanel>
+                    <TextBlock Text="{Binding SelectedEcole.Denomination, FallbackValue='Ecole'}"
+                               FontSize="13"
+                               />
+                    
+                    <TextBlock Text="{Binding SelectedSubdivision, FallbackValue='Classe'}"
+                               FontWeight="ExtraBold"
+                               FontSize="20"
+                               TextTrimming="CharacterEllipsis"
+                               />
+
+                    <Grid Grid.Column="1"
+                          VerticalAlignment="Top"
+                          Margin="0 5 5 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="34" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Width="28"
+                                Height="28"
+                                Grid.Column="2"
+                                Background="#fff"
+                                CornerRadius="15"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Visibility="{Binding InscriptionLoading, Converter={StaticResource boolToVisibilityConverter}}"
+                            >
+                            <Image gif:ImageBehavior.AnimatedSource="/Humager;component/View/Image/preloader.gif"
+                                   Height="20"
+                                   Width="20"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                            />
+                        </Border>
+
+                        <TextBox HorizontalAlignment="Stretch" 
+                                 Height="30" 
+                                 FontSize="13" 
+                                 Grid.Column="0"
+                                 MinWidth="160"
+                                 Tag="Filtrer les élèves ici"  
+                                 Text="{Binding InscriptionFilterText, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{DynamicResource searchControl}" 
+                                 Foreground="#007ACC"  />
+
+                        <Button Content="Actualiser" 
+                                Style="{DynamicResource ButtonFlatIconStyle}"
+                                ToolTip="Actualiser la liste des élèves"
+                                Cursor="Hand"
+                                Margin="5,0,0,0"
+                                Grid.Column="1"
+                                Width="30"
+                                Height="30"
+                                Command="{Binding RefreshInscriptionCommand}"
+                                Tag="M1.6819987,14.044979L9.8970004,17.370966 6.3769976,19.284967C8.2400037,22.789972 11.896001,25.193962 16.141995,25.193962 20.631998,25.193962 24.487993,22.521967 26.233004,18.687982L29.466995,18.687982C27.558001,24.216972 22.313997,28.208 16.141995,28.208 10.761998,28.208 6.0890032,25.17498 3.7130042,20.731012L0,22.747003z M16.141995,0C21.460993,1.3985937E-07,26.084002,2.9670097,28.485001,7.3259868L32,5.3049912 30.530991,14.044979 22.236994,10.916013 25.860003,8.8339815C23.983004,5.3789963 20.351999,3.0140068 16.141995,3.0140066 11.653997,3.0140068 7.7980023,5.6860031 6.0520006,9.518979L2.8189999,9.518979C4.7280031,3.9899892,9.9719973,1.3985937E-07,16.141995,0z"/>
+
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <ListView Grid.Row="1"
+                      Background="Transparent"
+                      BorderBrush="Transparent"
+                      IsSynchronizedWithCurrentItem="True"
+                      Margin="0" 
+                      SelectedValue="{Binding SelectedInscription}"
+                      ItemsSource="{Binding InscriptionsView}"
+                      ItemTemplate="{StaticResource dtInscription}">
+            </ListView>
+        </Grid>
+
+        <Border Width="1"
+                Background="{DynamicResource Separator.Background}"
+                Grid.Column="3" />
+
+        <Grid Grid.Column="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Background="{DynamicResource Item.Presentation.Background}"
+                    Padding="20 15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Height="100" 
+                            Width="100" 
+                            CornerRadius="50" 
+                            BorderBrush="#20000000" 
+                            BorderThickness="1" 
+                            Name="brdImage"
+                            Background="Transparent">
+                        <Border.Clip>
+                            <EllipseGeometry Center="49 49"
+                                             RadiusX="50"
+                                             RadiusY="50" />
+                        </Border.Clip>
+                        <Grid>
+
+                            <Path Margin="20"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Fill="#BBB"
+                                  Stretch="Uniform"
+                                  Name="pathFille"
+                                  Visibility="{Binding SelectedInscription.Eleve.EstFille, Converter={StaticResource boolToVisibilityConverter}}"
+                                  Data="M15.152999,0C15.851,0 16.648,0.29899979 17.645,1.0970001 17.645,1.0970001 20.437,0.69799995 21.035,3.8880005L20.934999,4.3860006C20.934999,4.3860006 22.131,5.3830009 22.53,6.6790009 22.53,6.6790009 23.926,10.567002 22.330999,14.255002 22.330999,14.255002 22.032,16.847003 20.736,17.047003 20.736,17.047003 20.437,18.243003 19.638999,19.639004 19.638999,21.333004 20.336999,22.629004 20.336999,22.629004 22.929,25.421004 29.209,27.016006 29.209,27.016006 30.704,27.016006 31.999999,29.607005 31.999999,29.607005L15.950999,29.607005 0,29.607005C0,29.607005 1.2959995,27.016006 2.7919998,27.016006 2.7919998,27.016006 8.9719996,25.421004 11.664,22.629004 11.664,22.629004 11.963,22.031004 12.063,21.234004 10.567,19.938004 8.8729997,17.844003 8.0749998,14.255002 8.0749998,14.255002 7.5769997,19.140003 10.767,23.227004 10.767,23.227004 1.9939995,19.838003 5.5829992,7.5760014 5.5829992,7.5760012 6.8789997,3.1900005 12.461,2.3930006 12.461,2.1929998 13.259,0 15.152999,0z"
+                              />
+
+                            <Path Margin="20"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Fill="#BBB"
+                                  Stretch="Uniform"
+                                  Name="pathGarcon"
+                                  Visibility="{Binding SelectedInscription.Eleve.EstGarcon, Converter={StaticResource boolToVisibilityConverter}}"
+                                  Data="M13.799998,0C14.6,-6.4474079E-08 15.500002,0.10000609 16.699999,0.19998169 16.699999,0.19998172 21.799997,-0.10000622 22.399995,3.6000081 22.399995,3.6000078 22.899995,5.1999839 23.1,6.399997 23.1,6.399997 23.000002,9.1999863 22.699999,10.600011 22.899995,10.399998 23.199999,10.399998 23.299997,11.100012L23.299997,11.299993C23.500002,12.9 22.000002,13.799994 21.799997,13.500006 21.500002,14.4 21.1,15.400001 20.500002,16.400001L20.500002,18.600015 20.799997,18.699991 20.899995,20.400003 31.099998,25.000011 32,27.300001 0,27.300001 0.90000152,25.000011 11.000003,20.400003 11.100001,18.699991 11.500003,18.600015 11.500003,16.799995C10.799998,16.100014 10.2,15.100014 9.799998,13.799994 9.3999965,13.799994 8.1999995,13.000006 8.299998,11.699987L8.299998,11.500006C8.3999965,10.699986 8.6999995,10.799993 8.8999965,11.000006 8.1999995,9.0000046 6.6000015,4.1000078 9.6999995,3.0000015 9.6999995,3.0000015 9.0000026,-6.4474079E-08 13.799998,0z"
+                              />
+                            <Image Source="{Binding Path=SelectedInscription.Photo, Converter={StaticResource byteArrayToImageThumbnailConverter}}" />
+                        </Grid>
+
+                    </Border>
+
+                    <StackPanel Grid.Column="1"
+                                Margin="20 0">
+                        <TextBlock Text="{Binding SelectedInscription.Eleve, FallbackValue='Elève'}"
+                                   FontWeight="ExtraBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   FontSize="24">
+                            <TextBlock.ToolTip>
+                                <TextBlock Text="{Binding SelectedInscription.Eleve}" />
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                        <TextBlock Text="{Binding SelectedInscription.Eleve.Sexe, FallbackValue='Sexe'}"
+                                   TextTrimming="CharacterEllipsis"
+                                   FontSize="12"
+                                   Foreground="#999">
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 5 0 0">
+
+                            <Border Height="16"
+                                    CornerRadius="8"
+                                    MinWidth="8"
+                                    Padding="6 0"
+                                    Background="#EE1ECE39"
+                                    Margin="0 0 10 0">
+                                <TextBlock Text="{Binding YearPresences, StringFormat=\{0\} présence(s), FallbackValue=0 présence}"
+                                           Foreground="#fff"
+                                           FontSize="10"
+                                           FontWeight="DemiBold"
+                                           VerticalAlignment="Center"
+                                            />
+                            </Border>
+
+                            <Border Height="16"
+                                    CornerRadius="8"
+                                    MinWidth="8"
+                                    Padding="6 0"
+                                    Background="#EEF42222"
+                                    Margin="0 0 10 0">
+                                <TextBlock Text="{Binding YearAbsences, StringFormat=\{0\} absence(s), FallbackValue=0 absence}"
+                                           Foreground="#fff"
+                                           FontSize="10"
+                                           FontWeight="DemiBold"
+                                           VerticalAlignment="Center"
+                               />
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <WrapPanel Margin="10"
+                  Grid.Row="1"
+                       HorizontalAlignment="Center">
+                <control:ARGMonthCalendar Margin="10"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center"
+                                           DisplayDate="{Binding DisplayDate}"
+                                           DisplayMode="Month"
+                                           DisplayDateStart="{Binding SelectedAnnee.DateOuverture}"
+                                           DisplayDateEnd="{Binding EndDate}"
+                                           IsAppointed="True"
+                                           Appointments="{Binding Appointments}"
+                                           Style="{DynamicResource StyleCalendar}"/>
+
+                <Border Grid.Column="1"
+                        Margin="10"
+                        Padding="5"
+                        Width="170"
+                        CornerRadius="4"
+                        Background="#20007ACC"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center">
+
+                    <Grid TextBlock.FontSize="14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding SelectedMonth, FallbackValue='Mois'}"
+                                   FontWeight="ExtraBold"
+                                   FontSize="18"
+                                   Grid.ColumnSpan="2"
+                                   Margin="0 0 0 3">
+                        </TextBlock>
+
+                        <TextBlock Text="Présences : "
+                                   TextAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Grid.Row="1" />
+
+                        <TextBlock Text="{Binding MonthPresences, FallbackValue=0}"
+                                   TextAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Grid.Row="1"
+                                   FontWeight="Bold"
+                                   Grid.Column="1"/>
+
+                        <Border Background="#30000000"
+                                Grid.Row="2"
+                                Height="1"
+                                Margin="0 3"
+                                Grid.ColumnSpan="2" />
+
+                        <TextBlock Text="Absences : "
+                                   TextAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Grid.Row="3" />
+
+                        <TextBlock Text="{Binding MonthAbsences, FallbackValue=0}"
+                                   TextAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Grid.Row="3"
+                                   FontWeight="Bold"
+                                   Grid.Column="1"/>
+                    </Grid>
+                </Border>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</UserControl>

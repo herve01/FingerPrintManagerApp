@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="FingerPrintManagerApp.Modules.Employe.View.Template.FonctionAddTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:FingerPrintManagerApp.View.Converter"
+             mc:Ignorable="d"
+             Name="this">
+    <UserControl.Resources>
+        <conv:ListViewItemToPositionConverter x:Key="listViewItemToPositionConverter" />
+        <conv:PercentageConverter x:Key="percentage" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Converter={StaticResource listViewItemToPositionConverter}}" 
+                       Grid.Column="0"
+                       FontSize="13"
+                       VerticalAlignment="Center"
+                       FontWeight="DemiBold"/>
+
+        <Border Width="1" 
+                    Grid.Column="1" 
+                    Margin="5,0" />
+
+        <TextBlock Text="{Binding Fonction.Unite.Denomination}" 
+                       Grid.Column="2"
+                       FontSize="13"
+                       VerticalAlignment="Center"
+                       FontWeight="DemiBold"
+                       Width="{Binding ElementName=this, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='33,210'}"
+                       TextWrapping="WrapWithOverflow"/>
+
+        <Border Width="1" 
+                    Grid.Column="3" 
+                    Margin="5,0" />
+
+        <TextBlock Text="{Binding Fonction.Grade.Id}" 
+                       Grid.Column="4"
+                       FontSize="13"
+                       VerticalAlignment="Center"
+                       FontWeight="DemiBold"
+                       TextWrapping="WrapWithOverflow"/>
+
+        <Border Width="1" 
+                    Grid.Column="5" 
+                    Margin="5,0" />
+
+        <TextBox Text="{Binding Fonction.Intitule, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                     Grid.Column="6"
+                     FontSize="12" 
+                     Height="24"
+                     VerticalContentAlignment="Center"
+                     TextWrapping="WrapWithOverflow"
+                     Width="{Binding ElementName=this, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='36,210'}"
+                     Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
+                     Style="{StaticResource TextBoxPlaceHolderStyle}"/>
+
+        <Border Width="1" 
+                    Grid.Column="7" 
+                    Margin="5,0" />
+
+        <TextBox Text="{Binding Fonction.Description}" 
+                     Grid.Column="8"
+                     FontSize="12" 
+                     Height="24"
+                     AcceptsReturn="True"
+                     TextWrapping="WrapWithOverflow"
+                     Width="{Binding ElementName=this, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,210'}"
+                     VerticalContentAlignment="Center"
+                     Style="{StaticResource TextBoxPlaceHolderStyle}"/>
+
+
+    </Grid>
+</UserControl>

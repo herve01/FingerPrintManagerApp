@@ -1,0 +1,1016 @@
+﻿<UserControl x:Class="FingerPrintManagerApp.Modules.Admin.View.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             xmlns:conv="clr-namespace:FingerPrintManagerApp.View.Converter">
+
+    <interactivity:Interaction.Triggers>
+        <interactivity:EventTrigger EventName="Loaded">
+            <interactivity:InvokeCommandAction Command="{Binding LoadCommand}" />
+        </interactivity:EventTrigger>
+    </interactivity:Interaction.Triggers>
+    
+    <UserControl.Resources>
+        <conv:DoubleToPercentageConverter x:Key="doubleToPercentageConverter" />
+        <conv:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+        <conv:ByteArrayToImageConveter x:Key="byteArrayToBitmapImageConveter" />
+
+        <ControlTemplate TargetType="Button" x:Key="LoadButtonTemplate">
+            <Border Width="{TemplateBinding Width}" 
+                    CornerRadius="15" 
+                    Name="border"
+                    Height="{TemplateBinding Height}" 
+                    Background="#CC000000"
+                    BorderBrush="#fff"
+                    BorderThickness="1">
+                <Path Data="M0,22.691865L9.6958332,27.864942 0.24500618,32.000013z M8.8988495,6.3116251L18.869686,12.034729 11.211813,25.370919 10.644821,23.665877 7.7198686,23.364879 7.2188854,21.531844 4.3549361,21.429853 3.5479436,19.422835 1.2459807,19.647815z M13.690775,0.00052993685C13.965764,-0.0064584891,14.233765,0.055554115,14.474758,0.19355655L21.534634,4.2476002C22.392622,4.7375976,22.586618,6.0146238,21.968632,7.0966398L21.126636,8.5616571 10.95782,2.7255753 11.799801,1.2555529C12.243793,0.48054798,12.988775,0.017528671,13.690775,0.00052993685z"
+                      Stretch="Uniform" 
+                      Fill="#FFFFFFFF"
+                      Width="14" 
+                      Height="14" 
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center"/>
+
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                    <EasingColorKeyFrame Value="#30000000" KeyTime="0:0:0.2" />
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                    <EasingColorKeyFrame Value="#ee000000" KeyTime="0:0:0.2" />
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="2">
+            <Image Stretch="Uniform" 
+                   Source="{Binding ElementName=imgGreatLogo, Path=Source}"
+                   Opacity="{Binding ElementName=slideOpacity, Path=Value}"
+                   HorizontalAlignment="Right"
+                   Margin="10 0"
+                   VerticalAlignment="Center"
+                   />
+        </Border>
+        <ScrollViewer Grid.Row="2" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Auto">
+            <StackPanel Margin="20 10">
+                <StackPanel Visibility="{Binding IsAdmin, Converter={StaticResource boolToVisibilityConverter}}"
+                            Margin="0 0 0 30">
+                    <StackPanel>
+                        <TextBlock Text="Paramètres généraux"
+                               FontSize="27"
+                               Foreground="#000"
+                               FontWeight="Normal"/>
+
+                        <Border MaxWidth="900"
+                                BorderThickness="0 1"
+                                Margin="0 10"
+                                Padding="0 5"
+                                HorizontalAlignment="Left"
+                                BorderBrush="{DynamicResource Separator.Background}">
+                            <TextBlock TextWrapping="WrapWithOverflow"
+                                   FontSize="12"
+                                   Foreground="#777">
+                            Les paramètres généraux sont ceux applicables à l'application entière, c'est-à-dire, à tous les utilisateurs du système, quel que soit l'ordinateur à partir duquel ils s'y connectent.
+                            <LineBreak />
+                            Ils doivent être configurés au premier lancement du système par l'<Bold>administrateur central</Bold>.
+                            </TextBlock>
+
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Margin="0 5">
+
+                        <TextBlock HorizontalAlignment="Left" 
+                                   FontSize="20"
+                                   Text="Entreprise"/>
+
+                        <WrapPanel>
+                            <StackPanel Width="450" 
+                                        Margin="0 10 10 0">
+                                <TextBlock Text="DENOMINATION"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <TextBox Height="30" 
+                                         Text="{Binding OrganisationName, Mode=TwoWay}"
+                                         Tag="Le nom de votre entreprise ici"
+                                         VerticalContentAlignment="Center" 
+                                         Padding="5,0"   
+                                         Margin="0 3" 
+                                         HorizontalAlignment="Stretch" 
+                                         Style="{DynamicResource TextBoxPlaceHolderStyle}" />
+                            </StackPanel>
+
+                            <StackPanel Width="500" 
+                                        Margin="0 10 10 0">
+                                <TextBlock Text="ADRESSE"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <TextBox Height="30" 
+                                         Text="{Binding OrganisationAddress, Mode=TwoWay}"
+                                         Tag="L'adresse complète de votre organisation ici"
+                                         VerticalContentAlignment="Center" 
+                                         Padding="5,0"  
+                                         Margin="0 3" 
+                                         HorizontalAlignment="Stretch" 
+                                         Style="{DynamicResource TextBoxPlaceHolderStyle}" />
+                            </StackPanel>
+
+                        </WrapPanel>
+
+                        <TextBlock Text="LOGOS"
+                               FontSize="14"
+                               Typography.Capitals="AllSmallCaps" 
+                               Margin="0 10 0 0"/>
+
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Margin="0 10 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Border Width="256"
+                                        Height="256"
+                                        CornerRadius="128"
+                                        BorderThickness="1"
+                                        BorderBrush="#ccc">
+                                    <Border.Clip>
+                                        <EllipseGeometry Center="128 128"
+                                                         RadiusX="128"
+                                                         RadiusY="128" />
+                                    </Border.Clip>
+
+                                    <Image Stretch="Uniform" 
+                                           Name="imgGreatLogo"
+                                           Source="{Binding GreatLogo, Mode=TwoWay, IsAsync=True, Converter={StaticResource byteArrayToBitmapImageConveter}}"
+                                       />
+                                </Border>
+
+                                <Button Cursor="Hand" 
+                                        ToolTip="Changer d'image" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Top"
+                                        Width="28" 
+                                        Height="28" 
+                                        Margin="0 30 0 0"
+                                        Command="{Binding ChooseOrganisationGreatLogoCommand}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Width="{TemplateBinding Width}" 
+                                                CornerRadius="15" 
+                                                Name="border"
+                                                Height="{TemplateBinding Height}" 
+                                                Background="#CC000000"
+                                                BorderBrush="#fff"
+                                                BorderThickness="1">
+                                                <Path Data="M0,22.691865L9.6958332,27.864942 0.24500618,32.000013z M8.8988495,6.3116251L18.869686,12.034729 11.211813,25.370919 10.644821,23.665877 7.7198686,23.364879 7.2188854,21.531844 4.3549361,21.429853 3.5479436,19.422835 1.2459807,19.647815z M13.690775,0.00052993685C13.965764,-0.0064584891,14.233765,0.055554115,14.474758,0.19355655L21.534634,4.2476002C22.392622,4.7375976,22.586618,6.0146238,21.968632,7.0966398L21.126636,8.5616571 10.95782,2.7255753 11.799801,1.2555529C12.243793,0.48054798,12.988775,0.017528671,13.690775,0.00052993685z"
+                                                  Stretch="Uniform" 
+                                                  Fill="#FFFFFFFF"
+                                                  Width="14" 
+                                                  Height="14" 
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup Name="CommonStates">
+                                                        <VisualState Name="Normal" />
+                                                        <VisualState Name="MouseOver">
+                                                            <Storyboard>
+                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                                    <EasingColorKeyFrame Value="#30000000" KeyTime="0:0:0.2" />
+                                                                </ColorAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState Name="Pressed">
+                                                            <Storyboard>
+                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                                    <EasingColorKeyFrame Value="#ee000000" KeyTime="0:0:0.2" />
+                                                                </ColorAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <StackPanel Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        Margin="0 10">
+                                    <TextBlock Text="Application"
+                                           FontSize="16"
+                                           FontWeight="DemiBold"
+                                           HorizontalAlignment="Center"
+                                           />
+
+                                    <TextBlock Text="512x512" 
+                                           HorizontalAlignment="Center"
+                                           Foreground="#999"/>
+
+                                    <Border MaxWidth="180"
+                                            BorderThickness="0 1"
+                                            Margin="0 3"
+                                            Padding="0 3"
+                                            BorderBrush="{DynamicResource Separator.Background}">
+                                        <TextBlock TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="#777"
+                                               TextAlignment="Center">
+                                        Cette image sera utilisée derrière les interfaces de l'application, et aussi comme filigrane des rapports.
+                                        </TextBlock>
+
+                                    </Border>
+
+
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Column="1"
+                              Margin="40 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Border Width="64"
+                                    Height="64"
+                                    CornerRadius="64"
+                                    BorderThickness="1"
+                                    BorderBrush="#ccc">
+                                    <Border.Clip>
+                                        <EllipseGeometry Center="32 32"
+                                             RadiusX="32"
+                                             RadiusY="32" />
+                                    </Border.Clip>
+
+                                    <Image Stretch="Uniform" 
+                                           Source="{Binding ReportLogo, Mode=TwoWay, IsAsync=True, Converter={StaticResource byteArrayToBitmapImageConveter}}"
+                                       />
+                                </Border>
+
+                                <Button Cursor="Hand" 
+                                    ToolTip="Changer d'image" 
+                                    HorizontalAlignment="Right" 
+                                    VerticalAlignment="Top"
+                                    Width="20" 
+                                    Height="20" 
+                                    Margin="0 0 0 0"
+                                    Command="{Binding ChooseOrganisationReportLogoCommand}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Width="{TemplateBinding Width}" 
+                                                CornerRadius="10" 
+                                                Name="border"
+                                                Height="{TemplateBinding Height}" 
+                                                Background="#CC000000"
+                                                BorderBrush="#fff"
+                                                BorderThickness="1">
+                                                <Path Data="M0,22.691865L9.6958332,27.864942 0.24500618,32.000013z M8.8988495,6.3116251L18.869686,12.034729 11.211813,25.370919 10.644821,23.665877 7.7198686,23.364879 7.2188854,21.531844 4.3549361,21.429853 3.5479436,19.422835 1.2459807,19.647815z M13.690775,0.00052993685C13.965764,-0.0064584891,14.233765,0.055554115,14.474758,0.19355655L21.534634,4.2476002C22.392622,4.7375976,22.586618,6.0146238,21.968632,7.0966398L21.126636,8.5616571 10.95782,2.7255753 11.799801,1.2555529C12.243793,0.48054798,12.988775,0.017528671,13.690775,0.00052993685z"
+                                                  Stretch="Uniform" 
+                                                  Fill="#FFFFFFFF"
+                                                  Width="10" 
+                                                  Height="10" 
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup Name="CommonStates">
+                                                        <VisualState Name="Normal" />
+                                                        <VisualState Name="MouseOver">
+                                                            <Storyboard>
+                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                                    <EasingColorKeyFrame Value="#30000000" KeyTime="0:0:0.2" />
+                                                                </ColorAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState Name="Pressed">
+                                                            <Storyboard>
+                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                          Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                                                    <EasingColorKeyFrame Value="#ee000000" KeyTime="0:0:0.2" />
+                                                                </ColorAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <StackPanel Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        Margin="0 10">
+                                    <TextBlock Text="Report"
+                                           FontSize="16"
+                                           FontWeight="DemiBold"
+                                           HorizontalAlignment="Center"
+                                           />
+
+                                    <TextBlock Text="64x64" 
+                                           HorizontalAlignment="Center"
+                                           Foreground="#999"/>
+
+                                    <Border MaxWidth="64"
+                                        BorderThickness="0 1"
+                                        Margin="0 3"
+                                        Padding="0 3"
+                                        BorderBrush="{DynamicResource Separator.Background}">
+                                        <TextBlock TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="#777"
+                                               TextAlignment="Center">
+                                        Cette image sera utilisée sur les entêtes des rapports.
+                                        </TextBlock>
+
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                    </StackPanel>
+                    <StackPanel Margin="0 5">
+
+                        <TextBlock HorizontalAlignment="Left" 
+                                   FontSize="20"
+                                   Text="Vente"/>
+
+                        <WrapPanel>
+                            <StackPanel Width="450" 
+                                        Margin="0 10 10 0">
+                                <TextBlock Text="Taux de la taxe à valeur ajoutée (TVA) en %"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <TextBox Height="30" 
+                                         Text="{Binding StringVATRate, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
+                                         Tag="Taux de la TVA ici"
+                                         VerticalContentAlignment="Center" 
+                                         Padding="5,0"   
+                                         Margin="0 3" 
+                                         Width="240"
+                                         HorizontalAlignment="Left" 
+                                         Style="{DynamicResource TextBoxPlaceHolderStyle}" 
+                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"/>
+
+                                <TextBlock Text="Délai de paiement en mois pour les ventes à crédit"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <TextBox Height="30" 
+                                         Text="{Binding CreditDueDelay, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
+                                         Tag="Délai de paiement (Due delay)"
+                                         VerticalContentAlignment="Center" 
+                                         Padding="5,0"   
+                                         Margin="0 3" 
+                                         Width="240"
+                                         HorizontalAlignment="Left" 
+                                         Style="{DynamicResource TextBoxPlaceHolderStyle}" 
+                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 15 0 0">
+
+                                <Border Width="500"
+                                        BorderThickness="0 0 0 1"
+                                        BorderBrush="{DynamicResource Separator.Background}"
+                                        Margin="0 0 0 5"
+                                        Padding="0 0 0 5"
+                                        HorizontalAlignment="Left">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Autoriser des ventes sans stocks"
+                                                   FontSize="14"
+                                                   Typography.Capitals="AllSmallCaps" 
+                                                   VerticalAlignment="Center"
+                                                />
+
+                                        <CheckBox Grid.Column="1"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top" 
+                                          IsChecked="{Binding SellWithoutStock, Mode=TwoWay}" 
+                                          Template="{DynamicResource SwitchTemplate}"
+                                    />
+                                    </Grid>
+                                </Border>
+
+                                <TextBlock TextWrapping="WrapWithOverflow"
+                                           FontSize="12"
+                                           Foreground="#777"
+                                           MaxWidth="500"
+                                           HorizontalAlignment="Left">
+                                           La <Bold>vente différée</Bold> est une vente à livraison progressive au fil du temps. Si votre politique
+                                    de vente inclut ce type de ventes, ce paramètre va permettre au système de valider les ventes même si les produits 
+                                    sollicités ne sont pas disponibles. <LineBreak />
+                                    Si cette option est dsactivitée, seules les commandes dont les quantités sollicitées des produits sont disponibles seront valides.
+                                </TextBlock>
+
+                            </StackPanel>
+
+                        </WrapPanel>
+                        
+
+                    </StackPanel>
+
+                    <StackPanel Margin="0 5">
+
+                        <TextBlock HorizontalAlignment="Left" 
+                                   FontSize="20"
+                                   Text="Rapport"/>
+
+                        <Border MaxWidth="900"
+                                BorderThickness="0 1"
+                                Margin="0 10"
+                                Padding="0 5"
+                                HorizontalAlignment="Left"
+                                BorderBrush="{DynamicResource Separator.Background}">
+                            <TextBlock TextWrapping="WrapWithOverflow"
+                                       FontSize="12"
+                                       Foreground="#777">
+                            Ces paramètres seront utilisés dans les différents <Bold>rapports (états de sortie)</Bold>. Vous configurez ici principalement des <Bold>images</Bold>
+                                devant être utilisées comme <Bold>haut de page</Bold>.
+                            </TextBlock>
+
+                        </Border>
+
+                        <WrapPanel>
+                            <StackPanel>
+                                <TextBlock Text="Entête portrait (A4)"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                           Margin="0 10 0 0"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Margin="0 10 0 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel>
+                                            <Border Width="630"
+                                                    Height="60"
+                                                    BorderThickness="1"
+                                                    BorderBrush="#ccc">
+
+                                                <Image Stretch="Uniform" 
+                                                   Source="{Binding ReportHeader, Mode=TwoWay, IsAsync=True, Converter={StaticResource byteArrayToBitmapImageConveter}}"
+                                                />
+                                            </Border>
+
+                                            <Border BorderThickness="1 0 1 1"
+                                                    BorderBrush="#ccc"
+                                                    Background="#fAfAfA"
+                                                    Visibility="Collapsed"
+                                                    Height="120">
+                                                <Path Fill="#EEE"
+                                                      Stretch="Fill"
+                                                      Margin="30 10"
+                                                      Data="M8.177002,18.751019L31.945999,18.751019 31.945999,21.396009 8.177002,21.396009z M1.8140106,17.466013C2.3430023,17.466013 2.7669983,17.635021 3.0859985,17.971996 3.3500061,18.247997 3.4830017,18.560009 3.4830017,18.906994 3.4830017,19.401012 3.2120056,19.794994 2.6740112,20.087994 2.9950104,20.156994 3.253006,20.311993 3.4450073,20.55302 3.6380005,20.792006 3.7350006,21.083021 3.7350006,21.423017 3.7350006,21.915998 3.5559998,22.336012 3.1950073,22.684004 2.8339996,23.031996 2.3860016,23.205 1.848999,23.205 1.3400116,23.205 0.91799927,23.059004 0.58300781,22.766005 0.24900818,22.474012 0.054000854,22.091017 0,21.617994L1.0440063,21.491011C1.076004,21.758009 1.1660004,21.960005 1.3120117,22.100996 1.4570007,22.242018 1.6340027,22.311995 1.8410034,22.311995 2.0640106,22.311995 2.25,22.227003 2.4029999,22.059004 2.5550079,21.889997 2.631012,21.663008 2.631012,21.37602 2.631012,21.104994 2.5579987,20.891005 2.4120026,20.733015 2.2669983,20.574017 2.0890045,20.495007 1.8800049,20.495007 1.7410126,20.495007 1.5770111,20.521008 1.3840027,20.576L1.5039978,19.698009C1.7960052,19.704998 2.0180054,19.64201 2.1710052,19.507 2.3250122,19.374004 2.401001,19.195019 2.401001,18.971996 2.401001,18.784008 2.3450012,18.633007 2.2330017,18.521008 2.1200104,18.406994 1.9700012,18.350994 1.7840118,18.350994 1.598999,18.350994 1.4420013,18.415997 1.3120117,18.543011 1.1820068,18.671001 1.1030121,18.858013 1.0750122,19.103008L0.082000732,18.935009C0.15100098,18.594006 0.2539978,18.323009 0.39401245,18.120007 0.53300476,17.917004 0.727005,17.755993 0.97801208,17.641003 1.2259979,17.523996 1.5050049,17.466013 1.8140106,17.466013z M8.177002,10.013006L32,10.013006 32,12.657997 8.177002,12.657997z M2.0270081,8.3620043C2.5920105,8.3620043 3.0340118,8.5140123 3.3580017,8.8179989 3.6790009,9.122015 3.8400116,9.5010128 3.8400116,9.9530086 3.8400116,10.209997 3.7949982,10.454993 3.7020111,10.687995 3.6100006,10.91999 3.4640045,11.164008 3.2640076,11.418006 3.131012,11.587012 2.8919983,11.829993 2.5470123,12.148018 2.201004,12.463997 1.9820099,12.674995 1.8890076,12.778999 1.7980042,12.883003 1.7230072,12.984016 1.6650085,13.083015L3.8400116,13.083015 3.8400116,14.100991 0,14.100991C0.041000366,13.716012 0.16600037,13.351997 0.37400818,13.006996 0.58200073,12.664009 0.99301147,12.206001 1.6070099,11.637 2.1000061,11.177009 2.4029999,10.864997 2.5149994,10.700995 2.6660004,10.475013 2.7410126,10.251013 2.7410126,10.030004 2.7410126,9.786993 2.6760101,9.5979976 2.5449982,9.4669857 2.4130096,9.3360042 2.2310028,9.2710018 2,9.2710018 1.7710114,9.2710018 1.5900116,9.338995 1.45401,9.4769954 1.3190002,9.6149959 1.2410126,9.8429928 1.2200012,10.163L0.1289978,10.053991C0.19400024,9.4509945 0.39801025,9.0180111 0.74101257,8.7559871 1.0839996,8.4929857 1.5130005,8.3620043 2.0270081,8.3620043z M8.177002,1.6220102L31.945999,1.6220102 31.945999,4.2670007 8.177002,4.2670007z M1.6220093,0L2.5110016,0 2.5110016,5.7389865 1.4160004,5.7389865 1.4160004,1.6099863C1.0149994,1.98401,0.54299927,2.2600112,0,2.4410109L0,1.4469919C0.28601074,1.3519906 0.5960083,1.1759956 0.93299866,0.91400192 1.2669983,0.6539921 1.4980011,0.34799216 1.6220093,0z"
+                                                      />
+                                            </Border>
+                                        </StackPanel>
+
+
+                                        <Button Cursor="Hand" 
+                                                ToolTip="Changer d'image" 
+                                                HorizontalAlignment="Right" 
+                                                VerticalAlignment="Top"
+                                                Width="28" 
+                                                Height="28" 
+                                                Margin="0 -14 -14 0"
+                                                Command="{Binding ChooseReportHeaderCommand}"
+                                                Template="{StaticResource LoadButtonTemplate}">
+                                        </Button>
+
+                                        <StackPanel Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        Margin="0 10">
+                                            <TextBlock Text="Entête portrait"
+                                           FontSize="16"
+                                           FontWeight="DemiBold"
+                                           HorizontalAlignment="Center"
+                                           />
+
+                                            <TextBlock Text="1050x100" 
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#999"/>
+
+                                            <Border MaxWidth="380"
+                                                BorderThickness="0 1"
+                                                Margin="0 3"
+                                                Padding="0 3"
+                                                BorderBrush="{DynamicResource Separator.Background}">
+                                                <TextBlock TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="#777"
+                                               TextAlignment="Center">
+                                                Cette image sera affichée en haut de page de chaque imprimé de l'orientation portrait. 
+                                                    L'image doit comporter votre <Bold>logo</Bold>, le <Bold>nom</Bold> de votre société, et éventuellement vos coordonnées géographiques et/ou téléphoniques.
+                                                    Pour assurer un rendu optimal, veuillez respecter les dimensions précisées ci-dessus ou
+                                                    néanmoins vérifier le ratio Longeur/Largeur de ces dimensions.
+                                                </TextBlock>
+
+                                            </Border>
+
+
+                                        </StackPanel>
+                                    </Grid>
+
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel
+                                Margin="20 0 0 0">
+                                <TextBlock Text="Entête facture"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                           Margin="0 10 0 0"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Margin="0 10 0 0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel>
+                                            <Border Width="316"
+                                                    Height="80"
+                                                    BorderThickness="1"
+                                                    BorderBrush="#ccc">
+
+                                                <Image Stretch="Uniform" 
+                                                   Source="{Binding ReportSmallHeader, Mode=TwoWay, IsAsync=True, Converter={StaticResource byteArrayToBitmapImageConveter}}"
+                                                />
+                                            </Border>
+
+                                            <Border BorderThickness="1 0 1 1"
+                                                    BorderBrush="#ccc"
+                                                    Background="#fAfAfA"
+                                                    Visibility="Collapsed"
+                                                    Height="120">
+                                                <Path Fill="#DADADA"
+                                                      Stretch="Fill"
+                                                      Margin="10"
+                                                      Data="M8.177002,18.751019L31.945999,18.751019 31.945999,21.396009 8.177002,21.396009z M1.8140106,17.466013C2.3430023,17.466013 2.7669983,17.635021 3.0859985,17.971996 3.3500061,18.247997 3.4830017,18.560009 3.4830017,18.906994 3.4830017,19.401012 3.2120056,19.794994 2.6740112,20.087994 2.9950104,20.156994 3.253006,20.311993 3.4450073,20.55302 3.6380005,20.792006 3.7350006,21.083021 3.7350006,21.423017 3.7350006,21.915998 3.5559998,22.336012 3.1950073,22.684004 2.8339996,23.031996 2.3860016,23.205 1.848999,23.205 1.3400116,23.205 0.91799927,23.059004 0.58300781,22.766005 0.24900818,22.474012 0.054000854,22.091017 0,21.617994L1.0440063,21.491011C1.076004,21.758009 1.1660004,21.960005 1.3120117,22.100996 1.4570007,22.242018 1.6340027,22.311995 1.8410034,22.311995 2.0640106,22.311995 2.25,22.227003 2.4029999,22.059004 2.5550079,21.889997 2.631012,21.663008 2.631012,21.37602 2.631012,21.104994 2.5579987,20.891005 2.4120026,20.733015 2.2669983,20.574017 2.0890045,20.495007 1.8800049,20.495007 1.7410126,20.495007 1.5770111,20.521008 1.3840027,20.576L1.5039978,19.698009C1.7960052,19.704998 2.0180054,19.64201 2.1710052,19.507 2.3250122,19.374004 2.401001,19.195019 2.401001,18.971996 2.401001,18.784008 2.3450012,18.633007 2.2330017,18.521008 2.1200104,18.406994 1.9700012,18.350994 1.7840118,18.350994 1.598999,18.350994 1.4420013,18.415997 1.3120117,18.543011 1.1820068,18.671001 1.1030121,18.858013 1.0750122,19.103008L0.082000732,18.935009C0.15100098,18.594006 0.2539978,18.323009 0.39401245,18.120007 0.53300476,17.917004 0.727005,17.755993 0.97801208,17.641003 1.2259979,17.523996 1.5050049,17.466013 1.8140106,17.466013z M8.177002,10.013006L32,10.013006 32,12.657997 8.177002,12.657997z M2.0270081,8.3620043C2.5920105,8.3620043 3.0340118,8.5140123 3.3580017,8.8179989 3.6790009,9.122015 3.8400116,9.5010128 3.8400116,9.9530086 3.8400116,10.209997 3.7949982,10.454993 3.7020111,10.687995 3.6100006,10.91999 3.4640045,11.164008 3.2640076,11.418006 3.131012,11.587012 2.8919983,11.829993 2.5470123,12.148018 2.201004,12.463997 1.9820099,12.674995 1.8890076,12.778999 1.7980042,12.883003 1.7230072,12.984016 1.6650085,13.083015L3.8400116,13.083015 3.8400116,14.100991 0,14.100991C0.041000366,13.716012 0.16600037,13.351997 0.37400818,13.006996 0.58200073,12.664009 0.99301147,12.206001 1.6070099,11.637 2.1000061,11.177009 2.4029999,10.864997 2.5149994,10.700995 2.6660004,10.475013 2.7410126,10.251013 2.7410126,10.030004 2.7410126,9.786993 2.6760101,9.5979976 2.5449982,9.4669857 2.4130096,9.3360042 2.2310028,9.2710018 2,9.2710018 1.7710114,9.2710018 1.5900116,9.338995 1.45401,9.4769954 1.3190002,9.6149959 1.2410126,9.8429928 1.2200012,10.163L0.1289978,10.053991C0.19400024,9.4509945 0.39801025,9.0180111 0.74101257,8.7559871 1.0839996,8.4929857 1.5130005,8.3620043 2.0270081,8.3620043z M8.177002,1.6220102L31.945999,1.6220102 31.945999,4.2670007 8.177002,4.2670007z M1.6220093,0L2.5110016,0 2.5110016,5.7389865 1.4160004,5.7389865 1.4160004,1.6099863C1.0149994,1.98401,0.54299927,2.2600112,0,2.4410109L0,1.4469919C0.28601074,1.3519906 0.5960083,1.1759956 0.93299866,0.91400192 1.2669983,0.6539921 1.4980011,0.34799216 1.6220093,0z"
+                                                      />
+                                            </Border>
+                                        </StackPanel>
+
+
+                                        <Button Cursor="Hand" 
+                                                ToolTip="Changer d'image" 
+                                                HorizontalAlignment="Right" 
+                                                VerticalAlignment="Top"
+                                                Width="28" 
+                                                Height="28" 
+                                                Margin="0 -14 -14 0"
+                                                Command="{Binding ChooseReportSmallHeaderCommand}"
+                                                Template="{StaticResource LoadButtonTemplate}">
+                                        </Button>
+
+                                        <StackPanel Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        Margin="0 10">
+                                            <TextBlock Text="Entête facture"
+                                           FontSize="16"
+                                           FontWeight="DemiBold"
+                                           HorizontalAlignment="Center"
+                                           />
+
+                                            <TextBlock Text="393x100" 
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#999"/>
+
+                                            <Border MaxWidth="300"
+                                                BorderThickness="0 1"
+                                                Margin="0 3"
+                                                Padding="0 3"
+                                                BorderBrush="{DynamicResource Separator.Background}">
+                                                <TextBlock TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="#777"
+                                               TextAlignment="Center">
+                                                Cette image, à la différence de la taille, est censée avoir le même contenu que la prédécente.
+                                                    Elle sera affichée comme entête des factures et reçus caisse.
+                                                </TextBlock>
+
+                                            </Border>
+
+
+                                        </StackPanel>
+                                    </Grid>
+
+                                </Grid>
+                            </StackPanel>
+                        </WrapPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Entête paysage (A4)"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                           Margin="0 10 0 0"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Margin="0 10 0 0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel>
+                                        <Border Width="900"
+                                                    Height="60"
+                                                    BorderThickness="1"
+                                                    BorderBrush="#ccc">
+
+                                            <Image Stretch="Uniform" 
+                                                   Source="{Binding ReportLargeHeader, Mode=TwoWay, IsAsync=True, Converter={StaticResource byteArrayToBitmapImageConveter}}"
+                                                />
+                                        </Border>
+
+                                        <Border BorderThickness="1 0 1 1"
+                                                    BorderBrush="#ccc"
+                                                    Background="#fAfAfA"
+                                                Visibility="Collapsed"
+                                                    Height="160">
+                                            <Path Fill="#DADADA"
+                                                      Stretch="Fill"
+                                                      Margin="40 10"
+                                                      Data="M8.177002,18.751019L31.945999,18.751019 31.945999,21.396009 8.177002,21.396009z M1.8140106,17.466013C2.3430023,17.466013 2.7669983,17.635021 3.0859985,17.971996 3.3500061,18.247997 3.4830017,18.560009 3.4830017,18.906994 3.4830017,19.401012 3.2120056,19.794994 2.6740112,20.087994 2.9950104,20.156994 3.253006,20.311993 3.4450073,20.55302 3.6380005,20.792006 3.7350006,21.083021 3.7350006,21.423017 3.7350006,21.915998 3.5559998,22.336012 3.1950073,22.684004 2.8339996,23.031996 2.3860016,23.205 1.848999,23.205 1.3400116,23.205 0.91799927,23.059004 0.58300781,22.766005 0.24900818,22.474012 0.054000854,22.091017 0,21.617994L1.0440063,21.491011C1.076004,21.758009 1.1660004,21.960005 1.3120117,22.100996 1.4570007,22.242018 1.6340027,22.311995 1.8410034,22.311995 2.0640106,22.311995 2.25,22.227003 2.4029999,22.059004 2.5550079,21.889997 2.631012,21.663008 2.631012,21.37602 2.631012,21.104994 2.5579987,20.891005 2.4120026,20.733015 2.2669983,20.574017 2.0890045,20.495007 1.8800049,20.495007 1.7410126,20.495007 1.5770111,20.521008 1.3840027,20.576L1.5039978,19.698009C1.7960052,19.704998 2.0180054,19.64201 2.1710052,19.507 2.3250122,19.374004 2.401001,19.195019 2.401001,18.971996 2.401001,18.784008 2.3450012,18.633007 2.2330017,18.521008 2.1200104,18.406994 1.9700012,18.350994 1.7840118,18.350994 1.598999,18.350994 1.4420013,18.415997 1.3120117,18.543011 1.1820068,18.671001 1.1030121,18.858013 1.0750122,19.103008L0.082000732,18.935009C0.15100098,18.594006 0.2539978,18.323009 0.39401245,18.120007 0.53300476,17.917004 0.727005,17.755993 0.97801208,17.641003 1.2259979,17.523996 1.5050049,17.466013 1.8140106,17.466013z M8.177002,10.013006L32,10.013006 32,12.657997 8.177002,12.657997z M2.0270081,8.3620043C2.5920105,8.3620043 3.0340118,8.5140123 3.3580017,8.8179989 3.6790009,9.122015 3.8400116,9.5010128 3.8400116,9.9530086 3.8400116,10.209997 3.7949982,10.454993 3.7020111,10.687995 3.6100006,10.91999 3.4640045,11.164008 3.2640076,11.418006 3.131012,11.587012 2.8919983,11.829993 2.5470123,12.148018 2.201004,12.463997 1.9820099,12.674995 1.8890076,12.778999 1.7980042,12.883003 1.7230072,12.984016 1.6650085,13.083015L3.8400116,13.083015 3.8400116,14.100991 0,14.100991C0.041000366,13.716012 0.16600037,13.351997 0.37400818,13.006996 0.58200073,12.664009 0.99301147,12.206001 1.6070099,11.637 2.1000061,11.177009 2.4029999,10.864997 2.5149994,10.700995 2.6660004,10.475013 2.7410126,10.251013 2.7410126,10.030004 2.7410126,9.786993 2.6760101,9.5979976 2.5449982,9.4669857 2.4130096,9.3360042 2.2310028,9.2710018 2,9.2710018 1.7710114,9.2710018 1.5900116,9.338995 1.45401,9.4769954 1.3190002,9.6149959 1.2410126,9.8429928 1.2200012,10.163L0.1289978,10.053991C0.19400024,9.4509945 0.39801025,9.0180111 0.74101257,8.7559871 1.0839996,8.4929857 1.5130005,8.3620043 2.0270081,8.3620043z M8.177002,1.6220102L31.945999,1.6220102 31.945999,4.2670007 8.177002,4.2670007z M1.6220093,0L2.5110016,0 2.5110016,5.7389865 1.4160004,5.7389865 1.4160004,1.6099863C1.0149994,1.98401,0.54299927,2.2600112,0,2.4410109L0,1.4469919C0.28601074,1.3519906 0.5960083,1.1759956 0.93299866,0.91400192 1.2669983,0.6539921 1.4980011,0.34799216 1.6220093,0z"
+                                                      />
+                                        </Border>
+                                    </StackPanel>
+
+
+                                    <Button Cursor="Hand" 
+                                                ToolTip="Changer d'image" 
+                                                HorizontalAlignment="Right" 
+                                                VerticalAlignment="Top"
+                                                Width="28" 
+                                                Height="28" 
+                                                Margin="0 -14 -14 0"
+                                                Command="{Binding ChooseReportLargeHeaderCommand}"
+                                                Template="{StaticResource LoadButtonTemplate}">
+                                    </Button>
+
+                                    <StackPanel Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        Margin="0 10">
+                                        <TextBlock Text="Entête paysage"
+                                           FontSize="16"
+                                           FontWeight="DemiBold"
+                                           HorizontalAlignment="Center"
+                                           />
+
+                                        <TextBlock Text="1500x100" 
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#999"/>
+
+                                        <Border MaxWidth="380"
+                                                BorderThickness="0 1"
+                                                Margin="0 3"
+                                                Padding="0 3"
+                                                BorderBrush="{DynamicResource Separator.Background}">
+                                            <TextBlock TextWrapping="WrapWithOverflow"
+                                               FontSize="10"
+                                               Foreground="#777"
+                                               TextAlignment="Center">
+                                                Cette image sera affichée en haut de page de chaque imprimé de l'orientation paysage. 
+                                                    L'image doit comporter votre <Bold>logo</Bold>, le <Bold>nom</Bold> de votre société, et éventuellement vos coordonnées géographiques et/ou téléphoniques.
+                                                    Pour assurer un rendu optimal, veuillez respecter les dimensions précisées ci-dessus ou
+                                                    néanmoins vérifier le ratio Longeur/Largeur de ces dimensions.
+                                            </TextBlock>
+
+                                        </Border>
+
+
+                                    </StackPanel>
+                                </Grid>
+
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Paramètres locaux"
+                               FontSize="27"
+                               Foreground="#000"
+                               FontWeight="Normal"/>
+
+                        <Border MaxWidth="900"
+                                BorderThickness="0 1"
+                                Margin="0 10"
+                                Padding="0 5"
+                                HorizontalAlignment="Left"
+                                BorderBrush="{DynamicResource Separator.Background}">
+                            <TextBlock TextWrapping="WrapWithOverflow"
+                                       FontSize="12"
+                                       Foreground="#777">
+                            Ces paramètres ne sont applicables qu'au niveau de cette instance. Ils sont donc exclusivement propres à cet ordinateur. 
+                            </TextBlock>
+
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Margin="0 5">
+
+                        <TextBlock HorizontalAlignment="Left" 
+                                   FontSize="20"
+                                   Text="Shop"/>
+
+                        <WrapPanel>
+                            <StackPanel Width="500" 
+                                        Margin="0 10 30 0">
+                                <TextBlock Text="LE MAGASIN CORRESPONDANT AU POSTE"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <Grid Width="340"
+                                      HorizontalAlignment="Left">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox ItemsSource="{Binding ShopsView}"
+                                              SelectedValue="{Binding SelectedShop}"
+                                              IsEnabled="{Binding IsAdmin}"
+                                              IsSynchronizedWithCurrentItem="True"
+                                              DisplayMemberPath="Name"
+                                              Height="30" 
+                                              VerticalAlignment="Center" 
+                                              HorizontalAlignment="Stretch" 
+                                              Padding="5 0"
+                                              Background="#fff"
+                                              Style="{DynamicResource ComboBoxOption}"
+                                                />
+
+                                    <Button Content="Actualiser" 
+                                            Command="{Binding RefreshShopCommand}"
+                                            Style="{DynamicResource ButtonFlatIconStyle}"
+                                            ToolTip="Actualiser la liste des shops"
+                                            Cursor="Hand"
+                                            Margin="5,0,0,0"
+                                            Grid.Column="1"
+                                            IsEnabled="{Binding IsAdmin}"
+                                            Width="30"
+                                            Height="30"
+                                            Tag="M1.6819987,14.044979L9.8970004,17.370966 6.3769976,19.284967C8.2400037,22.789972 11.896001,25.193962 16.141995,25.193962 20.631998,25.193962 24.487993,22.521967 26.233004,18.687982L29.466995,18.687982C27.558001,24.216972 22.313997,28.208 16.141995,28.208 10.761998,28.208 6.0890032,25.17498 3.7130042,20.731012L0,22.747003z M16.141995,0C21.460993,1.3985937E-07,26.084002,2.9670097,28.485001,7.3259868L32,5.3049912 30.530991,14.044979 22.236994,10.916013 25.860003,8.8339815C23.983004,5.3789963 20.351999,3.0140068 16.141995,3.0140066 11.653997,3.0140068 7.7980023,5.6860031 6.0520006,9.518979L2.8189999,9.518979C4.7280031,3.9899892,9.9719973,1.3985937E-07,16.141995,0z"/>
+
+                                    <Button Style="{DynamicResource ButtonFlatIconStyle}"
+                                            ToolTip="Valider le shop"
+                                            Cursor="Hand"
+                                            Margin="5"
+                                            Width="30"
+                                            Height="30"
+                                            Grid.Column="2"
+                                            IsEnabled="{Binding IsAdmin}"
+                                            Command="{Binding SaveShopCommand}"
+                                            Tag="M29.042969,18.955L23.935974,24.063003 21.518982,21.642006 20.575989,22.583 23.935974,25.942001 29.985962,19.897001z M25.281006,15.865003C28.974976,15.865003 32,18.890005 32,22.583 32,26.277 28.974976,29.302002 25.281006,29.302002 21.588013,29.302002 18.562988,26.277 18.562988,22.583 18.562988,18.890005 21.588013,15.865003 25.281006,15.865003z M16.515991,0L20.190002,0 20.190002,8.1180008 16.515991,8.1180008z M2.5189819,0L6.7879944,0 6.7879944,7.8380025C6.7879944,8.9980028,7.7279968,9.9380014,8.8880005,9.9380014L19.594971,9.9380014C20.755005,9.9380014,21.695007,8.9980028,21.695007,7.8380025L21.695007,0 24.588013,0 28.482971,3.8950015 28.482971,15.188001C27.500977,14.760999 26.419006,14.521002 25.281982,14.521002 20.835999,14.521002 17.219971,18.136999 17.219971,22.583 17.219971,24.768005 18.096008,26.750007 19.513,28.203003L2.5189819,28.203003C1.1279907,28.203003,0,27.076004,0,25.684006L0,2.5190015C0,1.1279986,1.1279907,1.9563436E-07,2.5189819,0z"
+                                            Background="#000" 
+                                            Foreground="#fff"/>
+                                </Grid>
+
+                                <TextBlock TextWrapping="WrapWithOverflow"
+                                           FontSize="12"
+                                           Foreground="#777"
+                                           Margin="0 3"
+                                           HorizontalAlignment="Left">
+                                    Indiquez le shop correspondant à ce poste.
+                                </TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
+
+                    </StackPanel>
+                    <StackPanel Margin="0 5">
+
+                        <TextBlock HorizontalAlignment="Left" 
+                                   FontSize="20"
+                                   Text="Système"/>
+
+                        <WrapPanel>
+                            <StackPanel Width="500" 
+                                        Margin="0 10 30 0">
+                                <TextBlock Text="CHEMIN DU DOSSIER D'EXPORTATION"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Height="30" 
+                                             Text="{Binding ExportationPath, Mode=TwoWay}"
+                                             Tag="Le chemin d'exportation ici."
+                                             VerticalContentAlignment="Center" 
+                                             Padding="5,0"  
+                                             Margin="0 3" 
+                                             IsEnabled="False"
+                                             HorizontalAlignment="Stretch" 
+                                             Style="{DynamicResource TextBoxPlaceHolderStyle}" />
+
+                                    <Button Style="{DynamicResource ButtonFlatIconStyle}"
+                                            ToolTip="Choisir le dossier d'exportation"
+                                            Cursor="Hand"
+                                            Margin="5"
+                                            Width="30"
+                                            Height="30"
+                                            Grid.Column="1"
+                                            Command="{Binding ChooseExportFolderCommand}"
+                                            Tag="M0,18.899998L32,18.899998 32,21 0,21z M4.5999756,8.5L8.2000122,8.5 16,15 23.799988,8.5 27.400024,8.5 32,17.299999 0,17.299999z M13.700012,0L18.299988,0 18.299988,7.2000008 22.900024,7.2000008 16,12.899998 9.0999756,7.2000008 13.700012,7.2000008z" 
+                                            Background="#000" 
+                                            Foreground="#fff"/>
+                                </Grid>
+
+                                <TextBlock TextWrapping="WrapWithOverflow"
+                                           FontSize="12"
+                                           Foreground="#777"
+                                           Margin="0 3"
+                                           HorizontalAlignment="Left">
+                                    Indiquez le dossier dans votre disque physique où vos exportations seront hébergées. 
+                                    Il vous est récommandé de choisir un emplacement qui n'est pas à la portée de tout le monde pour plus de sécurité.
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Width="300" 
+                                        Margin="0 10 10 0">
+                                <TextBlock Text="IMPRIMANTE PAR DEFAUT"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Height="30" 
+                                             Text="{Binding DefaultPrintName, Mode=TwoWay}"
+                                             Tag="L'imprimante par défaut"
+                                             VerticalContentAlignment="Center" 
+                                             Padding="5,0"  
+                                             Margin="0 3" 
+                                             IsEnabled="False"
+                                             HorizontalAlignment="Stretch" 
+                                             Style="{DynamicResource TextBoxPlaceHolderStyle}" />
+
+                                    <Button Style="{DynamicResource ButtonFlatIconStyle}"
+                                            ToolTip="Choisir l'imprimante par défaut"
+                                            Cursor="Hand"
+                                            Margin="5"
+                                            Width="30"
+                                            Height="30"
+                                            Grid.Column="1"
+                                            Command="{Binding ChoosePrinterCommand}"
+                                            Tag="M0,18.899998L32,18.899998 32,21 0,21z M4.5999756,8.5L8.2000122,8.5 16,15 23.799988,8.5 27.400024,8.5 32,17.299999 0,17.299999z M13.700012,0L18.299988,0 18.299988,7.2000008 22.900024,7.2000008 16,12.899998 9.0999756,7.2000008 13.700012,7.2000008z" 
+                                            Background="#000" 
+                                            Foreground="#fff"/>
+                                </Grid>
+                                <TextBlock TextWrapping="WrapWithOverflow"
+                                           FontSize="12"
+                                           Foreground="#777"
+                                           Margin="0 3"
+                                           HorizontalAlignment="Left">
+                                    Choisissez l'imprimante qui sera utilisée par défaut pour imprimer vos documents.
+                                </TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
+
+                        <WrapPanel>
+                            <StackPanel Width="300" 
+                                        Margin="0 10 30 0">
+                                <TextBlock Text="DELAI DE MISE EN VEILLE"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Slider Template="{DynamicResource HorizontalSlider}"
+                                            Width="240"
+                                            Name="slideDelay"
+                                            Value="{Binding SleepDelay, Mode=TwoWay}"
+                                            Minimum="0"
+                                            Maximum="60"
+                                            Interval="5"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="{Binding SleepDelay, StringFormat=\{0:#\}\', TargetNullValue=0\', FallbackValue=0\'}"
+                                               Margin="10 0 0 0"
+                                               TextAlignment="Right"
+                                               Width="50"
+                                               FontSize="16"/>
+                                </StackPanel>
+                                <TextBlock TextWrapping="WrapWithOverflow"
+                                           FontSize="12"
+                                           Foreground="#777"
+                                           Margin="0 3"
+                                           HorizontalAlignment="Left">
+                                    Configurez ce paramètre en vue de spécifier après combien de minutes d'inactivité le système entrera automatiquement en veille.
+                                    Ce paramètre est d'une importance capitale en terme de sécurité. La valeur <Bold>0</Bold> désactive le mode veille.
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Width="300" 
+                                        Margin="0 10 10 0">
+                                <TextBlock Text="Opacité de l'image d'arrière-plan"
+                                           FontSize="14"
+                                           Typography.Capitals="AllSmallCaps" 
+                                       />
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Slider Template="{DynamicResource HorizontalSlider}"
+                                            Width="240"
+                                            Name="slideOpacity"
+                                            Value="{Binding BackgroundLogoOpacity, Mode=TwoWay}"
+                                            Minimum="0"
+                                            Maximum="1"
+                                            VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="{Binding BackgroundLogoOpacity, StringFormat=\{0:#\}%, Converter={StaticResource doubleToPercentageConverter}, TargetNullValue=0%, FallbackValue=0%}"
+                                               Margin="10 0 0 0"
+                                               TextAlignment="Right"
+                                               Width="50"
+                                               FontSize="16"/>
+                                </StackPanel>
+                                <TextBlock TextWrapping="WrapWithOverflow"
+                                           FontSize="12"
+                                           Foreground="#777"
+                                           Margin="0 3"
+                                           HorizontalAlignment="Left">
+                                    Reglez le niveau d'opacité (inverse de la transparence) de l'image d'arrière-plan.
+                                </TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+            
+    </Grid>
+</UserControl>

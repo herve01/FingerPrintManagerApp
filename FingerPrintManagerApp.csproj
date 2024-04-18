@@ -90,6 +90,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\..\arg_store\BookStore\Dependencies_\System.Windows.Interactivity.dll</HintPath>
@@ -121,6 +122,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dao\Admin\AppDao.cs" />
+    <Compile Include="Dao\Admin\EntryLogDao.cs" />
+    <Compile Include="Dao\Admin\LogUtil.cs" />
+    <Compile Include="Dao\Admin\SettingDao.cs" />
+    <Compile Include="Dao\Admin\UserDao.cs" />
+    <Compile Include="Dao\Admin\Util.cs" />
+    <Compile Include="Dao\CommuneDao.cs" />
+    <Compile Include="Dao\ContinentDao.cs" />
+    <Compile Include="Dao\Dao.cs" />
+    <Compile Include="Dao\Employe\AffectationDao.cs" />
+    <Compile Include="Dao\Employe\BureauDao.cs" />
+    <Compile Include="Dao\Employe\DivisionDao.cs" />
+    <Compile Include="Dao\Employe\DomaineEtudeDao.cs" />
+    <Compile Include="Dao\Employe\EmployeDao.cs" />
+    <Compile Include="Dao\Employe\EmployeEmpreinteDao.cs" />
+    <Compile Include="Dao\Employe\EmployeEtudeDao.cs" />
+    <Compile Include="Dao\Employe\EmployeFonctionDao.cs" />
+    <Compile Include="Dao\Employe\EmployeGradeDao.cs" />
+    <Compile Include="Dao\Employe\EnfantEmployeDao.cs" />
+    <Compile Include="Dao\Employe\EntiteDao.cs" />
+    <Compile Include="Dao\Employe\FonctionDao.cs" />
+    <Compile Include="Dao\Employe\GradeDao.cs" />
+    <Compile Include="Dao\Employe\NiveauEtudeDao.cs" />
+    <Compile Include="Dao\Employe\Util.cs" />
+    <Compile Include="Dao\Helper\Connection.cs" />
+    <Compile Include="Dao\Helper\DbConfig.cs" />
+    <Compile Include="Dao\Helper\DbUtil.cs" />
+    <Compile Include="Dao\Helper\TableKeyHelper.cs" />
+    <Compile Include="Dao\PaysDao.cs" />
+    <Compile Include="Dao\Presence\PeriodeDao.cs" />
+    <Compile Include="Dao\Presence\PresenceDao.cs" />
+    <Compile Include="Dao\Presence\Util.cs" />
+    <Compile Include="Dao\ProvinceDao.cs" />
+    <Compile Include="Dao\util.cs" />
+    <Compile Include="Dao\ZoneDao.cs" />
+    <Compile Include="IoC\Container.cs" />
+    <Compile Include="IoC\Module.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Admin\EntryLog.cs" />
     <Compile Include="Model\Admin\Enum.cs" />
@@ -171,6 +209,8 @@
     <Compile Include="Model\Page.cs" />
     <Compile Include="Model\Pays.cs" />
     <Compile Include="Model\Presence\Enum.cs" />
+    <Compile Include="Model\Presence\DateException.cs" />
+    <Compile Include="Model\Presence\HoraireTravailSemaine.cs" />
     <Compile Include="Model\Presence\Periode.cs" />
     <Compile Include="Model\Presence\Presence.cs" />
     <Compile Include="Model\Province.cs" />
@@ -179,6 +219,270 @@
     <Compile Include="Model\Util\BitmapFormat.cs" />
     <Compile Include="Model\ValueValidator.cs" />
     <Compile Include="Model\Zone.cs" />
+    <Compile Include="Modules\Admin\ViewModel\AdminCtrlViewModel.cs" />
+    <Compile Include="Modules\Admin\ViewModel\AdminPresentationViewModel.cs" />
+    <Compile Include="Modules\Admin\ViewModel\AdminWindowViewModel.cs" />
+    <Compile Include="Modules\Admin\ViewModel\ConnectorViewModel.cs" />
+    <Compile Include="Modules\Admin\ViewModel\LoginViewModel.cs" />
+    <Compile Include="Modules\Admin\ViewModel\LogViewModel.cs" />
+    <Compile Include="Modules\Admin\ViewModel\SettingsViewModel.cs" />
+    <Compile Include="Modules\Admin\ViewModel\UserViewModel.cs" />
+    <Compile Include="Modules\Admin\View\AdminCrtlView.xaml.cs">
+      <DependentUpon>AdminCrtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Admin\View\AdminPresentationView.xaml.cs">
+      <DependentUpon>AdminPresentationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Admin\View\AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Admin\View\ConnectorView.xaml.cs">
+      <DependentUpon>ConnectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Admin\View\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Admin\View\LogView.xaml.cs">
+      <DependentUpon>LogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Admin\View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Admin\View\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Dataset\EmployeDS.cs">
+      <DependentUpon>EmployeDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Dataset\EmployeDS.Designer.cs">
+      <DependentUpon>EmployeDS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\CarteServiceRecto1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarteServiceRecto.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\FicheIndividuelleReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FicheIndividuelleReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\FichePersonnelReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FichePersonnelReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentDecedeReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentDecedeReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentEnDetachementReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentEnDetachementReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentEnDisponibiliteReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentEnDisponibiliteReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentEnInstanceAffectationReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentEnInstanceAffectationReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentMecaniseReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentMecaniseReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentsAffectesReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentsAffectesReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentsEligibleRetraiteReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentsEligibleRetraiteReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentsFormationReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentsFormationReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeAgentsSuspensionReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeAgentsSuspensionReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeDeclarativeReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeDeclarativeReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeEffectifReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeEffectifReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\Reporting\Report\ListeFemmesReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListeFemmesReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Employe\ViewModel\Adapter\EnfantAddAdapter.cs" />
+    <Compile Include="Modules\Employe\ViewModel\Adapter\FonctionAddAdapter.cs" />
+    <Compile Include="Modules\Employe\ViewModel\BureauViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\DivisionViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\DomaineEtudeViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EditEmployeViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EmployeChoiceListViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EmployeCtrlViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EmployeDefaultViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EmployeDetailsViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EmployeListViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EmployeMultiChoiceListViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EntiteAddAllFonctionsViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\EntiteViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\FingerPrintViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\FonctionViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\NiveauEtudeViewModel.cs" />
+    <Compile Include="Modules\Employe\View\BureauView.xaml.cs">
+      <DependentUpon>BureauView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\DivisionView.xaml.cs">
+      <DependentUpon>DivisionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\DomaineEtudeView.xaml.cs">
+      <DependentUpon>DomaineEtudeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EditEmployeView.xaml.cs">
+      <DependentUpon>EditEmployeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EmployeChoiceListView.xaml.cs">
+      <DependentUpon>EmployeChoiceListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EmployeCtrlView.xaml.cs">
+      <DependentUpon>EmployeCtrlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EmployeDefaultView.xaml.cs">
+      <DependentUpon>EmployeDefaultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EmployeDetailsView.xaml.cs">
+      <DependentUpon>EmployeDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EmployeListView.xaml.cs">
+      <DependentUpon>EmployeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EmployeMultiChoiceListView.xaml.cs">
+      <DependentUpon>EmployeMultiChoiceListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EntiteAddAllFonctionsView.xaml.cs">
+      <DependentUpon>EntiteAddAllFonctionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\EntiteView.xaml.cs">
+      <DependentUpon>EntiteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\FingerPrintView.xaml.cs">
+      <DependentUpon>FingerPrintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\FonctionView.xaml.cs">
+      <DependentUpon>FonctionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\NiveauEtudeView.xaml.cs">
+      <DependentUpon>NiveauEtudeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\Template\EnfantAddTemplate.xaml.cs">
+      <DependentUpon>EnfantAddTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\Template\FonctionAddTemplate.xaml.cs">
+      <DependentUpon>FonctionAddTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Dataset\PresenceDS.cs">
+      <DependentUpon>PresenceDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Dataset\PresenceDS.Designer.cs">
+      <DependentUpon>PresenceDS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Report\Calendar Which is Populated With a Date Lookup Table1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Calendar Which is Populated With a Date Lookup Table.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Report\Calendar Which Populates All Dates in a Range1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Calendar Which Populates All Dates in a Range.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Report\CalendarMonthlyView1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalendarMonthlyView.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Report\CalendarYearlyView1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalendarYearlyView.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Report\PresenceJounaliereReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PresenceJounaliereReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Report\RegistrePresenceJournaliereReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegistrePresenceJournaliereReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Presence\Reporting\Report\RegistrePresenceMensuelReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegistrePresenceMensuelReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\Presence\ViewModel\PresenceCtrlViewModel.cs" />
+    <Compile Include="Modules\Presence\ViewModel\PresenceDefaultViewModel.cs" />
+    <Compile Include="Modules\Presence\ViewModel\PresenceEmployeViewModel.cs" />
+    <Compile Include="Modules\Presence\ViewModel\PresenceWindowViewModel.cs" />
+    <Compile Include="Modules\Presence\ViewModel\SuiviViewModel.cs" />
+    <Compile Include="Modules\Presence\View\PresenceCtrlView.xaml.cs">
+      <DependentUpon>PresenceCtrlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Presence\View\PresenceDefaultView.xaml.cs">
+      <DependentUpon>PresenceDefaultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Presence\View\PresenceEmployeView.xaml.cs">
+      <DependentUpon>PresenceEmployeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Presence\View\PresenceWindowView.xaml.cs">
+      <DependentUpon>PresenceWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Presence\View\SuiviView.xaml.cs">
+      <DependentUpon>SuiviView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Behavior\EventToCommandBehavior.cs" />
     <Compile Include="ViewModel\Behavior\ListViewZoomBehavior.cs" />
     <Compile Include="ViewModel\Behavior\ReportSourceBehavior.cs" />
@@ -279,10 +583,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -331,10 +631,126 @@
     </Compile>
     <Compile Include="Extension\StringExtensions.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Modules\Admin\View\AdminCrtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Admin\View\AdminPresentationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Admin\View\AdminWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Admin\View\ConnectorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Admin\View\LoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Admin\View\LogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Admin\View\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Admin\View\UserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\BureauView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\DivisionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\DomaineEtudeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EditEmployeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EmployeChoiceListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EmployeCtrlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EmployeDefaultView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EmployeDetailsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EmployeListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EmployeMultiChoiceListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EntiteAddAllFonctionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\EntiteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\FingerPrintView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\FonctionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\NiveauEtudeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\Template\EnfantAddTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\Template\FonctionAddTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Presence\View\PresenceCtrlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Presence\View\PresenceDefaultView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Presence\View\PresenceEmployeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Presence\View\PresenceWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Presence\View\SuiviView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\About.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -386,10 +802,112 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\CarteServiceRecto.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CarteServiceRecto1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\FicheIndividuelleReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>FicheIndividuelleReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\FichePersonnelReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>FichePersonnelReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentDecedeReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentDecedeReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentEnDetachementReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentEnDetachementReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentEnDisponibiliteReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentEnDisponibiliteReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentEnInstanceAffectationReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentEnInstanceAffectationReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentMecaniseReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentMecaniseReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentsAffectesReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentsAffectesReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentsEligibleRetraiteReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentsEligibleRetraiteReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentsFormationReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentsFormationReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeAgentsSuspensionReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeAgentsSuspensionReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeDeclarativeReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeDeclarativeReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeEffectifReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeEffectifReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Employe\Reporting\Report\ListeFemmesReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ListeFemmesReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Presence\Reporting\Report\Calendar Which is Populated With a Date Lookup Table.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Calendar Which is Populated With a Date Lookup Table1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Presence\Reporting\Report\Calendar Which Populates All Dates in a Range.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Calendar Which Populates All Dates in a Range1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Presence\Reporting\Report\CalendarMonthlyView.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CalendarMonthlyView1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Presence\Reporting\Report\CalendarYearlyView.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CalendarYearlyView1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Presence\Reporting\Report\PresenceJounaliereReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PresenceJounaliereReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Presence\Reporting\Report\RegistrePresenceJournaliereReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RegistrePresenceJournaliereReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Presence\Reporting\Report\RegistrePresenceMensuelReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RegistrePresenceMensuelReport1.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Modules\Employe\Reporting\Dataset\EmployeDS.xsc">
+      <DependentUpon>EmployeDS.xsd</DependentUpon>
+    </None>
+    <None Include="Modules\Employe\Reporting\Dataset\EmployeDS.xsd" />
+    <None Include="Modules\Employe\Reporting\Dataset\EmployeDS.xss">
+      <DependentUpon>EmployeDS.xsd</DependentUpon>
+    </None>
+    <None Include="Modules\Presence\Reporting\Dataset\PresenceDS.xsc">
+      <DependentUpon>PresenceDS.xsd</DependentUpon>
+    </None>
+    <None Include="Modules\Presence\Reporting\Dataset\PresenceDS.xsd" />
+    <None Include="Modules\Presence\Reporting\Dataset\PresenceDS.xss">
+      <DependentUpon>PresenceDS.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -398,13 +916,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dao\" />
-    <Folder Include="Global\" />
-    <Folder Include="IoC\" />
-    <Folder Include="Modules\" />
-    <Folder Include="Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="View\Image\arg_header.png" />
     <Resource Include="View\Image\arg_header_invoice.png" />
@@ -430,6 +942,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TakePhoto1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

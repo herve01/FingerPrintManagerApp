@@ -7,20 +7,20 @@ namespace FingerPrintManagerApp.ViewModel
         public MainWindowPresenterViewModel()
         {
         }
-        
-        //private MainWindowViewModel mainController;
-        //public MainWindowViewModel MainController
-        //{
-        //    get { return mainController; }
-        //    set
-        //    {
-        //        if(mainController != value)
-        //        {
-        //            mainController = value;
-        //            RaisePropertyChanged(() => mainController);
-        //        }
-        //    }
-        //}
+
+        private MainWindowViewModel mainController;
+        public MainWindowViewModel MainController
+        {
+            get { return mainController; }
+            set
+            {
+                if (mainController != value)
+                {
+                    mainController = value;
+                    RaisePropertyChanged(() => mainController);
+                }
+            }
+        }
 
     }
 }

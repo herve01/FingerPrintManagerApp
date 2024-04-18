@@ -1,4 +1,5 @@
 ﻿//using FingerPrintManagerApp.Model.Employe;
+using FingerPrintManagerApp.Model.Employe;
 using System;
 using System.ComponentModel;
 
@@ -11,7 +12,7 @@ namespace FingerPrintManagerApp.Model.Admin
         private string _prenom;
         private string _username;
         private Sex _sex;
-        //private Entite _entite;
+        private Entite _entite;
         private string _email;
         private string _passwd;
         private string _telephone;
@@ -96,22 +97,22 @@ namespace FingerPrintManagerApp.Model.Admin
 
             }
         }
-        //public Entite Entite
-        //{
-        //    get
-        //    {
-        //        return _entite;
-        //    }
-        //    set
-        //    {
-        //        if (value != _entite)
-        //        {
-        //            _entite = value;
-        //            RaisePropertyChanged(() => Entite);
-        //        }
+        public Entite Entite
+        {
+            get
+            {
+                return _entite;
+            }
+            set
+            {
+                if (value != _entite)
+                {
+                    _entite = value;
+                    RaisePropertyChanged(() => Entite);
+                }
 
-        //    }
-        //}
+            }
+        }
         public string Email
         {
             get

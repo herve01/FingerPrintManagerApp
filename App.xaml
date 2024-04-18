@@ -5,7 +5,13 @@
              xmlns:viewModel="clr-namespace:FingerPrintManagerApp.ViewModel"
              xmlns:view="clr-namespace:FingerPrintManagerApp.View"
              xmlns:dialog="clr-namespace:FingerPrintManagerApp.Dialog.View"
-             StartupUri="MainWindow.xaml">
+             
+             xmlns:adm_vm="clr-namespace:FingerPrintManagerApp.Modules.Admin.ViewModel"
+             xmlns:adm_view="clr-namespace:FingerPrintManagerApp.Modules.Admin.View"
+             
+             StartupUri="View/Main.xaml"
+             
+             >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,14 +20,14 @@
                 <ResourceDictionary Source="View/Theme/General.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!--<DataTemplate DataType="{x:Type dialog:DialogYesNoViewModel}">
+            <DataTemplate DataType="{x:Type dialog:DialogYesNoViewModel}">
                 <dialog:DialogYesNo />
-            </DataTemplate>-->
+            </DataTemplate>
 
             <!--  Models -->
-            <!--<viewModel:ViewModelLocator x:Key="viewModelLocator" />
+            <viewModel:ViewModelLocator x:Key="viewModelLocator" />
 
-            --><!--#region Admin --><!--
+            <!--#region Admin -->
             <DataTemplate DataType="{x:Type adm_vm:AdminCtrlViewModel}">
                 <adm_view:AdminCrtlView />
             </DataTemplate>
@@ -40,7 +46,7 @@
 
             <DataTemplate DataType="{x:Type adm_vm:LogViewModel}">
                 <adm_view:LogView />
-            </DataTemplate>-->
+            </DataTemplate>
 
             <!--<DataTemplate DataType="{x:Type adm_vm:SettingsViewModel}">
           <adm_view:SettingsView />
@@ -49,9 +55,9 @@
             <!--#endregion-->
 
             <!--#region Global-->
-            <!--<DataTemplate DataType="{x:Type viewModel:MainWindowPresenterViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:MainWindowPresenterViewModel}">
                 <view:MainWindowPresentationView />
-            </DataTemplate>-->
+            </DataTemplate>
             <!--#endregion-->
 
             <!--#region Subscription -->

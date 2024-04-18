@@ -8,6 +8,7 @@ namespace FingerPrintManagerApp.Model.Employe
         private FonctionEmployeType _type;
         private DateTime _dateFin;
         private EmployeGrade _grade;
+        private Employe _employe;
         private bool _isRequired;
         private FonctionState _state;
 
@@ -31,6 +32,24 @@ namespace FingerPrintManagerApp.Model.Employe
                     RaisePropertyChanged(() => Fonction);
 
                     GradeAssocie.Grade = Fonction?.Grade;
+                }
+            }
+        }
+
+        public Employe Employe
+        {
+            get
+            {
+                return _employe;
+            }
+            set
+            {
+                if (value != _employe)
+                {
+                    _employe = value;
+                    RaisePropertyChanged(() => Employe);
+
+                  
                 }
             }
         }

@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="FingerPrintManagerApp.Modules.Employe.View.Template.EnfantAddTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:FingerPrintManagerApp.View.Converter"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:ListViewItemToPositionConverter x:Key="listViewItemToPositionConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Converter={StaticResource listViewItemToPositionConverter}}" 
+                   Grid.Column="0"
+                   FontSize="13"
+                   VerticalAlignment="Center"
+                   FontWeight="DemiBold"/>
+
+        <Border Grid.Column="1" 
+                Margin="5,0" />
+
+        <TextBox Text="{Binding Enfant.Nom, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Column="2"
+                 FontSize="12" 
+                 Height="24"
+                 VerticalContentAlignment="Center"
+                 Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
+                 Style="{StaticResource TextBoxPlaceHolderStyle}"/>
+
+        <Border Grid.Column="3" 
+                Margin="5,0" />
+
+        <TextBox Text="{Binding Enfant.PostNom, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Column="4"
+                 FontSize="12" 
+                 Height="24"
+                 VerticalContentAlignment="Center"
+                 Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
+                 Style="{StaticResource TextBoxPlaceHolderStyle}"/>
+
+        <Border Grid.Column="5" 
+                Margin="5,0" />
+
+        <TextBox Text="{Binding Enfant.Prenom, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Column="6"
+                 FontSize="12" 
+                 Height="24"
+                 VerticalContentAlignment="Center"
+                 Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
+                 Style="{StaticResource TextBoxPlaceHolderStyle}"/>
+
+        <Border Grid.Column="7" 
+                Margin="5,0" />
+
+        <ComboBox ItemsSource="{Binding SexesView}" 
+                  SelectedValue="{Binding Enfant.Sexe, Mode=TwoWay}"
+                  Grid.Column="8"
+                  FontSize="12" 
+                  Height="24"
+                  Style="{StaticResource ComboBoxOption}"/>
+
+        <Border Grid.Column="9" 
+                Margin="5,0" />
+
+        <DatePicker SelectedDate="{Binding Enfant.DateNaissance, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                    Grid.Column="10"
+                    FontSize="12" 
+                    Height="24"
+                    BorderBrush="#AAA"
+                    Padding="2 0"
+                    VerticalContentAlignment="Center"
+                    Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}">
+            <DatePicker.Style>
+                <Style TargetType="DatePicker">
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="BorderBrush" Value="#90ff0000" />
+                            <Setter Property="ToolTip" 
+                                    Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DatePicker.Style>
+        </DatePicker>
+        
+    </Grid>
+</UserControl>

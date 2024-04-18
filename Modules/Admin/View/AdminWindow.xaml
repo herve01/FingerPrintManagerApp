@@ -1,0 +1,17 @@
+﻿<Window x:Class="FingerPrintManagerApp.Modules.Admin.View.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d" 
+        WindowStartupLocation="CenterScreen"
+        Title="Paramètres et administration"
+        Height="700" 
+        Width="1200" 
+        MinHeight="500" 
+        MinWidth="1100"
+        DataContext="{Binding AdminWindowViewModel, Source={StaticResource viewModelLocator}}">
+    <Grid>
+        <ContentPresenter Content="{Binding CurrentPageViewModel}"/>
+    </Grid>
+</Window>
