@@ -1,5 +1,4 @@
-﻿//using FingerPrintManagerApp.Model.Employe;
-using FingerPrintManagerApp.Model.Employe;
+﻿using FingerPrintManagerApp.Model.Employe;
 using System;
 using System.ComponentModel;
 
@@ -236,7 +235,7 @@ namespace FingerPrintManagerApp.Model.Admin
             Email = backup.Email;
             UserName = backup.UserName;
             Telephone = backup.Telephone;
-            //Entite = backup.Entite;
+            Entite = backup.Entite;
         }
 
         public virtual string Error
@@ -298,11 +297,11 @@ namespace FingerPrintManagerApp.Model.Admin
                             error = "Le numéro de téléphone saisi n'est pas valide.";
                         break;
 
-                    //case "Entite":
-                    //    if (Entite == null)
-                    //        error = "L'entité de cet utilisateur doit être spécifiée.";
-                    //    break;
-                        
+                    case "Entite":
+                        if (Entite == null)
+                            error = "L'entité de cet utilisateur doit être spécifiée.";
+                        break;
+
                     default:
                         break;
                 }

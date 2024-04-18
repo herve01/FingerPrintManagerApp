@@ -6,7 +6,7 @@ namespace FingerPrintManagerApp.Model.Employe
     public class Entite : ModelBase, IEditableObject, IDataErrorInfo, ICloneable
     {
 
-        private Division _division;
+        private Direction _direction;
         private Zone _zone;
         private Address _address;
         private bool _estPrincipale;
@@ -16,23 +16,21 @@ namespace FingerPrintManagerApp.Model.Employe
         {
             Address = new Address() { IsRequired = true };
             Id = string.Empty;
-            Type = EntiteType.Agence;
+            Type = EntiteType.Direction;
         }
 
-  
-
-        public Division Division
+        public Direction Direction
         {
             get
             {
-                return _division;
+                return _direction;
             }
             set
             {
-                if (value != _division)
+                if (value != _direction)
                 {
-                    _division = value;
-                    RaisePropertyChanged(() => Division);
+                    _direction = value;
+                    RaisePropertyChanged(() => Direction);
                 }
             }
         }
@@ -142,7 +140,7 @@ namespace FingerPrintManagerApp.Model.Employe
                 return;
 
             Id = backup.Id;
-            //Direction = backup.Direction;
+            Direction = backup.Direction;
             Zone = backup.Zone;
             Address = backup.Address;
             EstPrincipale = backup.EstPrincipale;
@@ -157,10 +155,10 @@ namespace FingerPrintManagerApp.Model.Employe
 
                 switch (columnName)
                 {
-                    //case "Direction":
-                    //    if (Direction == null)
-                    //        error = "La direction provinciale de l'entité doit être renseignée.";
-                    //    break;
+                    case "Direction":
+                        if (Direction == null)
+                            error = "La direction provinciale de l'entité doit être renseignée.";
+                        break;
 
                     case "Zone":
                         if (Zone == null)

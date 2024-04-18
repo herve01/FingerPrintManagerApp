@@ -26,7 +26,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private ObservableCollection<Grade> grades;
         private ObservableCollection<Entite> entites;
      
-        private ObservableCollection<Division> divisions;
+        private ObservableCollection<Departement> divisions;
         private ObservableCollection<Bureau> bureaux;
 
         // Collection Views
@@ -67,7 +67,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             UniteTypesView.Filter = OnTypeFilter;
 
            
-            divisions = new ObservableCollection<Division>();
+            divisions = new ObservableCollection<Departement>();
             DivisionsView = (CollectionView)CollectionViewSource.GetDefaultView(divisions);
             DivisionsView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
 
@@ -139,12 +139,12 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private bool _initState;
         private bool _showDivision;
         private bool _showBureau;
-        private Division _selectedDivision;
+        private Departement _selectedDivision;
         private Bureau _selectedBureau;
         private Grade _selectedGrade;
         // SelectedUnite
 
-        public Division SelectedDivision
+        public Departement SelectedDivision
         {
             get
             {

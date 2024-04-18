@@ -453,7 +453,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
         }
 
-        public List<Bureau> GetAll(Division division, bool withFonctions = false)
+        public List<Bureau> GetAll(Departement division, bool withFonctions = false)
         {
             var intances = new List<Bureau>();
             var _instances = new List<Dictionary<string, object>>();
@@ -490,7 +490,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-        public async Task<List<Bureau>> GetAllAsync(Division division, bool withFonctions = false)
+        public async Task<List<Bureau>> GetAllAsync(Departement division, bool withFonctions = false)
         {
             var intances = new List<Bureau>();
             var _instances = new List<Dictionary<string, object>>();

@@ -15,53 +15,24 @@ namespace FingerPrintManagerApp.Model.Employe
         private EtatCivil _etatCivil;
         private string _lieuNaissance;
         private DateTime _dateNaissance;
-        private string _immatriculationCNSSAP;
-        private EmployeGrade _gradeEngagement;
-        private EmployeFonction _currentFonctionNomination;
+        private EmployeGrade _currentGrade;
         private Affectation _currentAffectation;
         private Affectation _lastAffectation;
-
-        private EmployeEtude _currentHighEtude;
-
-        private Province _provinceOrigine;
-        private string _personneContact;
-        private string _qualiteContact;
         
-        private bool _estMecaniseSalaire;
-        private bool _estMecanisePrime;
-        private bool _estRecense;
         private bool _estAffecte;
-        private bool _estActif;
 
         /* Adresse et Téléphone */
         private string _telephone;
         private string _email;
-
-        private Address _address;
-
-        private string _conjoint;
-        private string _telephoneConjoint;
-
-        public List<EnfantEmploye> Enfants { get; set; }
-      
-        public List<EmployeEtude> Etudes { get; set; }
+     
         public List<EmployeEmpreinte> Empreintes { get; set; }
-        public List<EmployeFonction> FonctionsInterim { get; set; }
-
+       
         public Employe()
         {
-            Address = new Address() { IsRequired = true };
             Id = string.Empty;
-            Enfants = new List<EnfantEmploye>();
-          
-            Etudes = new List<EmployeEtude>();
             Empreintes = new List<EmployeEmpreinte>();
-            GradeEngagement = new EmployeGrade() { Employe = this, EstInitial = true };
-            //CurrentGradeNomination = new EmployeGrade() { Employe = this, Type = GradeEmployeType.Commissionnement };
-            //CurrentStatutaireGradeNomination = new EmployeGrade() { Employe = this, Type = GradeEmployeType.Officiel };
-            
-            CurrentAffectation = new Affectation() { Employe = this };
-            CurrentHighEtude = new EmployeEtude() { Employe = this };
+            CurrentGrade = new EmployeGrade() { Employe = this, EstInitial = true };
+            CurrentAffectation = new Affectation() { Employe = this };   
         }
        
         public string Matricule
@@ -176,9 +147,6 @@ namespace FingerPrintManagerApp.Model.Employe
                     _etatCivil = value;
                     RaisePropertyChanged(() => EtatCivil);
                     RaisePropertyChanged(() => EstMarie);
-
-                    if (!EstMarie)
-                        Conjoint = TelephoneConjoint = null;
                 }
             }
         }
@@ -215,71 +183,19 @@ namespace FingerPrintManagerApp.Model.Employe
                 }
             }
         }
-
-        public Province ProvinceOrigine
+     
+        public EmployeGrade CurrentGrade
         {
             get
             {
-                return _provinceOrigine;
+                return _currentGrade;
             }
             set
             {
-                if (value != _provinceOrigine)
+                if (value != _currentGrade)
                 {
-                    _provinceOrigine = value;
-                    RaisePropertyChanged(() => ProvinceOrigine);
-                }
-            }
-        }
-
-        public string ImmatriculationCNSSAP
-        {
-            get
-            {
-                return _immatriculationCNSSAP;
-            }
-            set
-            {
-                if (value != _immatriculationCNSSAP)
-                {
-                    _immatriculationCNSSAP = value;
-                    RaisePropertyChanged(() => ImmatriculationCNSSAP);
-                }
-            }
-        }
-        
-        public EmployeGrade GradeEngagement
-        {
-            get
-            {
-                return _gradeEngagement;
-            }
-            set
-            {
-                if (value != _gradeEngagement)
-                {
-                    _gradeEngagement = value;
-                    RaisePropertyChanged(() => GradeEngagement);
-                    //RaisePropertyChanged(() => AnneesService);
-                }
-            }
-        }
-
-
-
-        public EmployeFonction CurrentFonctionNomination
-        {
-            get
-            {
-                return _currentFonctionNomination;
-            }
-            set
-            {
-                if (value != _currentFonctionNomination)
-                {
-                    _currentFonctionNomination = value;
-                    RaisePropertyChanged(() => CurrentFonctionNomination);
-                    //RaisePropertyChanged(() => CurrentGrade);
+                    _currentGrade = value;
+                    RaisePropertyChanged(() => CurrentGrade);
                 }
             }
         }
@@ -316,77 +232,6 @@ namespace FingerPrintManagerApp.Model.Employe
             }
         }
 
-        public EmployeEtude CurrentHighEtude
-        {
-            get
-            {
-                return _currentHighEtude;
-            }
-            set
-            {
-                if (value != _currentHighEtude)
-                {
-                    _currentHighEtude = value;
-                    RaisePropertyChanged(() => CurrentHighEtude);
-                }
-            }
-        }
-
-
-
-        public string PersonneContact
-        {
-            get
-            {
-                return _personneContact;
-            }
-            set
-            {
-                if (value != _personneContact)
-                {
-                    _personneContact = value;
-                    RaisePropertyChanged(() => PersonneContact);
-                }
-            }
-        }
-        public string QualiteContact
-        {
-            get
-            {
-                return _qualiteContact;
-            }
-            set
-            {
-                if (value != _qualiteContact)
-                {
-                    _qualiteContact = value;
-                    RaisePropertyChanged(() => QualiteContact);
-                }
-            }
-        }
-
-   
-
-        public bool EstActif
-        {
-            get
-            {
-                return this._estActif;
-            }
-            set
-            {
-                if (_estActif != value)
-                {
-                    _estActif = value;
-
-                    RaisePropertyChanged(() => EstActif);
-
-                    if (!EstActif)
-                        EstAffecte = false;
-                }
-            }
-        }
-
         public bool EstMarie
         {
             get
@@ -396,52 +241,6 @@ namespace FingerPrintManagerApp.Model.Employe
             
         }
 
-
-        public bool EstMecaniseSalaire
-        {
-            get
-            {
-                return _estMecaniseSalaire;
-            }
-            set
-            {
-                if (value != _estMecaniseSalaire)
-                {
-                    _estMecaniseSalaire = value;
-                    RaisePropertyChanged(() => EstMecaniseSalaire);
-                }
-            }
-        }
-        public bool EstMecanisePrime
-        {
-            get
-            {
-                return _estMecanisePrime;
-            }
-            set
-            {
-                if (value != _estMecanisePrime)
-                {
-                    _estMecanisePrime = value;
-                    RaisePropertyChanged(() => EstMecanisePrime);
-                }
-            }
-        }
-        public bool EstRecense
-        {
-            get
-            {
-                return _estRecense;
-            }
-            set
-            {
-                if (value != _estRecense)
-                {
-                    _estRecense = value;
-                    RaisePropertyChanged(() => EstRecense);
-                }
-            }
-        }
         public bool EstAffecte
         {
             get
@@ -487,53 +286,6 @@ namespace FingerPrintManagerApp.Model.Employe
                 }
             }
         }
-
-        public Address Address
-        {
-            get
-            {
-                return _address;
-            }
-            set
-            {
-                if (value != _address)
-                {
-                    _address = value;
-                    RaisePropertyChanged(() => Address);
-                }
-            }
-        }
-        public string Conjoint
-        {
-            get
-            {
-                return _conjoint;
-            }
-            set
-            {
-                if (value != _conjoint)
-                {
-                    _conjoint = value;
-                    RaisePropertyChanged(() => Conjoint);
-                }
-            }
-        }
-        public string TelephoneConjoint
-        {
-            get
-            {
-                return _telephoneConjoint;
-            }
-            set
-            {
-                if (value != _telephoneConjoint)
-                {
-                    _telephoneConjoint = value;
-                    RaisePropertyChanged(() => TelephoneConjoint);
-                }
-            }
-        }
-
         public DateTime TargetRetraiteTime { get; set; }
 
         public int Age
@@ -624,27 +376,13 @@ namespace FingerPrintManagerApp.Model.Employe
 
             LieuNaissance = backup.LieuNaissance;
             DateNaissance = backup.DateNaissance;
-            ImmatriculationCNSSAP = backup.ImmatriculationCNSSAP;
-            GradeEngagement = backup.GradeEngagement;
-        
-            CurrentFonctionNomination = backup.CurrentFonctionNomination;
+            CurrentGrade = backup.CurrentGrade;
+
             CurrentAffectation = backup.CurrentAffectation;
-
-            ProvinceOrigine = backup.ProvinceOrigine;
-
-            PersonneContact = backup.PersonneContact;
-            QualiteContact = backup.QualiteContact;
-
-            EstMecaniseSalaire = backup.EstMecaniseSalaire;
-            EstMecanisePrime = backup.EstMecanisePrime;
-            EstRecense = backup.EstRecense;
             EstAffecte = backup.EstAffecte;
             Telephone = backup.Telephone;
 
             Email = backup.Email;
-            Address = backup.Address;
-            Conjoint = backup.Conjoint;
-            TelephoneConjoint = backup.TelephoneConjoint;
         }
 
 
@@ -700,50 +438,10 @@ namespace FingerPrintManagerApp.Model.Employe
                             error = "Le téléphone de l'employé ne peut être vide.";
                         else if (!ValueValidator.IsValidPhoneNumber(Telephone))
                             error = "Le numéro de téléphone saisi n'est pas valide.";
-                        break;
+                        break;               
 
-                    case "PersonneContact":
-                        if (string.IsNullOrWhiteSpace(PersonneContact))
-                            error = "La personne à contacter doit être spécifiée.";
-                        break;
-
-                    case "QualiteContact":
-                        if (string.IsNullOrWhiteSpace(QualiteContact))
-                            error = "La qualité de la personne à contacter doit être spécifiée.";
-                        break;
-
-                    case "Conjoint":
-                        if (EstMarie && string.IsNullOrWhiteSpace(Conjoint))
-                            error = "Les noms du (de la) conjoint(e) doivent être spécifiés.";
-                        break;
-
-                    case "TelephoneConjoint":
-                        if (EstMarie)
-                        {
-                            if (string.IsNullOrWhiteSpace(TelephoneConjoint))
-                                error = "Le téléphone du (de la) conjoint(e) doit être spécifié.";
-                            else if (!ValueValidator.IsValidPhoneNumber(TelephoneConjoint))
-                                error = "Le numéro de téléphone saisi n'est pas valide.";
-                        }
-                            
-                        break;
-
-                    case "GradeEngagement":
-                        error = GradeEngagement.Error;
-                        break;
-
-                    case "CurrentFonctionNomination":
-                        if (CurrentFonctionNomination.IsRequired)
-                            error = CurrentFonctionNomination.Error;
-                        break;
-
-                    case "Enfants":
-                        foreach (var enfant in Enfants)
-                            if (enfant.Error != null)
-                            {
-                                error = enfant.Error;
-                                break;
-                            }
+                    case "CurrentGrade":
+                        error = CurrentGrade.Error;
                         break;
 
                     default:

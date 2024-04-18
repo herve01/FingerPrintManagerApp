@@ -135,3 +135,10 @@ C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\obj\De
 C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\obj\Debug\Modules\Presence\View\PresenceEmployeView.baml
 C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\obj\Debug\Modules\Presence\View\PresenceWindowView.baml
 C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\obj\Debug\Modules\Presence\View\SuiviView.baml
+C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\bin\Debug\DPFPCtlXWrapperNET.dll
+C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\bin\Debug\DPFPDevNET.dll
+C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\bin\Debug\DPFPEngNET.dll
+C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\bin\Debug\DPFPGuiNET.dll
+C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\bin\Debug\DPFPShrNET.dll
+C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\bin\Debug\DPFPVerNET.dll
+C:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\obj\Debug\FingerPrintManagerApp_Content.g.cs

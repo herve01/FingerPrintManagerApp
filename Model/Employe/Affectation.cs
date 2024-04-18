@@ -214,12 +214,12 @@ namespace FingerPrintManagerApp.Model.Employe
 
         
 
-        public Division Division
+        public Departement Division
         {
             get
             {
-                if (Unite is Division)
-                    return (Division)Unite;
+                if (Unite is Departement)
+                    return (Departement)Unite;
                 else if (Unite is Bureau)
                     return ((Bureau)Unite).Division;
 

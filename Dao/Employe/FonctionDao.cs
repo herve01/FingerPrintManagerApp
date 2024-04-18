@@ -368,7 +368,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
 
 
-        public List<Fonction> GetAll(Division division)
+        public List<Fonction> GetAll(Departement division)
         {
             var intances = new List<Fonction>();
             var _instances = new List<Dictionary<string, object>>();
@@ -617,7 +617,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         //    return intances;
         //}
 
-        public async Task<List<Fonction>> GetAllAsync(Division division)
+        public async Task<List<Fonction>> GetAllAsync(Departement division)
         {
             var intances = new List<Fonction>();
             var _instances = new List<Dictionary<string, object>>();

@@ -21,7 +21,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
     {
         private static object _lock = new object();
         private ObservableCollection<Bureau> bureaux;
-        private ObservableCollection<Division> divisions;
+        private ObservableCollection<Departement> divisions;
 
         private bool editing = false;
         public ICollectionView BureauxView { get; private set; }
@@ -44,7 +44,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
  
 
-            divisions = new ObservableCollection<Division>();
+            divisions = new ObservableCollection<Departement>();
             DivisionsView = (CollectionView)CollectionViewSource.GetDefaultView(divisions);
             DivisionsView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
 

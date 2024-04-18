@@ -469,7 +469,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         }
 
        
-        public async Task<List<EmployeFonction>> GetAllRunningAsync(Division division)
+        public async Task<List<EmployeFonction>> GetAllRunningAsync(Departement division)
         {
             var intances = new List<EmployeFonction>();
             var _instances = new List<Dictionary<string, object>>();

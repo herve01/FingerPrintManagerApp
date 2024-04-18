@@ -18,7 +18,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
     public class DivisionViewModel : PageViewModel
     {
         private static object _lock = new object();
-        private ObservableCollection<Division> divisions;
+        private ObservableCollection<Departement> divisions;
 
         private bool editing = false;
         public ICollectionView DivisionsView { get; private set; }
@@ -26,7 +26,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         public DivisionViewModel()
         {
-            divisions = new ObservableCollection<Division>();
+            divisions = new ObservableCollection<Departement>();
             BindingOperations.EnableCollectionSynchronization(divisions, _lock);
 
             DivisionsView = (CollectionView)CollectionViewSource.GetDefaultView(divisions);
@@ -47,7 +47,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         private bool OnFilterDivision(object obj)
         {
-            var division = obj as Division;
+            var division = obj as Departement;
 
             if (division == null)
                 return false;
@@ -62,7 +62,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private string _action;
         private string _filterText;
         private int _count;
-        private Division _division;
+        private Departement _division;
         private bool _divisionLoading;
         //private DirectionInterne _visibleDirection;
 
@@ -113,7 +113,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             }
         }
 
-        public Division Division
+        public Departement Division
         {
             get
             {
@@ -275,7 +275,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             }
             else
             {
-                var clone = (Division)Division.Clone();
+                var clone = (Departement)Division.Clone();
                 clone.Id = string.Empty;
 
                 divisions.Remove(Division);
@@ -311,7 +311,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             //var direction = Division?.Direction;
 
-            Division = new Division();
+            Division = new Departement();
             Action = "Enregistrer";
             editing = false;
             Title = "Nouvelle division";
@@ -375,9 +375,9 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         private void Edit(object param)
         {
-            if (param is Division)
+            if (param is Departement)
             {
-                Division = (Division)param;
+                Division = (Departement)param;
                 Division.BeginEdit();
                 editing = true;
                 Action = "Modifier";
@@ -407,9 +407,9 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             Status = string.Empty;
 
-            if (param is Division)
+            if (param is Departement)
             {
-                var division = (Division)param;
+                var division = (Departement)param;
 
                 var msg = string.Format("Êtes - vous sûr(e) de vouloir supprimer la division <<{0}>> ?", division.Denomination);
 

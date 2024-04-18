@@ -32,7 +32,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private ObservableCollection<Fonction> currentFonctions;
         private ObservableCollection<NiveauEtude> niveaux;
         private ObservableCollection<DomaineEtude> domaines;
-        private ObservableCollection<Division> divisions;
+        private ObservableCollection<Departement> divisions;
         private ObservableCollection<Bureau> bureaux;
         private ObservableCollection<Entite> entites;
         private ObservableCollection<int> annees;
@@ -138,7 +138,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             CurrentFonctionsView = (CollectionView)CollectionViewSource.GetDefaultView(currentFonctions);
             CurrentFonctionsView.SortDescriptions.Add(new SortDescription("Grade.Niveau", ListSortDirection.Ascending));
 
-            divisions = new ObservableCollection<Division>();
+            divisions = new ObservableCollection<Departement>();
             DivisionsView = (CollectionView)CollectionViewSource.GetDefaultView(divisions);
             DivisionsView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
 
@@ -777,8 +777,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             }
         }
 
-        private Division _selectedDivision;
-        public Division SelectedDivision
+        private Departement _selectedDivision;
+        public Departement SelectedDivision
         {
             get
             {
@@ -1051,8 +1051,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             //if (unite is DirectionInterne)
             //    ((DirectionInterne)unite).Fonctions.ForEach(f => currentFonctions.Add(f));
-            if (unite is Division)
-                ((Division)unite).Fonctions.ForEach(f => currentFonctions.Add(f));
+            if (unite is Departement)
+                ((Departement)unite).Fonctions.ForEach(f => currentFonctions.Add(f));
             if (unite is Bureau)
                 ((Bureau)unite).Fonctions.ForEach(f => currentFonctions.Add(f));
 

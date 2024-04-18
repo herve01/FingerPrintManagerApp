@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace FingerPrintManagerApp.Dao.Employe
 {
-    public class DivisionDao : Dao<Division>
+    public class DivisionDao : Dao<Departement>
     {
         public DivisionDao()
         {
             TableName = "division";
         }
 
-        public override int Add(Division instance)
+        public override int Add(Departement instance)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             }
         }
 
-        public int Add(DbCommand command, Division division)
+        public int Add(DbCommand command, Departement division)
         {
             Request = command;
             Request.Parameters.Clear();
@@ -61,7 +61,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             return Add(division);
         }
 
-        public async Task<int> AddAsync(Division instance)
+        public async Task<int> AddAsync(Departement instance)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             }
         }
 
-        public async Task<int> AddAsync(DbCommand command, Division instance)
+        public async Task<int> AddAsync(DbCommand command, Departement instance)
         {
             Request = command;
             Request.Parameters.Clear();
@@ -107,7 +107,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             return await AddAsync(instance);
         }
 
-        public override int Update(Division instance, Division old = null)
+        public override int Update(Departement instance, Departement old = null)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             }
         }
 
-        public override int Delete(Division instance)
+        public override int Delete(Departement instance)
         {
             try
             {
@@ -154,9 +154,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             }
         }
 
-        private Division Create(Dictionary<string, object> row, bool withDirection, bool withBureaux, bool withFonctions)
+        private Departement Create(Dictionary<string, object> row, bool withDirection, bool withBureaux, bool withFonctions)
         {
-            var instance = new Division();
+            var instance = new Departement();
 
             instance.Id = row["id"].ToString();
             instance.Denomination = row["denomination"].ToString();
@@ -213,9 +213,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             return 0;
         }
 
-        public Division Get(string id)
+        public Departement Get(string id)
         {
-            Division instance = null;
+            Departement instance = null;
             Dictionary<string, object> _instances = null;
 
             try
@@ -246,9 +246,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             return instance;
         }
 
-        public Division Get(Entite entite)
+        public Departement Get(Entite entite)
         {
-            Division instance = null;
+            Departement instance = null;
             Dictionary<string, object> _instances = null;
 
             try
@@ -282,9 +282,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             return instance;
         }
 
-        public List<Division> GetAll(bool withFonctions)
+        public List<Departement> GetAll(bool withFonctions)
         {
-            var intances = new List<Division>();
+            var intances = new List<Departement>();
             var _instances = new List<Dictionary<string, object>>();
 
             try
@@ -319,9 +319,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-        public async Task<List<Division>> GetAllAsync(Entite entite)
+        public async Task<List<Departement>> GetAllAsync(Entite entite)
         {
-            var intances = new List<Division>();
+            var intances = new List<Departement>();
             var _instances = new List<Dictionary<string, object>>();
 
             try
@@ -342,7 +342,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 foreach (var item in _instances)
                 {
-                    Division division = Create(item, true, false, false);
+                    Departement division = Create(item, true, false, false);
                     division.Entite = entite;
                     intances.Add(division);
                 }
@@ -356,9 +356,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-        public async Task<List<Division>> GetAllAsync(DateTime lastUpdateTime)
+        public async Task<List<Departement>> GetAllAsync(DateTime lastUpdateTime)
         {
-            var intances = new List<Division>();
+            var intances = new List<Departement>();
             var _instances = new List<Dictionary<string, object>>();
 
             try
@@ -379,7 +379,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 foreach (var item in _instances)
                 {
-                    Division division = Create(item, true, false, false);
+                    Departement division = Create(item, true, false, false);
                     intances.Add(division);
                 }
             }
@@ -392,9 +392,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-        public async Task<List<Division>> GetAllAsync(bool withFonctions = false)
+        public async Task<List<Departement>> GetAllAsync(bool withFonctions = false)
         {
-            var intances = new List<Division>();
+            var intances = new List<Departement>();
             var _instances = new List<Dictionary<string, object>>();
 
             try
@@ -415,7 +415,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 foreach (var item in _instances)
                 {
-                    Division division = Create(item, false, true, withFonctions);
+                    Departement division = Create(item, false, true, withFonctions);
                     //division.Direction = direction;
                     intances.Add(division);
                 }
@@ -429,7 +429,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-        public async Task GetAllAsync(Entite entite, ObservableCollection<Division> collection)
+        public async Task GetAllAsync(Entite entite, ObservableCollection<Departement> collection)
         {
             var _instances = new List<Dictionary<string, object>>();
 
@@ -451,7 +451,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 foreach (var item in _instances)
                 {
-                    Division division = Create(item, true, false, false);
+                    Departement division = Create(item, true, false, false);
                     division.Entite = entite;
                     collection.Add(division);
                 }

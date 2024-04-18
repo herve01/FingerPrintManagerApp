@@ -382,7 +382,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private void InitSave()
         {
             Entite = new Entite();
-            Entite.Division = Division.BuildProvincial(Entite);
+            Entite.Division = Departement.BuildProvincial(Entite);
 
             Action = "Enregistrer";
             editing = false;

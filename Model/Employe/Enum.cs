@@ -41,7 +41,7 @@
     public enum EntiteType
     {
         Agence,
-        Antenne
+        Direction
     }
 
     public enum ActeType
