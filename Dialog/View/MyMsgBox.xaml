@@ -143,7 +143,7 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                Name="imgWrong" 
-                               Source="/Humager;component/View/Image/emoji_triste.PNG" 
+                               Source="/FingerPrintManagerApp;component/View/Image/emoji_triste.PNG" 
                                Stretch="Uniform"
                                />
 
@@ -152,7 +152,7 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                Name="imgWarn" 
-                               Source="/Humager;component/View/Image/emoji_warn.PNG" 
+                               Source="/FingerPrintManagerApp;component/View/Image/emoji_warn.PNG" 
                                Stretch="Uniform"
                                />
 
@@ -161,7 +161,7 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                Name="imgOk" 
-                               Source="/Humager;component/View/Image/emoji_good.PNG" 
+                               Source="/FingerPrintManagerApp;component/View/Image/emoji_good.PNG" 
                                Stretch="Uniform"
                                />
                     </Grid>

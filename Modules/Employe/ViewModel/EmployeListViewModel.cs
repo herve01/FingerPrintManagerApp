@@ -399,8 +399,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             //directions.Clear();
 
-            //directions.Add(new DirectionInterne() { Id = "-1", Denomination = "Toutes", Sigle = "Toutes" });
-            //directions.Add(new DirectionInterne() { Id = "-2", Denomination = "", Sigle = "Non affectés" });
+            //directions.Add(new Direction() { Id = "-1", Denomination = "Toutes", Sigle = "Toutes" });
+            //directions.Add(new Direction() { Id = "-2", Denomination = "", Sigle = "Non affectés" });
 
             //var list = await Task.Run(() => new DirectionDao().GetAllAsync(true));
 

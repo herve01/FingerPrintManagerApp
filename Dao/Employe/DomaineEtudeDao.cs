@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class DomaineEtudeDao : Dao<DomaineEtude>
     {
-        public DomaineEtudeDao()
+        public DomaineEtudeDao(DbConnection connection = null) : base(connection)
         {
             TableName = "domaine_etude";
         }

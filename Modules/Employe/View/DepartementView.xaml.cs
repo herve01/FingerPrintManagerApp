@@ -1,16 +1,18 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;using System.Windows.Media.Animation;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace FingerPrintManagerApp.Modules.Employe.View
 {
     /// <summary>
-    /// Logique d'interaction pour BureauView.xaml
+    /// Logique d'interaction pour DivisionView.xaml
     /// </summary>
-    public partial class BureauView : UserControl
+    public partial class DepartementView : UserControl
     {
         Storyboard statusSB;
-        public BureauView()
+
+        public DepartementView()
         {
             InitializeComponent();
 
@@ -34,6 +36,5 @@ namespace FingerPrintManagerApp.Modules.Employe.View
                 }
             });
         }
-
     }
 }

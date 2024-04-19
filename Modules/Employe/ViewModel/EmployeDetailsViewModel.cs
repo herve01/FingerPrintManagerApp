@@ -13,7 +13,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 {
     public class EmployeDetailsViewModel : DialogViewModelBase
     {
-        ObservableCollection<EnfantEmploye> enfants;
+        
         // Collection Views
         public ICollectionView EnfantsView { get; private set; }
 
@@ -24,9 +24,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             this.reportViewer = reportView;
             Employe = employe;
 
-            enfants = new ObservableCollection<EnfantEmploye>();
-            EnfantsView = (CollectionView)CollectionViewSource.GetDefaultView(enfants);
-            EnfantsView.SortDescriptions.Add(new SortDescription("DateNaissance", ListSortDirection.Descending));
+            
         }
 
         Model.Employe.Employe _employe;
@@ -67,31 +65,12 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         protected override async Task Load(object param)
         {
             EmployeLoading = true;
-            await LoadMissedInfo();
-            await LoadEnfants();
             EmployeLoading = false;
         }
 
-        async Task LoadEnfants()
-        {
-            if (Employe.Enfants.Count == 0)
-                Employe.Enfants = await Task.Run(() => new EnfantEmployeDao().GetAllAsync(Employe));
 
-            enfants.Clear();
 
-            Employe.Enfants.ForEach(e => enfants.Add(e));
 
-            EnfantsView.Refresh();
-        }
-
-        async Task LoadMissedInfo()
-        {
-            if (Employe.CurrentFonctionNomination.Fonction == null)
-                Employe.CurrentFonctionNomination = new EmployeFonctionDao().GetCurrent(Employe);
-
-            if (Employe.CurrentHighEtude.Niveau == null)
-                Employe.CurrentHighEtude = new EmployeEtudeDao().Get(Employe);
-        }
 
         protected override void Close(object param)
         {
@@ -159,16 +138,16 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             var info = AppConfig.GetReportInfo();
             info.Rows[0]["report_header"] = AppConfig.ReportHeader;
 
-            var enfants = await Task.Run(() => new EnfantEmployeDao().GetEmployeEnfantsReportAsync(Employe));
+            //var enfants = await Task.Run(() => new EnfantEmployeDao().GetEmployeEnfantsReportAsync(Employe));
 
-            if (enfants != null)
-                enfants.TableName = "Enfant";
+            //if (enfants != null)
+            //    enfants.TableName = "Enfant";
 
             var dataset = new System.Data.DataSet();
 
             dataset.Tables.Add(info);
             dataset.Tables.Add(fiche);
-            dataset.Tables.Add(enfants);
+            //dataset.Tables.Add(enfants);
 
             //report.Database.Tables[0].SetDataSource(info);
             //report.Database.Tables[1].SetDataSource(fiche);

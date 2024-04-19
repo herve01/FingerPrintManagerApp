@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class EmployeGradeDao : Dao<EmployeGrade>
     {
-        public EmployeGradeDao()
+        public EmployeGradeDao(DbConnection connection = null) : base(connection)
         {
             TableName = "employe_grade";
         }
@@ -19,9 +19,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, acte_id, type, est_initial, date, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, acte_id, type, est_initial, date, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_grade_id, @v_acte_id, @v_type, @v_est_initial, @v_date, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -60,9 +60,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, acte_id, type, est_initial, date, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, acte_id, type, est_initial, date, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_grade_id, @v_acte_id, @v_type, @v_est_initial, @v_date, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -136,7 +136,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "est_initial = @v_est_initial, " +
                     "type = @v_type, " +
                     "date = @v_date, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));

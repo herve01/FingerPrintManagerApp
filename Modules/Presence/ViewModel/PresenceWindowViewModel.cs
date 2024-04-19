@@ -11,11 +11,16 @@ using FingerPrintManagerApp.Model.Employe;
 using System.Threading.Tasks;
 using System.Speech.Synthesis;
 using FingerPrintManagerApp.Model;
+using DPFP.Capture;
 
 namespace FingerPrintManagerApp.Modules.Presence.ViewModel
 {
-    public class PresenceWindowViewModel : ViewModelBase
+    public class PresenceWindowViewModel : ViewModelBase, DPFP.Capture.EventHandler
     {
+
+        DPFP.Capture.Capture Capturer;
+        public static DPFP.Processing.Enrollment Enroller;
+
         DispatcherTimer timer;
         private SpeechSynthesizer Parleur { get; set; }
 
@@ -482,6 +487,36 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
             catch (Exception)
             {
             }
+        }
+
+        public void OnComplete(object Capture, string ReaderSerialNumber, DPFP.Sample Sample)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnFingerGone(object Capture, string ReaderSerialNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnFingerTouch(object Capture, string ReaderSerialNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnReaderConnect(object Capture, string ReaderSerialNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnReaderDisconnect(object Capture, string ReaderSerialNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnSampleQuality(object Capture, string ReaderSerialNumber, CaptureFeedback CaptureFeedback)
+        {
+            throw new NotImplementedException();
         }
 
         private AsyncCommand _loadCommand;

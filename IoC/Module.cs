@@ -1,14 +1,11 @@
 ﻿using FingerPrintManagerApp.Dialog.Facade;
 using FingerPrintManagerApp.Dialog.Service;
 using FingerPrintManagerApp.Modules.Admin.ViewModel;
-
-//using FingerPrintManagerApp.Modules.Admin.ViewModel;
-//using FingerPrintManagerApp.Modules.Subscriber.ViewModel;
-//using FingerPrintManagerApp.Modules.Employe.ViewModel;
+using FingerPrintManagerApp.Modules.Employe.ViewModel;
+using FingerPrintManagerApp.Modules.Presence.ViewModel;
 using FingerPrintManagerApp.ViewModel;
+using FingerPrintManagerApp.Modules.Employe.View;
 using Ninject.Modules;
-//using FingerPrintManagerApp.Modules.Carriere.ViewModel;
-//using FingerPrintManagerApp.Modules.Presence.ViewModel;
 
 namespace FingerPrintManagerApp.IoC
 {
@@ -30,33 +27,19 @@ namespace FingerPrintManagerApp.IoC
             Bind<MainWindowPresenterViewModel>().ToSelf();
             #endregion
 
-            //#region Subscriber
-            //Bind<SubscriptionCtrlViewModel>().ToSelf();
-            //Bind<BankViewModel>().ToSelf();
-            //Bind<CurrencyViewModel>().ToSelf();
-            //Bind<BankAccountViewModel>().ToSelf();
-            //Bind<ExchangeRateViewModel>().ToSelf();
-            //Bind<MoneyConversionViewModel>().ToSelf();
-            //Bind<ExchangeViewModel>().ToSelf();
-            //Bind<SubscriptionDefaultViewModel>().ToSelf();
-            //Bind<SubscriptionViewModel>().ToSelf();
-            //Bind<SubscriberListViewModel>().ToSelf();
-            //Bind<PricingViewModel>().ToSelf();
-            //Bind<BonusViewModel>().ToSelf();
-            //#endregion
 
             //#region Employe
 
-            //Bind<EmployeCtrlViewModel>().ToSelf();
-            //Bind<EmployeDefaultViewModel>().ToSelf();
-            //Bind<EmployeListViewModel>().ToSelf();
-            //Bind<DomaineEtudeViewModel>().ToSelf();
-            //Bind<NiveauEtudeViewModel>().ToSelf();
-            //Bind<DivisionViewModel>().ToSelf();
-            //Bind<FonctionViewModel>().ToSelf();
-            //Bind<DirectionInterneViewModel>().ToSelf();
-            //Bind<BureauViewModel>().ToSelf();
-            //Bind<EntiteViewModel>().ToSelf();
+            Bind<EmployeCtrlViewModel>().ToSelf();
+            Bind<EmployeDefaultViewModel>().ToSelf();
+            Bind<EmployeListViewModel>().ToSelf();
+            Bind<AffectationViewModel>().ToSelf();
+            Bind<DepartementViewModel>().ToSelf();
+            Bind<DirectionViewModel>().ToSelf();
+            Bind<EntiteViewModel>().ToSelf();
+            Bind<FonctionViewModel>().ToSelf();
+            Bind<NiveauEtudeViewModel>().ToSelf();
+            Bind<DomaineEtudeViewModel>().ToSelf();
             //#endregion
 
             //#region Carrière
@@ -87,10 +70,10 @@ namespace FingerPrintManagerApp.IoC
             //#endregion
 
             //#region Présence
-            //Bind<PresenceCtrlViewModel>().ToSelf();
-            //Bind<PresenceDefaultViewModel>().ToSelf();
-            //Bind<PresenceWindowViewModel>().ToSelf();
-            //Bind<PresenceEmployeViewModel>().ToSelf();
+            Bind<PresenceCtrlViewModel>().ToSelf();
+            Bind<PresenceDefaultViewModel>().ToSelf();
+            Bind<PresenceWindowViewModel>().ToSelf();
+            Bind<PresenceEmployeViewModel>().ToSelf();
             //#endregion
         }
     }

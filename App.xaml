@@ -8,6 +8,11 @@
              
              xmlns:adm_vm="clr-namespace:FingerPrintManagerApp.Modules.Admin.ViewModel"
              xmlns:adm_view="clr-namespace:FingerPrintManagerApp.Modules.Admin.View"
+             xmlns:employe_vm="clr-namespace:FingerPrintManagerApp.Modules.Employe.ViewModel"
+             xmlns:employe_view="clr-namespace:FingerPrintManagerApp.Modules.Employe.View"
+             
+             xmlns:presence_vm="clr-namespace:FingerPrintManagerApp.Modules.Presence.ViewModel"
+             xmlns:presence_view="clr-namespace:FingerPrintManagerApp.Modules.Presence.View"
              
              StartupUri="View/Main.xaml"
              
@@ -60,92 +65,15 @@
             </DataTemplate>
             <!--#endregion-->
 
-            <!--#region Subscription -->
-            <!--<DataTemplate DataType="{x:Type subscription_vm:ExchangeRateViewModel}">
-                <subscription_view:ExchangeRate />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:ExchangeViewModel}">
-                <subscription_view:ExchangeView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:MoneyConversionViewModel}">
-                <subscription_view:MoneyConversionView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:BankViewModel}">
-                <subscription_view:BankView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:BankAccountViewModel}">
-                <subscription_view:BankAccountView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:CurrencyViewModel}">
-                <subscription_view:CurrencyView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriberChooserListViewModel}">
-                <subscription_view:SubscriberChooserListView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriberMultiChooserListViewModel}">
-                <subscription_view:SubscriberMultiChooserListView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:BonusViewModel}">
-                <subscription_view:BonusView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriptionViewModel}">
-                <subscription_view:SubscriptionView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriberListViewModel}">
-                <subscription_view:SubscriberView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriptionDetailsViewModel}">
-                <subscription_view:SubscriptionDetailsView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:EditSubscriberViewModel}">
-                <subscription_view:EditSubscriberView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:PricingViewModel}">
-                <subscription_view:PricingView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriberDetailsViewModel}">
-                <subscription_view:SubscriberDetailsView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriptionDefaultViewModel}">
-                <subscription_view:SubscriptionDefaultView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type subscription_vm:SubscriptionCtrlViewModel}">
-                <subscription_view:SubscriptionCrtlView />
-            </DataTemplate>-->
-
-            <!--#endregion-->
+           
 
             <!--#region Employe -->
-            <!--<DataTemplate DataType="{x:Type employe_vm:EmployeCtrlViewModel}">
+            <DataTemplate DataType="{x:Type employe_vm:EmployeCtrlViewModel}">
                 <employe_view:EmployeCtrlView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type employe_vm:EmployeDefaultViewModel}">
                 <employe_view:EmployeDefaultView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:NiveauEtudeViewModel}">
-                <employe_view:NiveauEtudeView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:DomaineEtudeViewModel}">
-                <employe_view:DomaineEtudeView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type employe_vm:EmployeListViewModel}">
@@ -164,49 +92,22 @@
                 <employe_view:EditEmployeView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type employe_vm:AddDocumentViewModel}">
-                <employe_view:AddDocumentView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:EditActeNominationViewModel}">
-                <employe_view:EditActeNominationView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:ActeChoiceListViewModel}">
-                <employe_view:ActeChoiceListView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:DocumentViewerViewModel}">
-                <employe_view:DocumentViewerView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:DocumentChoiceViewModel}">
-                <employe_view:DocumentChoiceView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:DirectionInterneViewModel}">
+            <DataTemplate DataType="{x:Type employe_vm:DirectionViewModel}">
                 <employe_view:DirectionView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type employe_vm:DivisionViewModel}">
-                <employe_view:DivisionView />
+            <DataTemplate DataType="{x:Type employe_vm:DepartementViewModel}">
+                <employe_view:DepartementView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type employe_vm:FonctionViewModel}">
-                <employe_view:FonctionView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type employe_vm:BureauViewModel}">
-                <employe_view:BureauView />
+            <DataTemplate DataType="{x:Type employe_vm:AffectationViewModel}">
+                <employe_view:AffectationView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type employe_vm:EntiteViewModel}">
                 <employe_view:EntiteView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type employe_vm:EntiteAddAllFonctionsViewModel}">
-                <employe_view:EntiteAddAllFonctionsView />
-            </DataTemplate>
 
             <DataTemplate DataType="{x:Type employe_vm:FingerPrintViewModel}">
                 <employe_view:FingerPrintView />
@@ -214,7 +115,19 @@
 
             <DataTemplate DataType="{x:Type employe_vm:EmployeDetailsViewModel}">
                 <employe_view:EmployeDetailsView />
-            </DataTemplate>-->
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type employe_vm:FonctionViewModel}">
+                <employe_view:FonctionView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type employe_vm:NiveauEtudeViewModel}">
+                <employe_view:NiveauEtudeView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type employe_vm:DomaineEtudeViewModel}">
+                <employe_view:DomaineEtudeView />
+            </DataTemplate>
 
             <!--#endregion-->
 
@@ -289,7 +202,7 @@
             </DataTemplate>-->
 
             <!--Presence-->
-            <!--<DataTemplate DataType="{x:Type presence_vm:PresenceEmployeViewModel}">
+            <DataTemplate DataType="{x:Type presence_vm:PresenceEmployeViewModel}">
                 <presence_view:PresenceEmployeView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type presence_vm:PresenceDefaultViewModel}">
@@ -297,7 +210,7 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type presence_vm:PresenceCtrlViewModel}">
                 <presence_view:PresenceCtrlView />
-            </DataTemplate>-->
+            </DataTemplate>
             <!--#endregion-->
         </ResourceDictionary>
     </Application.Resources>

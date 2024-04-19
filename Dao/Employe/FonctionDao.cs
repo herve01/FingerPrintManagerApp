@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class FonctionDao : Dao<Fonction>
     {
-        public FonctionDao()
+        public FonctionDao(DbConnection connection = null) : base(connection)
         {
             TableName = "fonction";
         }
@@ -20,19 +20,19 @@ namespace FingerPrintManagerApp.Dao.Employe
             try
             {
 
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as DirectionInterne).Id 
-                //    : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
+                object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id 
+                    : (instance.Niveau == UniteType.Direction ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
 
                 var id = Helper.TableKeyHelper.GetKey(TableName);
 
-                Request.CommandText = "insert into fonction(id, grade_id, intitule, niveau, unite_id, entite_id, description, adding_date, last_update_time) " +
+                Request.CommandText = "insert into fonction(id, grade_id, intitule, niveau, unite_id, entite_id, description, created_at, updated_at) " +
                     "values(@v_id, @v_grade_id, @v_intitule, @v_niveau, @v_unite_id, @v_entite_id, @v_description, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_grade_id", DbType.String, instance.Grade.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_intitule", DbType.String, instance.Intitule));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_niveau", DbType.String, instance.Niveau));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, instance.Entite.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_description", DbType.String, instance.Description));
 
@@ -65,19 +65,19 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as DirectionInterne).Id
-                //         : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
-                
+                object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
+                              : (instance.Niveau == UniteType.Direction ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
+
                 var id = Helper.TableKeyHelper.GetKey(TableName);
 
-                Request.CommandText = "insert into fonction(id, grade_id, intitule, niveau, unite_id, entite_id, description, adding_date, last_update_time) " +
+                Request.CommandText = "insert into fonction(id, grade_id, intitule, niveau, unite_id, entite_id, description, created_at, updated_at) " +
                     "values(@v_id, @v_grade_id, @v_intitule, @v_niveau, @v_unite_id, @v_entite_id, @v_description, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_grade_id", DbType.String, instance.Grade.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_intitule", DbType.String, instance.Intitule));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_niveau", DbType.String, instance.Niveau));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, instance.Entite.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_description", DbType.String, instance.Description));
 
@@ -138,9 +138,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as DirectionInterne).Id
-                //    : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
-            
+                object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
+                              : (instance.Niveau == UniteType.Direction ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
+
                 Request.CommandText = "update fonction " +
                     "set niveau = @v_niveau, " +
                     "grade_id = @v_grade_id, " +
@@ -149,14 +149,14 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "unite_id = @v_unite_id, " +
                     "entite_id = @v_entite_id, " +
                     "description = @v_description, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_grade_id", DbType.String, instance.Grade.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_intitule", DbType.String, instance.Intitule));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_niveau", DbType.String, instance.Niveau));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, instance.Entite.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_description", DbType.String, instance.Description));
 
@@ -206,14 +206,14 @@ namespace FingerPrintManagerApp.Dao.Employe
                 var niveau = Util.ToUniteType(row["niveau"].ToString());
                 switch (niveau)
                 {
-                    //case UniteType.Direction:
-                    //    instance.Unite = new DirectionDao().Get(row["unite_id"].ToString());
-                    //    break;
-                    case UniteType.Division:
-                        instance.Unite = new DivisionDao().Get(row["unite_id"].ToString());
+                    case UniteType.Direction:
+                        instance.Unite = new DirectionDao().Get(row["unite_id"].ToString());
                         break;
-                    case UniteType.Bureau:
-                        instance.Unite = new BureauDao().Get(row["unite_id"].ToString());
+                    case UniteType.Departement:
+                        instance.Unite = new DepartementDao().Get(row["unite_id"].ToString());
+                        break;
+                    case UniteType.Agence:
+                        instance.Unite = new EntiteDao().Get(row["unite_id"].ToString());
                         break;
                     default:
                         break;
@@ -329,6 +329,80 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
+        public List<Fonction> GetAll(Direction direction)
+        {
+            var intances = new List<Fonction>();
+            var _instances = new List<Dictionary<string, object>>();
+
+            try
+            {
+                Request.CommandText = "select * " +
+                    "from fonction " +
+                    "where niveau = 'Direction' and unite_id = @v_unite_id";
+
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, direction.Id));
+
+                Reader = Request.ExecuteReader();
+
+                if (Reader.HasRows)
+                    while (Reader.Read())
+                        _instances.Add(Map(Reader));
+
+                Reader.Close();
+
+                foreach (var item in _instances)
+                {
+                    var fonction = Create(item, false, false);
+                    fonction.Unite = direction;
+                    intances.Add(fonction);
+                }
+            }
+            catch (Exception)
+            {
+                if (Reader != null && !Reader.IsClosed)
+                    Reader.Close();
+            }
+
+            return intances;
+        }
+
+        public List<Fonction> GetAll(Departement departement)
+        {
+            var intances = new List<Fonction>();
+            var _instances = new List<Dictionary<string, object>>();
+
+            try
+            {
+                Request.CommandText = "select * " +
+                    "from fonction " +
+                    "where niveau = 'Departement' and unite_id = @v_unite_id";
+
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, departement.Id));
+
+                Reader = Request.ExecuteReader();
+
+                if (Reader.HasRows)
+                    while (Reader.Read())
+                        _instances.Add(Map(Reader));
+
+                Reader.Close();
+
+                foreach (var item in _instances)
+                {
+                    var fonction = Create(item, false, false);
+                    fonction.Unite = departement;
+                    intances.Add(fonction);
+                }
+            }
+            catch (Exception)
+            {
+                if (Reader != null && !Reader.IsClosed)
+                    Reader.Close();
+            }
+
+            return intances;
+        }
+
         public List<Fonction> GetAll(Entite entite)
         {
             var intances = new List<Fonction>();
@@ -338,48 +412,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "select * " +
                     "from fonction " +
-                    "where entite_id = @v_entite_id";
+                    "where niveau = 'Agence' and unite_id = @v_unite_id";
 
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, entite.Id));
-
-                Reader = Request.ExecuteReader();
-
-                if (Reader.HasRows)
-                    while (Reader.Read())
-                        _instances.Add(Map(Reader));
-
-                Reader.Close();
-
-                foreach (var item in _instances)
-                {
-                    var fonction = Create(item, false, true);
-                    fonction.Entite = entite;
-                    intances.Add(fonction);
-                }
-            }
-            catch (Exception)
-            {
-                if (Reader != null && !Reader.IsClosed)
-                    Reader.Close();
-            }
-
-            return intances;
-        }
-
-
-
-        public List<Fonction> GetAll(Departement division)
-        {
-            var intances = new List<Fonction>();
-            var _instances = new List<Dictionary<string, object>>();
-
-            try
-            {
-                Request.CommandText = "select * " +
-                    "from fonction " +
-                    "where niveau = 'Division' and unite_id = @v_unite_id";
-
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, division.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, entite.Id));
 
                 Reader = Request.ExecuteReader();
 
@@ -392,44 +427,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 foreach (var item in _instances)
                 {
                     var fonction = Create(item, false, false);
-                    fonction.Unite = division;
-                    intances.Add(fonction);
-                }
-            }
-            catch (Exception)
-            {
-                if (Reader != null && !Reader.IsClosed)
-                    Reader.Close();
-            }
-
-            return intances;
-        }
-
-        public List<Fonction> GetAll(Bureau bureau)
-        {
-            var intances = new List<Fonction>();
-            var _instances = new List<Dictionary<string, object>>();
-
-            try
-            {
-                Request.CommandText = "select * " +
-                    "from fonction " +
-                    "where niveau = 'Bureau' and unite_id = @v_unite_id";
-
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, bureau.Id));
-
-                Reader = Request.ExecuteReader();
-
-                if (Reader.HasRows)
-                    while (Reader.Read())
-                        _instances.Add(Map(Reader));
-
-                Reader.Close();
-
-                foreach (var item in _instances)
-                {
-                    var fonction = Create(item, false, false);
-                    fonction.Unite = bureau;
+                    fonction.Unite = entite;
                     intances.Add(fonction);
                 }
             }
@@ -451,7 +449,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "select * " +
                     "from fonction " +
-                    "where adding_date >= @v_time or last_update_time >= @v_time";
+                    "where created_at >= @v_time or updated_at >= @v_time";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_time", DbType.DateTime, lastUpdateTime));
 
@@ -580,44 +578,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
         }
 
-        //public async Task<List<Fonction>> GetAllAsync()
-        //{
-        //    var intances = new List<Fonction>();
-        //    var _instances = new List<Dictionary<string, object>>();
-
-        //    try
-        //    {
-        //        Request.CommandText = "select * " +
-        //            "from fonction " +
-        //            "where niveau = 'Direction' and unite_id = @v_unite_id";
-
-        //        //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, direction.Id));
-
-        //        Reader = await Request.ExecuteReaderAsync();
-
-        //        if (Reader.HasRows)
-        //            while (Reader.Read())
-        //                _instances.Add(Map(Reader));
-
-        //        Reader.Close();
-
-        //        foreach (var item in _instances)
-        //        {
-        //            var fonction = Create(item, false, false);
-        //            fonction.Unite = direction;
-        //            intances.Add(fonction);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        if (Reader != null && !Reader.IsClosed)
-        //            Reader.Close();
-        //    }
-
-        //    return intances;
-        //}
-
-        public async Task<List<Fonction>> GetAllAsync(Departement division)
+        public async Task<List<Fonction>> GetAllAsync(Direction direction)
         {
             var intances = new List<Fonction>();
             var _instances = new List<Dictionary<string, object>>();
@@ -626,9 +587,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "select * " +
                     "from fonction " +
-                    "where niveau = 'Division' and unite_id = @v_unite_id";
+                    "where niveau = 'Direction' and unite_id = @v_unite_id";
 
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, division.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, direction.Id));
 
                 Reader = await Request.ExecuteReaderAsync();
 
@@ -641,7 +602,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 foreach (var item in _instances)
                 {
                     var fonction = Create(item, false, false);
-                    fonction.Unite = division;
+                    fonction.Unite = direction;
                     intances.Add(fonction);
                 }
             }
@@ -654,7 +615,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-        public async Task<List<Fonction>> GetAllAsync(Bureau bureau)
+        public async Task<List<Fonction>> GetAllAsync(Departement departement)
         {
             var intances = new List<Fonction>();
             var _instances = new List<Dictionary<string, object>>();
@@ -663,9 +624,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "select * " +
                     "from fonction " +
-                    "where niveau = 'Bureau' and unite_id = @v_unite_id";
+                    "where niveau = 'Departement' and unite_id = @v_unite_id";
 
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, bureau.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, departement.Id));
 
                 Reader = await Request.ExecuteReaderAsync();
 
@@ -678,7 +639,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 foreach (var item in _instances)
                 {
                     var fonction = Create(item, false, false);
-                    fonction.Unite = bureau;
+                    fonction.Unite = departement;
                     intances.Add(fonction);
                 }
             }

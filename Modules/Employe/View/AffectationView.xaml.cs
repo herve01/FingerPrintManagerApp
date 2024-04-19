@@ -1,31 +1,29 @@
 ﻿using System.ComponentModel;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace FingerPrintManagerApp.Modules.Employe.View
 {
     /// <summary>
-    /// Logique d'interaction pour DivisionView.xaml
+    /// Logique d'interaction pour AffectationView.xaml
     /// </summary>
-    public partial class DivisionView : UserControl
+    public partial class AffectationView : UserControl
     {
         Storyboard statusSB;
-
-        public DivisionView()
+        public AffectationView()
         {
             InitializeComponent();
 
             statusSB = TryFindResource("fadeInStatusSB") as Storyboard;
         }
 
-        private void TextBox_GotFocus_1(object sender, RoutedEventArgs e)
+        private void TextBox_GotFocus_1(object sender, System.Windows.RoutedEventArgs e)
         {
             var txt = (TextBox)sender;
             txt.Select(txt.Text.Length, 0);
         }
 
-        private void This_Loaded(object sender, RoutedEventArgs e)
+        private void This_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             var dp = DependencyPropertyDescriptor.FromProperty(TextBlock.TextProperty, typeof(TextBlock));
             dp.AddValueChanged(txtStatus, (s, a) =>
@@ -35,6 +33,11 @@ namespace FingerPrintManagerApp.Modules.Employe.View
                     statusSB.Begin(this);
                 }
             });
+        }
+
+        private void BtnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            popupPrint.IsOpen = !popupPrint.IsOpen;
         }
     }
 }

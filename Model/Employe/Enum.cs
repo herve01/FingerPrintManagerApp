@@ -10,8 +10,8 @@
     public enum UniteType
     {
         Direction,
-        Division,
-        Bureau
+        Departement,
+        Agence
     }
 
     public enum FonctionEmployeType

@@ -9,16 +9,13 @@ using FingerPrintManagerApp.ViewModel.Command;
 using FingerPrintManagerApp.ViewModel.Extension;
 using Ninject;
 using System.Collections.Generic;
-//using FingerPrintManagerApp.Modules.Admin.ViewModel;
-//using FingerPrintManagerApp.Modules.Employe.ViewModel;
 using FingerPrintManagerApp.Model;
 using FingerPrintManagerApp.Model.Util;
-//using FingerPrintManagerApp.Dao;
 using FingerPrintManagerApp.Model.Admin;
 using FingerPrintManagerApp.Dao;
 using FingerPrintManagerApp.Modules.Admin.ViewModel;
-//using FingerPrintManagerApp.Modules.Carriere.ViewModel;
-//using FingerPrintManagerApp.Modules.Presence.ViewModel;
+using FingerPrintManagerApp.Modules.Employe.ViewModel;
+using FingerPrintManagerApp.Modules.Presence.ViewModel;
 
 namespace FingerPrintManagerApp.ViewModel
 {
@@ -163,9 +160,9 @@ namespace FingerPrintManagerApp.ViewModel
 
         void LoadViewModels()
         {
-            //pageViewModels.Add(IoC.Container.Instance.Kernel.Get<PresenceCtrlViewModel>());
+            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<PresenceCtrlViewModel>());
             //pageViewModels.Add(IoC.Container.Instance.Kernel.Get<CarriereCtrlViewModel>());
-            //pageViewModels.Add(IoC.Container.Instance.Kernel.Get<EmployeCtrlViewModel>());
+            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<EmployeCtrlViewModel>());
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<AdminCtrlViewModel>());
 
             foreach (var ctrl in pageViewModels)

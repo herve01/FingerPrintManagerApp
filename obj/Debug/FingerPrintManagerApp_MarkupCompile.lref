@@ -9,8 +9,9 @@ FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modul
 FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Admin\View\LogView.xaml;;
 FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Admin\View\SettingsView.xaml;;
 FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Admin\View\UserView.xaml;;
-FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\BureauView.xaml;;
-FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\DivisionView.xaml;;
+FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\AffectationView.xaml;;
+FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\DirectionInterneView.xaml;;
+FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\DepartementView.xaml;;
 FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\DomaineEtudeView.xaml;;
 FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\EditEmployeView.xaml;;
 FC:\Users\kayembe\source\repos\FingerPrintManagerApp\FingerPrintManagerApp\Modules\Employe\View\EmployeChoiceListView.xaml;;

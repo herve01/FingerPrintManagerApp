@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao
 {
     public class CommuneDao : Dao<Commune>
     {
-        public CommuneDao()
+        public CommuneDao(DbConnection connection = null) : base(connection)
         {
         }
 

@@ -15,29 +15,32 @@ using System.Windows.Input;
 
 namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 {
-    public class DivisionViewModel : PageViewModel
+    public class DepartementViewModel : PageViewModel
     {
         private static object _lock = new object();
-        private ObservableCollection<Departement> divisions;
+        private ObservableCollection<Departement> departements;
+        private ObservableCollection<Direction> directions;
 
         private bool editing = false;
-        public ICollectionView DivisionsView { get; private set; }
+        public ICollectionView DepartementsView { get; private set; }
         public ICollectionView DirectionsView { get; private set; }
 
-        public DivisionViewModel()
+        public DepartementViewModel()
         {
-            divisions = new ObservableCollection<Departement>();
-            BindingOperations.EnableCollectionSynchronization(divisions, _lock);
-
-            DivisionsView = (CollectionView)CollectionViewSource.GetDefaultView(divisions);
-            DivisionsView.GroupDescriptions.Add(new PropertyGroupDescription("Direction.Denomination"));
-            DivisionsView.SortDescriptions.Add(new SortDescription("Direction.EstGenerale", ListSortDirection.Descending));
-            DivisionsView.SortDescriptions.Add(new SortDescription("Direction.Denomination", ListSortDirection.Ascending));
-            DivisionsView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
+            departements = new ObservableCollection<Departement>();
+            BindingOperations.EnableCollectionSynchronization(departements, _lock);
+            DepartementsView = (CollectionView)CollectionViewSource.GetDefaultView(departements);
+            DepartementsView.GroupDescriptions.Add(new PropertyGroupDescription("Direction.Denomination"));
+            DepartementsView.SortDescriptions.Add(new SortDescription("Direction.EstGenerale", ListSortDirection.Descending));
+            DepartementsView.SortDescriptions.Add(new SortDescription("Direction.Denomination", ListSortDirection.Ascending));
+            DepartementsView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
             //Filtering
-            DivisionsView.Filter = OnFilterDivision;
+            DepartementsView.Filter = OnFilterDepartement;
 
-     
+            directions = new ObservableCollection<Direction>();
+            DirectionsView = (CollectionView)CollectionViewSource.GetDefaultView(directions);
+            DirectionsView.SortDescriptions.Add(new SortDescription("EstGenerale", ListSortDirection.Descending));
+            DirectionsView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
 
             FilterText = string.Empty;
 
@@ -45,26 +48,26 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             MenuInit();
         }
 
-        private bool OnFilterDivision(object obj)
+        private bool OnFilterDepartement(object obj)
         {
-            var division = obj as Departement;
+            var departement = obj as Departement;
 
-            if (division == null)
+            if (departement == null)
                 return false;
 
             var pattern = FilterText.Trim().ToLower().NoAccent();
 
-            return division.Denomination.ToLower().NoAccent().Contains(pattern);
-                //|| division.Direction.Denomination.ToLower().NoAccent().Contains(pattern);
+            return departement.Denomination.ToLower().NoAccent().Contains(pattern)
+                || departement.Direction.Denomination.ToLower().NoAccent().Contains(pattern);
 
         }
 
         private string _action;
         private string _filterText;
         private int _count;
-        private Departement _division;
-        private bool _divisionLoading;
-        //private DirectionInterne _visibleDirection;
+        private Departement _departement;
+        private bool _departementLoading;
+        private Direction _visibleDirection;
 
         public string Action
         {
@@ -92,12 +95,12 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 if (_filterText != value)
                 {
                     _filterText = value;
-                    DivisionsView.Refresh();
+                    DepartementsView.Refresh();
                     RaisePropertyChanged(() => FilterText);
                 }
             }
         }
-        public int DivisionCount
+        public int DepartementCount
         {
             get
             {
@@ -108,39 +111,39 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 if (_count != value)
                 {
                     _count = value;
-                    RaisePropertyChanged(() => DivisionCount);
+                    RaisePropertyChanged(() => DepartementCount);
                 }
             }
         }
 
-        public Departement Division
+        public Departement Departement
         {
             get
             {
-                return this._division;
+                return this._departement;
             }
             set
             {
-                if (_division != value)
+                if (_departement != value)
                 {
-                    _division = value;
-                    RaisePropertyChanged(() => Division);
+                    _departement = value;
+                    RaisePropertyChanged(() => Departement);
                 }
             }
         }
 
-        public bool DivisionLoading
+        public bool DepartementLoading
         {
             get
             {
-                return this._divisionLoading;
+                return this._departementLoading;
             }
             set
             {
-                if (_divisionLoading != value)
+                if (_departementLoading != value)
                 {
-                    _divisionLoading = value;
-                    RaisePropertyChanged(() => DivisionLoading);
+                    _departementLoading = value;
+                    RaisePropertyChanged(() => DepartementLoading);
                 }
             }
         }
@@ -151,8 +154,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             UpdateTimer.IsEnabled = false;
 
-            //await LoadDirectionChanges();
-            await LoadDivisionChanges();
+            await LoadDirectionChanges();
+            await LoadDepartementChanges();
 
             LastDataUpdateTime = DateTime.Now;
 
@@ -163,8 +166,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             if (!IsInit)
             {
-                await LoadDivisions();
-                //await LoadDirections();
+                await LoadDepartements();
+                await LoadDirections();
                 LastDataUpdateTime = DateTime.Now;
                 IsInit = true;
             }
@@ -172,65 +175,66 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             UpdateTimer.IsEnabled = true;
         }
 
-        async Task LoadDivisions()
+        async Task LoadDepartements()
         {
-            //DivisionLoading = true;
+            DepartementLoading = true;
 
-            //divisions.Clear();
+            departements.Clear();
 
-            //DivisionCount = new DivisionDao().Count(AppConfig.CurrentUser.Entite);
+            DepartementCount = new DepartementDao().Count();
 
-            //await Task.Run(() => new DivisionDao().GetAllAsync(AppConfig.CurrentUser.Entite, divisions));
+            await Task.Run(() => new DepartementDao().GetAllAsync(departements));
 
-            //DivisionLoading = false;
+            DepartementLoading = false;
 
-            //DivisionsView.Refresh();
+            DepartementsView.Refresh();
         }
 
-        //async Task LoadDirections()
-        //{
-        //    directions.Clear();
-
-        //    var list = await Task.Run(() => new DirectionDao().GetAllAsync());
-
-        //    list.ForEach(d => directions.Add(d));
-
-        //    DirectionsView.MoveCurrentToFirst();
-        //}
-
-        //async Task LoadDirectionChanges()
-        //{
-        //    var list = await Task.Run(() => new DirectionDao().GetAllAsync(LastDataUpdateTime.AddSeconds(-5)));
-
-        //    list.ForEach(d => {
-        //        var _d = directions.ToList().Find(e => e.Equals(d));
-
-        //        if (_d != null) directions.Remove(_d);
-
-        //        if (d.Equals(Division.Direction))
-        //            Division.Direction = d;
-
-        //        directions.Add(d);
-        //    });
-
-        //    DirectionsView.Refresh();
-        //}
-
-        async Task LoadDivisionChanges()
+        async Task LoadDirections()
         {
-            //DivisionCount = new DivisionDao().Count(AppConfig.CurrentUser.Entite);
+            directions.Clear();
 
-            //var list = await Task.Run(() => new DivisionDao().GetAllAsync(LastDataUpdateTime.AddSeconds(-5)));
+            var list = await Task.Run(() => new DirectionDao().GetAllAsync());
+
+            list.ForEach(d => directions.Add(d));
+
+            DirectionsView.MoveCurrentToFirst();
+        }
+
+        async Task LoadDirectionChanges()
+        {
+            var list = await Task.Run(() => new DirectionDao().GetAllAsync(LastDataUpdateTime.AddSeconds(-5)));
+
+            list.ForEach(d =>
+            {
+                var _d = directions.ToList().Find(e => e.Equals(d));
+
+                if (_d != null) directions.Remove(_d);
+
+                if (d.Equals(Departement.Direction))
+                    Departement.Direction = d;
+
+                directions.Add(d);
+            });
+
+            DirectionsView.Refresh();
+        }
+
+        async Task LoadDepartementChanges()
+        {
+            //DepartementCount = new DepartementDao().Count(AppConfig.CurrentUser.Entite);
+
+            //var list = await Task.Run(() => new DepartementDao().GetAllAsync(LastDataUpdateTime.AddSeconds(-5)));
 
             //list.ForEach(d => {
-            //    var _d = divisions.ToList().Find(e => e.Equals(d));
+            //    var _d = departements.ToList().Find(e => e.Equals(d));
 
-            //    if (_d != null) divisions.Remove(_d);
+            //    if (_d != null) departements.Remove(_d);
 
-            //    divisions.Add(d);
+            //    departements.Add(d);
             //});
 
-            //DivisionsView.Refresh();
+            //DepartementsView.Refresh();
         }
 
         public ICommand SaveCommand
@@ -248,60 +252,60 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             Status = string.Empty;
 
-            //Division.Entite = AppConfig.CurrentUser.Entite;
+            //Departement.Entite = AppConfig.CurrentUser.Entite;
 
             if (!editing)
             {
-                if (divisions.Contains(Division))
+                if (departements.Contains(Departement))
                 {
-                    Status = "Une division avec la même description existe déjà.";
+                    Status = "Une departement avec la même description existe déjà.";
                     return;
                 }
 
-                if (new DivisionDao().Add(Division) > 0)
+                if (new DepartementDao().Add(Departement) > 0)
                 {
                     Dao.Admin.LogUtil.AddEntry(
                             AppConfig.CurrentUser,
-                            DbUtil.Entity.Division + "",
-                            string.Format("Enregistrement de la division '{0}' (ID : {1}).", Division.Denomination, Division.Id)
+                            DbUtil.Entity.Departement + "",
+                            string.Format("Enregistrement de la departement '{0}' (ID : {1}).", Departement.Denomination, Departement.Id)
                         );
 
-                    divisions.Add(Division);
-                    DivisionCount++;
-                    DivisionsView.Refresh();
-                    Status = "Division enregistrée avec succès !";
+                    departements.Add(Departement);
+                    DepartementCount++;
+                    DepartementsView.Refresh();
+                    Status = "Departement enregistrée avec succès !";
                     InitSave();
                 }
             }
             else
             {
-                var clone = (Departement)Division.Clone();
+                var clone = (Departement)Departement.Clone();
                 clone.Id = string.Empty;
 
-                divisions.Remove(Division);
+                departements.Remove(Departement);
 
-                if (!divisions.Contains(clone))
+                if (!departements.Contains(clone))
                 {
                     Dao.Admin.LogUtil.AddEntry(
                             AppConfig.CurrentUser,
-                            DbUtil.Entity.Division + "",
-                            string.Format("Modification de la division '{0}' (ID : {1}).", Division.Denomination, Division.Id)
+                            DbUtil.Entity.Departement + "",
+                            string.Format("Modification de la departement '{0}' (ID : {1}).", Departement.Denomination, Departement.Id)
                         );
 
-                    if (new DivisionDao().Update(Division) > 0)
+                    if (new DepartementDao().Update(Departement) > 0)
                     {
-                        Status = "Division modifiée avec succès !";
-                        divisions.Add(Division);
-                        DivisionsView.Refresh();
+                        Status = "Departement modifiée avec succès !";
+                        departements.Add(Departement);
+                        DepartementsView.Refresh();
                         InitSave();
                     }
                 }
                 else
                 {
-                    Status = "Une division avec la même description existe déjà !";
-                    Division.CancelEdit();
-                    divisions.Add(Division);
-                    DivisionsView.Refresh();
+                    Status = "Une departement avec la même description existe déjà !";
+                    Departement.CancelEdit();
+                    departements.Add(Departement);
+                    DepartementsView.Refresh();
                 }
 
             }
@@ -309,12 +313,12 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         private void InitSave()
         {
-            //var direction = Division?.Direction;
+            //var direction = Departement?.Direction;
 
-            Division = new Departement();
+            Departement = new Departement();
             Action = "Enregistrer";
             editing = false;
-            Title = "Nouvelle division";
+            Title = "Nouvelle departement";
 
             //if (direction != null)
             //    DirectionsView.MoveCurrentTo(direction);
@@ -324,18 +328,18 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         private void MenuInit()
         {
-            Name = "Division";
+            Name = "Departement";
             OptionItem = new OptionItem()
             {
-                Name = "Division",
-                ToolTip = "Division",
+                Name = "Departement",
+                ToolTip = "Departement",
                 IconPathData = "M8,24C6.3460002,24 5,25.346001 5,27 5,28.653999 6.3460002,30 8,30 9.6540003,30 11,28.653999 11,27 11,25.346001 9.6540003,24 8,24z M21,18C19.346001,18 18,19.346001 18,21 18,22.653999 19.346001,24 21,24 22.653999,24 24,22.653999 24,21 24,19.346001 22.653999,18 21,18z M27,5C25.346001,5 24,6.3460002 24,8 24,9.6540003 25.346001,11 27,11 28.653999,11 30,9.6540003 30,8 30,6.3460002 28.653999,5 27,5z M8,2C4.6910095,2 2,4.6909943 2,8 2,11.309006 4.6910095,14 8,14 11.30899,14 14,11.309006 14,8 14,4.6909943 11.30899,2 8,2z M8,0C12.066401,0,15.434203,3.0501282,15.935603,6.9825435L15.937605,7 22.100616,7 22.101765,6.9935956C22.568781,4.7172971 24.587626,3 27,3 29.757,3 32,5.243 32,8 32,10.757 29.757,13 27,13 24.587626,13 22.568781,11.282703 22.101765,9.0064049L22.100616,9 15.937605,9 15.935603,9.0174561C15.765205,10.353863,15.263757,11.588371,14.516341,12.635893L14.388103,12.808235 18.345156,16.766047 18.409283,16.724895C19.165298,16.265041 20.05228,16 21,16 23.757,16 26,18.243 26,21 26,23.757 23.757,26 21,26 18.243,26 16,23.757 16,21 16,19.966125 16.315422,19.004532 16.855087,18.206396L16.897621,18.146629 12.995,14.244009 12.974164,14.261286C11.884956,15.128406,10.565331,15.717825,9.1234684,15.921363L8.9759865,15.938684 8.9759865,22.096317 9.0064049,22.101765C11.282703,22.568781 13,24.587626 13,27 13,29.757 10.757,32 8,32 5.243,32 3,29.757 3,27 3,24.67378 4.5968232,22.713486 6.7518983,22.157686L6.975987,22.105839 6.975987,15.934683 6.7833576,15.907648C2.9475975,15.319838 0,11.997465 0,8 0,3.5890045 3.5889893,0 8,0z"
             };
         }
 
         private bool CanSave()
         {
-            return Division.Error == string.Empty;
+            return Departement.Error == string.Empty;
         }
 
         public ICommand CancelCommand
@@ -352,7 +356,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private void Cancel()
         {
             if (editing)
-                Division.CancelEdit();
+                Departement.CancelEdit();
 
             InitSave();
         }
@@ -377,13 +381,13 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             if (param is Departement)
             {
-                Division = (Departement)param;
-                Division.BeginEdit();
+                Departement = (Departement)param;
+                Departement.BeginEdit();
                 editing = true;
                 Action = "Modifier";
-                Title = "Modification de la division";
+                Title = "Modification de la departement";
 
-                //DirectionsView.MoveCurrentTo(directions.ToList().Find(d => d.Equals(Division.Direction)));
+                //DirectionsView.MoveCurrentTo(directions.ToList().Find(d => d.Equals(Departement.Direction)));
             }
         }
 
@@ -409,29 +413,29 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             if (param is Departement)
             {
-                var division = (Departement)param;
+                var departement = (Departement)param;
 
-                var msg = string.Format("Êtes - vous sûr(e) de vouloir supprimer la division <<{0}>> ?", division.Denomination);
+                var msg = string.Format("Êtes - vous sûr(e) de vouloir supprimer la departement <<{0}>> ?", departement.Denomination);
 
                 if (MyMsgBox.Show(msg, "Humager", MyMsgBoxButton.YesNoCancel, MyMsgBoxIcon.Warning) == DialogueResult.Yes)
                 {
-                    if (new DivisionDao().Delete(division) > 0)
+                    if (new DepartementDao().Delete(departement) > 0)
                     {
                         Dao.Admin.LogUtil.AddEntry(
                             AppConfig.CurrentUser,
-                            DbUtil.Entity.Division + "",
-                            string.Format("Suppression de la division '{0}' (ID : {1}).", division.Denomination, division.Id)
+                            DbUtil.Entity.Departement + "",
+                            string.Format("Suppression de la departement '{0}' (ID : {1}).", departement.Denomination, departement.Id)
                         );
 
-                        divisions.Remove(division);
-                        DivisionCount--;
+                        departements.Remove(departement);
+                        DepartementCount--;
 
-                        Status = "Division supprimée avec succès !";
+                        Status = "Departement supprimée avec succès !";
                     }
                     else
                     {
-                        Status = "Suppression de la division échouée ! Vérifiez que vous êtes bien connecté au serveur de données, " +
-                            "sinon cette division est réliée à d'autres objets et ne peut donc pas être supprimée.";
+                        Status = "Suppression de la departement échouée ! Vérifiez que vous êtes bien connecté au serveur de données, " +
+                            "sinon cette departement est réliée à d'autres objets et ne peut donc pas être supprimée.";
                     }
                 }
 
@@ -452,7 +456,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             //    var items = Humager.ViewModel.Helper.View.GetItemsControlVisibleItemsFromTheTop(control, (FrameworkElement)control.Parent);
 
             //    if (items.Count > 0)
-            //        VisibleDirection = ((Division)items[0]).Direction;
+            //        VisibleDirection = ((Departement)items[0]).Direction;
             //    else
             //        VisibleDirection = null;
 

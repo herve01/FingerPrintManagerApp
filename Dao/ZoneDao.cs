@@ -11,7 +11,7 @@ namespace FingerPrintManagerApp.Dao
 {
     public class ZoneDao : Dao<Zone>
     {
-        public ZoneDao()
+        public ZoneDao(DbConnection connection = null) : base(connection)
         {
             TableName = "zone";
         }
@@ -264,7 +264,7 @@ namespace FingerPrintManagerApp.Dao
                 { "nom", reader["nom"] },
                 { "type", reader["type"] },
                 { "province_id", reader["province_id"] },
-                { "adding_date", reader["adding_date"] }
+                { "created_at", reader["created_at"] }
             };
         }
     }

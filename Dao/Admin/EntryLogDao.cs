@@ -19,7 +19,7 @@ namespace FingerPrintManagerApp.Dao.Admin
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "insert into entry_log(id, user_id, event, entry_date, entity, ip_address, machine_name) " +
                     "values(@v_id, @v_user_id, @v_event, @v_entry_date, @v_entity, @v_ip_address, @v_machine_name)";

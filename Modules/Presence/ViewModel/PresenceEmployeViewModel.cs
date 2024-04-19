@@ -261,8 +261,8 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
 
                 PresenceLoading = true;
 
-                if (Presence.Employe.FonctionsInterim != null)
-                    Presence.Employe.FonctionsInterim.ForEach(f => f.DateFin = Presence.Date);
+                //if (Presence.Employe.FonctionsInterim != null)
+                //    Presence.Employe.FonctionsInterim.ForEach(f => f.DateFin = Presence.Date);
 
                 Presence.Mode = Model.Presence.ModePointage.Utilisateur;
                 Presence.Date = SelectedPresenceDate;
@@ -468,7 +468,7 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
             {
                 var employe = (Model.Employe.Employe)obj;
 
-                employe.CurrentFonctionNomination = new Dao.Employe.EmployeFonctionDao().GetCurrent(employe);
+                //employe.CurrentFonctionNomination = new Dao.Employe.EmployeFonctionDao().GetCurrent(employe);
 
                 Presence.Employe = employe;
 
@@ -503,7 +503,7 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
             if (employe == null)
                 return false;
 
-            if (employe.Equals(Presence.Employe) || employe.EstActif == false)
+            if (employe.Equals(Presence.Employe) )
                 return false;
 
             return true;

@@ -7,10 +7,6 @@ namespace FingerPrintManagerApp.Dao
 {
     public abstract class Dao<T>
     {
-        public abstract int Add(T obj);
-        public abstract int Delete(T obj);
-        public abstract int Update(T newObj, T oldObj);
-
         protected abstract Dictionary<string, object> Map(DbDataReader row);
 
         protected DbConnection Connection;
@@ -22,23 +18,36 @@ namespace FingerPrintManagerApp.Dao
         protected string AutoIncrementFunction = string.Empty;
         protected string TableName = string.Empty;
 
-        public Dao()
+        public Dao(DbConnection connection = null)
         {
             try
             {
-                Connection = ConnectionHelper.GetConnection();
-                Request = Connection.CreateCommand();
-                AutoIncrementFunction = DbConfig.AutoIncrementFunctions[DbConfig.DbInvariant];
-                Adapter = DbProviderFactories.GetFactory(DbConfig.Providers[DbConfig.DbInvariant]).CreateDataAdapter();
-                Table = new DataTable();
-
-                if (Connection.State == ConnectionState.Closed)
-                    Connection.Open();
+                Connection = connection ?? ConnectionHelper.GetConnection();
+                InitProperties();
             }
             catch (Exception)
             {
 
             }
         }
+        public void UseNewConnection()
+        {
+            Connection = ConnectionHelper.GetNewInstance();
+            InitProperties();
+        }
+        void InitProperties()
+        {
+            Request = Connection.CreateCommand();
+            AutoIncrementFunction = DbConfig.AutoIncrementFunctions[DbConfig.DbInvariant ?? "MySQL"];
+            Adapter = DbProviderFactories.GetFactory(DbConfig.Providers[DbConfig.DbInvariant]).CreateDataAdapter();
+            Table = new DataTable();
+
+            if (Connection.State == ConnectionState.Closed)
+                Connection.Open();
+        }
+
+        public abstract int Add(T obj);
+        public abstract int Delete(T obj);
+        public abstract int Update(T newObj, T oldObj);
     }
 }

@@ -4,7 +4,6 @@ using FingerPrintManagerApp.Dialog.Service;
 using FingerPrintManagerApp.Model;
 using FingerPrintManagerApp.Model.Admin.Util;
 using FingerPrintManagerApp.Model.Employe;
-using FingerPrintManagerApp.Modules.Employe.ViewModel.Adapter;
 using FingerPrintManagerApp.ViewModel.Command;
 using FingerPrintManagerApp.ViewModel.Contract;
 using System;
@@ -25,15 +24,13 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private ObservableCollection<Province> provinces;
         private ObservableCollection<Zone> zones;
         private ObservableCollection<Commune> communes;
-        private ObservableCollection<EnfantAddAdapter> enfants;
+
         private ObservableCollection<Grade> initGrades;
         private ObservableCollection<Grade> currentGrades;
         private ObservableCollection<Grade> currentStatutaireGrades;
-        private ObservableCollection<Fonction> currentFonctions;
-        private ObservableCollection<NiveauEtude> niveaux;
-        private ObservableCollection<DomaineEtude> domaines;
-        private ObservableCollection<Departement> divisions;
-        private ObservableCollection<Bureau> bureaux;
+
+        private ObservableCollection<Departement> departements;
+
         private ObservableCollection<Entite> entites;
         private ObservableCollection<int> annees;
         private ObservableCollection<EmployeEmpreinte> empreintes;
@@ -95,8 +92,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             CommunesView = (CollectionView)CollectionViewSource.GetDefaultView(communes);
             CommunesView.SortDescriptions.Add(new SortDescription("Nom", ListSortDirection.Ascending));
 
-            enfants = new ObservableCollection<EnfantAddAdapter>();
-            EnfantsView = (CollectionView)CollectionViewSource.GetDefaultView(enfants);
+   
 
             empreintes = new ObservableCollection<EmployeEmpreinte>();
             EmpreintesView = (CollectionView)CollectionViewSource.GetDefaultView(empreintes);
@@ -111,11 +107,6 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             etatsCivils = Enum.GetValues(typeof(EtatCivil));
             EtatsCivilsView = (CollectionView)CollectionViewSource.GetDefaultView(etatsCivils);
 
-            niveaux = new ObservableCollection<NiveauEtude>();
-            NiveauxView = (CollectionView)CollectionViewSource.GetDefaultView(niveaux);
-
-            domaines = new ObservableCollection<DomaineEtude>();
-            DomainesView = (CollectionView)CollectionViewSource.GetDefaultView(domaines);
 
             entites = new ObservableCollection<Entite>();
             EntitesView = (CollectionView)CollectionViewSource.GetDefaultView(entites);
@@ -134,18 +125,12 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             CurrentGradesView.SortDescriptions.Add(new SortDescription("Niveau", ListSortDirection.Ascending));
             CurrentGradesView.Filter += OnCurrentGradeFilter;
 
-            currentFonctions = new ObservableCollection<Fonction>();
-            CurrentFonctionsView = (CollectionView)CollectionViewSource.GetDefaultView(currentFonctions);
-            CurrentFonctionsView.SortDescriptions.Add(new SortDescription("Grade.Niveau", ListSortDirection.Ascending));
-
-            divisions = new ObservableCollection<Departement>();
-            DivisionsView = (CollectionView)CollectionViewSource.GetDefaultView(divisions);
+            
+            departements = new ObservableCollection<Departement>();
+            DivisionsView = (CollectionView)CollectionViewSource.GetDefaultView(departements);
             DivisionsView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
 
-            bureaux = new ObservableCollection<Bureau>();
-            BureauxView = (CollectionView)CollectionViewSource.GetDefaultView(bureaux);
-            BureauxView.SortDescriptions.Add(new SortDescription("Denomination", ListSortDirection.Ascending));
-
+            
             NombreEnfantString = "0";
 
             annees = new ObservableCollection<int>();
@@ -216,7 +201,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         Grade _initGrade;
         Grade _currentGrade;
         Grade _currentStatutaireGrade;
-        Fonction _currentFonction;
+
 
         DateTime _dateEngagement;
         DateTime _dateCurrentGrade;
@@ -238,7 +223,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         private Entite _selectedEntite;
         private bool _isSiege;
         private bool _estAffecte;
-        private NiveauEtude _selectedNiveau;
+
 
         void InitStepHeaders()
         {
@@ -404,8 +389,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
                     Employe.EstAffecte = EstAffecte;
 
-                    if (EstAffecte && CurrentGrade != null && CurrentGrade.Niveau >= 7)
-                        Employe.CurrentFonctionNomination.IsRequired = true;
+                    //if (EstAffecte && CurrentGrade != null && CurrentGrade.Niveau >= 7)
+                    //    Employe.CurrentFonctionNomination.IsRequired = true;
                 }
             }
         }
@@ -430,7 +415,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
                     _initGrade = value;
 
-                    Employe.GradeEngagement.Grade = _initGrade;
+                    Employe.CurrentGrade.Grade = _initGrade;
                     CurrentGradesView.Refresh();
                 }
             }
@@ -474,26 +459,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
                     //Employe.CurrentGradeNomination.Grade = _currentGrade;
 
-                    if (EstAffecte && CurrentGrade != null && CurrentGrade.Niveau >= 7)
-                        Employe.CurrentFonctionNomination.IsRequired = true;
-                }
-            }
-        }
-
-        public Fonction CurrentFonction
-        {
-            get
-            {
-                return this._currentFonction;
-            }
-            set
-            {
-                if (_currentFonction != value)
-                {
-                    _currentFonction = value;
-                    RaisePropertyChanged(() => CurrentFonction);
-
-                    Employe.CurrentFonctionNomination.Fonction = _currentFonction;
+                    //if (EstAffecte && CurrentGrade != null && CurrentGrade.Niveau >= 7)
+                    //    Employe.CurrentFonctionNomination.IsRequired = true;
                 }
             }
         }
@@ -674,7 +641,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 {
                     _selectedProvince = value;
                     RaisePropertyChanged(() => SelectedProvince);
-                    LoadZones();
+                    
                 }
             }
         }
@@ -690,7 +657,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 {
                     _selectedZone = value;
                     RaisePropertyChanged(() => SelectedZone);
-                    LoadCommunes();
+                   
                 }
             }
         }
@@ -723,26 +690,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             }
         }
 
-        public NiveauEtude SelectedNiveau
-        {
-            get
-            {
-                return this._selectedNiveau;
-            }
-            set
-            {
-                if (_selectedNiveau != value)
-                {
-                    _selectedNiveau = value;
-                    RaisePropertyChanged(() => SelectedNiveau);
-
-                    Employe.CurrentHighEtude.Niveau = SelectedNiveau;
-
-                    if (initGrades.Count > 0 && SelectedNiveau != null)
-                        InitGradesView.MoveCurrentTo(initGrades.ToList().Find(n => n.Equals(SelectedNiveau.GradeRecrutement)));
-                }
-            }
-        }
+   
         private string _action;
         public string Action
         {
@@ -791,39 +739,18 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                     _selectedDivision = value;
                     RaisePropertyChanged(() => SelectedDivision);
 
-                    if (SelectedUnite == UniteType.Division)
-                    {
-                        Employe.CurrentAffectation.Unite = SelectedDivision;
-                        LoadFonctions(SelectedDivision);
-                    }
+                    //if (SelectedUnite == UniteType.Division)
+                    //{
+                    //    Employe.CurrentAffectation.Unite = SelectedDivision;
+                    //    //LoadFonctions(SelectedDivision);
+                    //}
 
-                    LoadBureaux();
+                    //LoadBureaux();
                 }
             }
         }
 
-        private Bureau _selectedBureau;
-        public Bureau SelectedBureau
-        {
-            get
-            {
-                return this._selectedBureau;
-            }
-            set
-            {
-                if (_selectedBureau != value)
-                {
-                    _selectedBureau = value;
-                    RaisePropertyChanged(() => SelectedBureau);
-
-                    if (SelectedUnite == UniteType.Bureau)
-                    {
-                        Employe.CurrentAffectation.Unite = SelectedBureau;
-                        LoadFonctions(SelectedBureau);
-                    }
-                }
-            }
-        }
+   
 
         private bool _showDivision;
         public bool ShowDivision
@@ -878,14 +805,14 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
                     //Employe.CurrentAffectation.Unite = SelectedUnite == UniteType.Direction ? (object)SelectedDirection : SelectedUnite == UniteType.Division ? (object)SelectedDivision : (object)SelectedBureau;
 
-                    LoadFonctions(Employe.CurrentAffectation.Unite);
+                    //LoadFonctions(Employe.CurrentAffectation.Unite);
 
                     ShowDivision = ShowBureau = false;
 
-                    if (SelectedUnite == UniteType.Division)
-                        ShowDivision = true;
-                    else if (SelectedUnite == UniteType.Bureau)
-                        ShowBureau = ShowDivision = true;
+                    //if (SelectedUnite == UniteType.Division)
+                    //    ShowDivision = true;
+                    //else if (SelectedUnite == UniteType.Bureau)
+                    //    ShowBureau = ShowDivision = true;
                 }
             }
         }
@@ -901,12 +828,12 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 Employe["DateNaissance"] == string.Empty &&
                 Employe["ProvinceOrigine"] == string.Empty &&
                 this["NombreEnfant"] == string.Empty &&
-                Employe.CurrentHighEtude.Error == string.Empty &&
+                //Employe.CurrentHighEtude.Error == string.Empty &&
                 Employe["Telephone"] == string.Empty &&
                 Employe["Email"] == string.Empty &&
                 Employe["PersonneContact"] == string.Empty &&
-                Employe["QualiteContact"] == string.Empty &&
-                Employe.Address.Error == string.Empty;
+                Employe["QualiteContact"] == string.Empty;
+                //Employe.Address.Error == string.Empty;
 
         }
 
@@ -914,10 +841,11 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             return Employe["Etat"] == string.Empty &&
                 this["Matricule"] == string.Empty &&
-                Employe.GradeEngagement.Error == string.Empty &&
-                (!Employe.EstAffecte || (Employe.EstAffecte && Employe.CurrentAffectation.Error == string.Empty)) &&
+                Employe.CurrentGrade.Error == string.Empty &&
+                (!Employe.EstAffecte || (Employe.EstAffecte && Employe.CurrentAffectation.Error == string.Empty));
+                //&&
               
-                (!Employe.CurrentFonctionNomination.IsRequired || (Employe.CurrentFonctionNomination.IsRequired && Employe.CurrentFonctionNomination.Error == string.Empty));
+                //(!Employe.CurrentFonctionNomination.IsRequired || (Employe.CurrentFonctionNomination.IsRequired && Employe.CurrentFonctionNomination.Error == string.Empty));
 
         }
 
@@ -951,9 +879,6 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 await LoadDivisionProvinciale();
 
             await LoadGrades();
-            await LoadProvinces();
-            await LoadNiveaux();
-            await LoadDomaines();
             await LoadEntites();
 
             IsInit = true;
@@ -977,32 +902,13 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             list.ForEach(g => { initGrades.Add(g); currentGrades.Add(g); currentStatutaireGrades.Add(g); });
 
-            if (initGrades.Count > 0 && SelectedNiveau != null)
-                InitGradesView.MoveCurrentTo(initGrades.ToList().Find(n => n.Equals(SelectedNiveau.GradeRecrutement)));
-            else 
-                InitGradesView.MoveCurrentToFirst();
+            //if (initGrades.Count > 0 && SelectedNiveau != null)
+            //    InitGradesView.MoveCurrentTo(initGrades.ToList().Find(n => n.Equals(SelectedNiveau.GradeRecrutement)));
+            //else 
+            //    InitGradesView.MoveCurrentToFirst();
         }
 
-        private async Task LoadNiveaux()
-        {
-            niveaux.Clear();
 
-            var list = await Task.Run(() => new NiveauEtudeDao().GetAllAsync());
-
-            list.ForEach(g => { niveaux.Add(g);});
-
-            NiveauxView.MoveCurrentToFirst();
-        }
-
-        private async Task LoadDomaines()
-        {
-            domaines.Clear();
-
-            var list = await Task.Run(() => new DomaineEtudeDao().GetAllAsync());
-
-            list.ForEach(g => { domaines.Add(g); });
-
-        }
 
         private async Task LoadEntites()
         {
@@ -1020,61 +926,25 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         }
 
-        private async Task LoadProvinces()
-        {
-            provinces.Clear();
-            provincesOrigine.Clear();
-
-            var list = await Task.Run(() => new Dao.ProvinceDao().GetAllAsync(true));
-
-            list.ForEach(c => { provinces.Add(c); provincesOrigine.Add(c);});
-
-            if (!ForAdding)
-            {
-                ProvincesView.MoveCurrentTo(list.Find(c => c.Equals(Employe.Address.Commune.Zone.Province)));
-                ProvincesOrigineView.MoveCurrentTo(Employe.ProvinceOrigine);
-            }
-            else
-            {
-                ProvincesView.MoveCurrentTo(list.Find(c => c.Equals(AppConfig.CurrentUser.Entite.Address.Commune.Zone.Province)));
-                ProvincesOrigineView.MoveCurrentToFirst();
-            }
-
-        }
-
-        private void LoadFonctions(object unite)
-        {
-            currentFonctions.Clear();
-
-            if (unite == null)
-                return;
-
-            //if (unite is DirectionInterne)
-            //    ((DirectionInterne)unite).Fonctions.ForEach(f => currentFonctions.Add(f));
-            if (unite is Departement)
-                ((Departement)unite).Fonctions.ForEach(f => currentFonctions.Add(f));
-            if (unite is Bureau)
-                ((Bureau)unite).Fonctions.ForEach(f => currentFonctions.Add(f));
-
-        }
+      
 
         private void LoadDivisions()
         {
-            divisions.Clear();
+            departements.Clear();
 
             //if (SelectedDirection == null)
             //    return;
 
-            //SelectedDirection.Divisions.ForEach(d => divisions.Add(d));
+            //SelectedDirection.Divisions.ForEach(d => departements.Add(d));
 
             //if (!ForAdding)
             //{
             //    var uniteType = Employe.CurrentAffectation.Niveau;
 
-            //    var division = uniteType == UniteType.Direction ? SelectedDirection.Divisions.First() :
+            //    var departement = uniteType == UniteType.Direction ? SelectedDirection.Divisions.First() :
             //        uniteType == UniteType.Division ? (Division)Employe.CurrentAffectation.Unite : ((Bureau)Employe.CurrentAffectation.Unite).Division;
 
-            //    DivisionsView.MoveCurrentTo(SelectedDirection.Divisions.Find(c => c.Equals(division)));
+            //    DivisionsView.MoveCurrentTo(SelectedDirection.Divisions.Find(c => c.Equals(departement)));
             //}
             //else
             //    DivisionsView.MoveCurrentToFirst();
@@ -1082,67 +952,20 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         async Task LoadDivisionProvinciale()
         {
-            divisions.Clear();
+            //departements.Clear();
 
-            var division = SelectedEntite.Division;
+            //var departement = SelectedEntite.Division;
 
-            if (division.Bureaux.Count == 0)
-                division.Bureaux = await Task.Run(() => new BureauDao().GetAllAsync(division, true));
+            //if (departement.Bureaux.Count == 0)
+            //    departement.Bureaux = await Task.Run(() => new BureauDao().GetAllAsync(departement, true));
 
-            divisions.Add(division);
-            DivisionsView.MoveCurrentToFirst();
+            //departements.Add(departement);
+            //DivisionsView.MoveCurrentToFirst();
         }
 
-        private void LoadBureaux()
-        {
-            bureaux.Clear();
 
-            //if (SelectedDirection?.Secretariat != null)
-            //{
-            //    bureaux.Insert(0, SelectedDirection.Secretariat);
-            //    BureauxView.MoveCurrentToFirst();
-            //}
 
-            if (SelectedDivision == null)
-                return;
-
-            SelectedDivision.Bureaux.ForEach(b => bureaux.Add(b));
-
-            if (!ForAdding)
-            {
-                var uniteType = Employe.CurrentAffectation.Niveau;
-
-                var bureau = uniteType != UniteType.Bureau ? SelectedDivision.Bureaux.First() : (Bureau)Employe.CurrentAffectation.Unite;
-
-                BureauxView.MoveCurrentTo(SelectedDivision.Bureaux.Find(b => b.Equals(bureau)));
-            }
-            else
-                BureauxView.MoveCurrentToFirst();
-        }
-
-        private void LoadZones()
-        {
-            zones.Clear();
-
-            SelectedProvince.Zones.ForEach(c => zones.Add(c));
-
-            if (!ForAdding)
-                ZonesView.MoveCurrentTo(SelectedProvince.Zones.Find(c => c.Equals(Employe.Address.Commune.Zone)));
-            //else
-            //    ZonesView.MoveCurrentTo(SelectedProvince.Zones.Find(c => c.Equals(AppConfig.CurrentUserEntite.Address.Commune.Zone)));
-        }
-        
-        private void LoadCommunes()
-        {
-            communes.Clear();
-
-            SelectedZone.Communes.ForEach(c => communes.Add(c));
-
-            if (!ForAdding)
-                CommunesView.MoveCurrentTo(SelectedZone.Communes.Find(c => c.Equals(Employe.Address.Commune)));
-            //else
-            //    CommunesView.MoveCurrentTo(SelectedZone.Communes.Find(c => c.Equals(AppConfig.CurrentUserEntite.Address.Commune)));
-        }
+   
 
         public ICommand SaveCommand
         {
@@ -1159,9 +982,9 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             Status = string.Empty;
 
-            if (Employe.CurrentFonctionNomination.IsRequired)
-                if (Employe.CurrentFonctionNomination.GradeAssocie.Equals(Employe.GradeEngagement))
-                    Employe.CurrentFonctionNomination.GradeAssocie.EstInitial = true;
+            //if (Employe.CurrentFonctionNomination.IsRequired)
+            //    if (Employe.CurrentFonctionNomination.GradeAssocie.Equals(Employe.GradeEngagement))
+            //        Employe.CurrentFonctionNomination.GradeAssocie.EstInitial = true;
 
             //if (Employe.EstAffecte)
             //    Employe.CurrentAffectation.Date = Employe.CurrentGradeNomination.Date;
@@ -1259,22 +1082,22 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                             error = this["NombreEnfant"];
                         break;
 
-                    case "SelectedNiveau":
-                        if (SelectedNiveau == null)
-                            error = Employe.CurrentHighEtude["Niveau"];
-                        break;
+                    //case "SelectedNiveau":
+                    //    if (SelectedNiveau == null)
+                    //        error = Employe.CurrentHighEtude["Niveau"];
+                    //    break;
 
-                    case "DateCurrentFonction":
-                        error = Employe.CurrentFonctionNomination["Date"];
-                        break;
+                    //case "DateCurrentFonction":
+                    //    error = Employe.CurrentFonctionNomination["Date"];
+                    //    break;
 
                     //case "DateCurrentGrade":
                     //    error = Employe.CurrentGradeNomination["Date"];
                     //    break;
 
-                    case "DateEngagement":
-                        error = Employe.GradeEngagement["Date"];
-                        break;
+                    //case "DateEngagement":
+                    //    error = Employe.GradeEngagement["Date"];
+                    //    break;
                     default:
                         break;
                 }
@@ -1392,37 +1215,37 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         void GenerateChildren()
         {
-            if (NombreEnfant == enfants.Count)
-                return;
+            //if (NombreEnfant == enfants.Count)
+            //    return;
 
-            if (NombreEnfant > enfants.Count)
-            {
-                var diff = NombreEnfant - enfants.Count;
+            //if (NombreEnfant > enfants.Count)
+            //{
+            //    var diff = NombreEnfant - enfants.Count;
 
-                for (int i = 0; i < diff; i++)
-                {
-                    var enfant = new EnfantEmploye()
-                    {
-                        Employe = Employe,
-                        DateNaissance = DateTime.Parse("01/01/2005")
-                    };
+            //    for (int i = 0; i < diff; i++)
+            //    {
+            //        var enfant = new EnfantEmploye()
+            //        {
+            //            Employe = Employe,
+            //            DateNaissance = DateTime.Parse("01/01/2005")
+            //        };
 
-                    Employe.Enfants.Add(enfant);
-                    enfants.Add(new EnfantAddAdapter(enfant));
-                }
+            //        Employe.Enfants.Add(enfant);
+            //        enfants.Add(new EnfantAddAdapter(enfant));
+            //    }
 
-            }
-            else
-            {
-                for (int i = NombreEnfant; i < enfants.Count; i++)
-                {
-                    Employe.Enfants.RemoveAt(i);
-                    enfants.RemoveAt(i);
-                    i--;
-                }
-            }
+            //}
+            //else
+            //{
+            //    for (int i = NombreEnfant; i < enfants.Count; i++)
+            //    {
+            //        Employe.Enfants.RemoveAt(i);
+            //        enfants.RemoveAt(i);
+            //        i--;
+            //    }
+            //}
 
-            RaisePropertyChanged("Employe");
+            //RaisePropertyChanged("Employe");
         }
 
         private void InitSave()
@@ -1431,7 +1254,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             Employe.DateNaissance = DateTime.Today.AddYears(-21);
 
-            Employe.EstRecense = Employe.EstMecanisePrime = Employe.EstMecaniseSalaire = true;
+            //Employe.EstRecense = Employe.EstMecanisePrime = Employe.EstMecaniseSalaire = true;
             ForAdding = true;
             Status = string.Empty;
             Action = "Suivant";

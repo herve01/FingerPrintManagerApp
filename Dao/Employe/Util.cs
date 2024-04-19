@@ -92,8 +92,8 @@ namespace FingerPrintManagerApp.Dao.Employe
                 case "Agence":
                     return EntiteType.Agence;
 
-                case "Antenne":
-                    return EntiteType.Antenne;
+                case "Direction":
+                    return EntiteType.Direction;
 
                 default:
                     return EntiteType.Agence;
@@ -108,14 +108,14 @@ namespace FingerPrintManagerApp.Dao.Employe
                 case "Direction":
                     return UniteType.Direction;
 
-                case "Division":
-                    return UniteType.Division;
+                case "Departement":
+                    return UniteType.Departement;
 
-                case "Bureau":
-                    return UniteType.Bureau;
+                case "Agence":
+                    return UniteType.Agence;
 
                 default:
-                    return UniteType.Bureau;
+                    return UniteType.Direction;
             }
         }
 

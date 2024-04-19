@@ -15,7 +15,7 @@ namespace FingerPrintManagerApp.Model.Admin.Util
             Niveau_Etude,
             Direction,
             Bureau,
-            Division,
+            Departement,
             Grade,
             Fonction,
             Taux,

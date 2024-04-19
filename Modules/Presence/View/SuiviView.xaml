@@ -217,8 +217,8 @@
                       Background="Transparent"
                       BorderBrush="Transparent"
                       IsSynchronizedWithCurrentItem="True"
-                      SelectedValue="{Binding SelectedSubdivision}"
-                      ItemsSource="{Binding SubdivisionsView}"
+                      SelectedValue="{Binding SelectedSubdepartement}"
+                      ItemsSource="{Binding SubdepartementsView}"
                       ItemTemplate="{StaticResource dtClasse}">
                 <ListView.GroupStyle>
                     <GroupStyle>
@@ -273,7 +273,7 @@
                                FontSize="13"
                                />
                     
-                    <TextBlock Text="{Binding SelectedSubdivision, FallbackValue='Classe'}"
+                    <TextBlock Text="{Binding SelectedSubdepartement, FallbackValue='Classe'}"
                                FontWeight="ExtraBold"
                                FontSize="20"
                                TextTrimming="CharacterEllipsis"
@@ -297,7 +297,7 @@
                                 HorizontalAlignment="Center"
                                 Visibility="{Binding InscriptionLoading, Converter={StaticResource boolToVisibilityConverter}}"
                             >
-                            <Image gif:ImageBehavior.AnimatedSource="/Humager;component/View/Image/preloader.gif"
+                            <Image gif:ImageBehavior.AnimatedSource="/FingerPrintManagerApp;component/View/Image/preloader.gif"
                                    Height="20"
                                    Width="20"
                                    VerticalAlignment="Center"

@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class EmployeFonctionDao : Dao<EmployeFonction>
     {
-        public EmployeFonctionDao()
+        public EmployeFonctionDao(DbConnection connection = null) : base(connection)
         {
             TableName = "employe_fonction";
         }
@@ -24,15 +24,14 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 var id = Helper.TableKeyHelper.GetKey(TableName);
 
-                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, acte_id, date, type, adding_date, last_update_time) " +
-                    "values(@v_id, @v_employe_id, @v_fonction_id, @v_acte_id, @v_date, @v_type, now(), now())";
+                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, created_at, updated_at) " +
+                    "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
                
                 var feed = Request.ExecuteNonQuery();
 
@@ -86,15 +85,14 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 var id = Helper.TableKeyHelper.GetKey(TableName);
 
-                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, acte_id, date, type, adding_date, last_update_time) " +
-                    "values(@v_id, @v_employe_id, @v_fonction_id, @v_acte_id, @v_date, @v_type, now(), now())";
+                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, created_at, updated_at) " +
+                    "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
 
                 var feed = await Request.ExecuteNonQueryAsync();
 
@@ -179,17 +177,15 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.CommandText = "update employe_fonction " +
                     "set employe_id = @v_employe_id, " +
                     "fonction_id = @v_fonction_id, " +
-                    "acte_id = @v_acte_id, " +
                     "type = @v_type, " +
                     "date = @v_date, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
 
                 var feed = Request.ExecuteNonQuery();
@@ -285,16 +281,15 @@ namespace FingerPrintManagerApp.Dao.Employe
 
             instance.Id = row["id"].ToString();
             instance.Fonction = new FonctionDao().Get(row["fonction_id"].ToString());
-            //instance.Acte = new ActeNominationDao().Get(row["acte_id"].ToString());
-            //instance.Type = Util.ToFonctionEmployeType(row["type"].ToString());
-            //instance.State = Util.ToFonctionState(row["state"].ToString());
-            //instance.Date = DateTime.Parse(row["date"].ToString());
+            instance.Type = Util.ToFonctionEmployeType(row["type"].ToString());
+            instance.State = Util.ToFonctionState(row["state"].ToString());
+            instance.Date = DateTime.Parse(row["date"].ToString());
 
             if (!(row["date_fin"] is DBNull))
                 instance.DateFin = DateTime.Parse(row["date_fin"].ToString());
 
-            //if (withEmploye)
-            //    instance.Employe = new EmployeDao().Get(row["employe_id"].ToString());
+            if (withEmploye)
+                instance.Employe = new EmployeDao().Get(row["employe_id"].ToString());
 
             return instance;
         }
@@ -376,7 +371,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 if (_instance != null)
                 {
                     instance = Create(_instance, false);
-                    //instance.Employe = employe;
+                    instance.Employe = employe;
                 }
 
             }
@@ -468,8 +463,82 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-       
-        public async Task<List<EmployeFonction>> GetAllRunningAsync(Departement division)
+        //public async Task GetAllAsync(Entite entite, ObservableCollection<Nomination> collection)
+        //{
+        //    var intances = new List<EmployeFonction>();
+        //    var _instances = new List<Dictionary<string, object>>();
+
+        //    try
+        //    {
+        //        Request.CommandText = "select U.* " +
+        //            "from " +
+        //            "(" +
+        //            "( " +
+        //            "select ef.id, ef.date, 'fonction' type " +
+        //            "from employe_fonction ef " +
+        //            "where @v_siege = 1 or get_employe_current_entite(ef.employe_id) = @v_entite_id " +
+        //            "order by ef.date desc " +
+        //            "limit 50 " +
+        //            ")" +
+        //            "union all " +
+        //            "( " +
+        //            "select eg.id, eg.date, 'grade' type " +
+        //            "from employe_grade eg " +
+        //            "inner join grade g " +
+        //            "on eg.grade_id = g.id " +
+        //            "where eg.type = 'Commissionnement' and g.niveau < 7 and (@v_siege = 1 or get_employe_current_entite(eg.employe_id) = @v_entite_id) " +
+        //            "order by eg.date desc " +
+        //            "limit 50 " +
+        //            ")" +
+        //            "union all " +
+        //            "( " +
+        //            "select eg.id, eg.date, 'grade' type " +
+        //            "from employe_grade eg " +
+        //            "inner join grade g " +
+        //            "on eg.grade_id = g.id " +
+        //            "where eg.type = 'Commissionnement' and g.niveau >= 7 and (@v_siege = 1 or get_employe_current_entite(eg.employe_id) = @v_entite_id) " +
+        //            "and not exists (select * from employe_fonction ef where ef.employe_id = eg.employe_id and ef.date = eg.date) " +
+        //            "order by eg.date desc " +
+        //            "limit 50 " +
+        //            ") " +
+        //            ") U " +
+        //            "order by U.date desc " +
+        //            "limit 100";
+
+        //        Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_siege", DbType.Int32, entite.EstPrincipale ? 1 : 0));
+        //        Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, entite.Id));
+
+        //        Reader = await Request.ExecuteReaderAsync();
+
+        //        if (Reader.HasRows)
+        //            while (await Reader.ReadAsync())
+        //                _instances.Add( new Dictionary<string, object>()
+        //                {
+        //                    {"id", Reader["id"] },
+        //                    {"type", Reader["type"] }
+        //                });
+
+        //        Reader.Close();
+
+        //        foreach (var item in _instances)
+        //        {
+        //            Request.Parameters.Clear();
+
+        //            if (item["type"].ToString() == "fonction")
+        //                collection.Add(Get(item["id"].ToString()));
+        //            else
+        //                collection.Add(new EmployeGradeDao().Get(item["id"].ToString()));
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        if (Reader != null && !Reader.IsClosed)
+        //            Reader.Close();
+        //    }
+
+        //}
+
+        public async Task<List<EmployeFonction>> GetAllRunningAsync(Direction direction)
         {
             var intances = new List<EmployeFonction>();
             var _instances = new List<Dictionary<string, object>>();
@@ -480,9 +549,9 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "from employe_fonction EF " +
                     "inner join fonction F " +
                     "on EF.fonction_id = F.id " +
-                    "where EF.date_fin is null and F.niveau = 'Division' and F.unite_id = @v_unite_id";
+                    "where EF.date_fin is null and F.niveau = 'Direction' and F.unite_id = @v_unite_id";
 
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, division.Id));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, direction.Id));
 
                 Reader = await Request.ExecuteReaderAsync();
 
@@ -507,7 +576,45 @@ namespace FingerPrintManagerApp.Dao.Employe
             return intances;
         }
 
-        public async Task<List<EmployeFonction>> GetAllRunningAsync(Bureau bureau)
+        public async Task<List<EmployeFonction>> GetAllRunningAsync(Departement departement)
+        {
+            var intances = new List<EmployeFonction>();
+            var _instances = new List<Dictionary<string, object>>();
+
+            try
+            {
+                Request.CommandText = "select EF.* " +
+                    "from employe_fonction EF " +
+                    "inner join fonction F " +
+                    "on EF.fonction_id = F.id " +
+                    "where EF.date_fin is null and F.niveau = 'Division' and F.unite_id = @v_unite_id";
+
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, departement.Id));
+
+                Reader = await Request.ExecuteReaderAsync();
+
+                if (Reader.HasRows)
+                    while (Reader.Read())
+                        _instances.Add(Map(Reader));
+
+                Reader.Close();
+
+                foreach (var item in _instances)
+                {
+                    var fonction = Create(item, true);
+                    intances.Add(fonction);
+                }
+            }
+            catch (Exception)
+            {
+                if (Reader != null && !Reader.IsClosed)
+                    Reader.Close();
+            }
+
+            return intances;
+        }
+
+        public async Task<List<EmployeFonction>> GetAllRunningAsync(Entite bureau)
         {
             var intances = new List<EmployeFonction>();
             var _instances = new List<Dictionary<string, object>>();

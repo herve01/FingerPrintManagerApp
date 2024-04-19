@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class AffectationDao : Dao<Affectation>
     {
-        public AffectationDao()
+        public AffectationDao(DbConnection connection = null) : base(connection)
         {
             TableName = "affectation";
         }
@@ -22,12 +22,12 @@ namespace FingerPrintManagerApp.Dao.Employe
                 if (OwnAction)
                     Request.Transaction = Connection.BeginTransaction();
 
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as DirectionInterne).Id
+                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
                 //     : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
                 
-                Request.CommandText = "insert into affectation(id, employe_id, ancienne_entite_id, nouvelle_entite_id, acte_id, niveau, unite_id, date, adding_date, last_update_time) " +
+                Request.CommandText = "insert into affectation(id, employe_id, ancienne_entite_id, nouvelle_entite_id, acte_id, niveau, unite_id, date, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_ancienne_entite_id, @v_nouvelle_entite_id, @v_acte_id, @v_niveau, @v_unite_id, @v_date, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -92,12 +92,12 @@ namespace FingerPrintManagerApp.Dao.Employe
                 if (OwnAction)
                     Request.Transaction = Connection.BeginTransaction();
 
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as DirectionInterne).Id
+                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
                 //     : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into affectation(id, employe_id, ancienne_entite_id, nouvelle_entite_id, acte_id, niveau, unite_id, date, adding_date, last_update_time) " +
+                Request.CommandText = "insert into affectation(id, employe_id, ancienne_entite_id, nouvelle_entite_id, acte_id, niveau, unite_id, date, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_ancienne_entite_id, @v_nouvelle_entite_id, @v_acte_id, @v_niveau, @v_unite_id, @v_date, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -159,7 +159,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as DirectionInterne).Id
+                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
                 //    : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
                 
                 Request.CommandText = "update affectation " +
@@ -170,7 +170,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "niveau = @v_niveau, " +
                     "unite_id = @v_unite_id, " +
                     "date = @v_date, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
@@ -196,7 +196,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "delete from affectation " +
                     "where id = @v_id";

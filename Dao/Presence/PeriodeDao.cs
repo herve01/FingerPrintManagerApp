@@ -12,7 +12,7 @@ namespace FingerPrintManagerApp.Dao.Presence
 {
     public class PeriodeDao : Dao<Periode>
     {
-        public PeriodeDao()
+        public PeriodeDao(DbConnection connection = null) : base(connection)
         {
             TableName = "periode";
         }
@@ -22,7 +22,7 @@ namespace FingerPrintManagerApp.Dao.Presence
             {
                 var id = instance.Mois.ToString("D2") + instance.Annee;
 
-                Request.CommandText = "insert into periode(id, mois, annee, adding_date, last_update_time) " +
+                Request.CommandText = "insert into periode(id, mois, annee, created_at, updated_at) " +
                     "values(@v_id, @v_mois, @v_annee, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -58,7 +58,7 @@ namespace FingerPrintManagerApp.Dao.Presence
             {
                 var id = instance.Mois.ToString("D2") + instance.Annee;
 
-                Request.CommandText = "insert into periode(id, mois, annee, adding_date, last_update_time) " +
+                Request.CommandText = "insert into periode(id, mois, annee, created_at, updated_at) " +
                     "values(@v_id, @v_mois, @v_annee, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -97,7 +97,7 @@ namespace FingerPrintManagerApp.Dao.Presence
                     "set mois = @v_mois, " +
                     "annee = @v_annee, " +
                     "date = @v_date, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_mois", DbType.Int32, instance.Mois));
@@ -333,7 +333,7 @@ namespace FingerPrintManagerApp.Dao.Presence
             {
                 Request.CommandText = "select * " +
                     "from periode " +
-                    "where adding_date >= @v_time or last_update_time >= @v_time";
+                    "where created_at >= @v_time or updated_at >= @v_time";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_time", DbType.DateTime, lastUpdateTime));
 

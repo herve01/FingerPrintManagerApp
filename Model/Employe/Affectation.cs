@@ -214,25 +214,23 @@ namespace FingerPrintManagerApp.Model.Employe
 
         
 
-        public Departement Division
+        public Departement Departement
         {
             get
             {
                 if (Unite is Departement)
                     return (Departement)Unite;
-                else if (Unite is Bureau)
-                    return ((Bureau)Unite).Division;
 
                 return null;
             }
         }
 
-        public Bureau Bureau
+        public Direction Direction
         {
             get
             {
-                if (Unite is Bureau)
-                    return (Bureau)Unite;
+                if (Unite is Direction)
+                    return (Direction)Unite;
 
                 return null;
             }

@@ -6,7 +6,7 @@ namespace FingerPrintManagerApp.Model.Employe
     public class Entite : ModelBase, IEditableObject, IDataErrorInfo, ICloneable
     {
 
-        private Direction _direction;
+        private DirectionProvinciale _direction;
         private Zone _zone;
         private Address _address;
         private bool _estPrincipale;
@@ -19,7 +19,7 @@ namespace FingerPrintManagerApp.Model.Employe
             Type = EntiteType.Direction;
         }
 
-        public Direction Direction
+        public DirectionProvinciale Direction
         {
             get
             {

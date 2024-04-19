@@ -4,16 +4,22 @@ insert into finger_print_manager_db_info
 values ('creator','Stone Tech'), 
 	   ('creation_year','2024'), 
        ('creation_country','Democratic Republic of Congo'), 
-       ('dbname', 'finger_print_manager_db');
+       ('dbname', 'finger_print_manager_db'),
+       ('dbversion', 1),
+       ('great_logo', null),
+       ('report_header', null),
+       ('report_large_header', null)
+       ;
+       
 
 insert into horaire_travail_semaine
-values ('1','lundi', 1, '08:00', '16:00', now(), now()),
-('2','mardi', 1, '08:00', '16:00',now(), now()), 
-('3','mercredi', 1, '08:00', '16:00',now(), now()), 
-('4','jeudi', 1, '08:00', '16:00',now(), now()),
-('5','vendredi', 1, '08:00', '16:00',now(), now()), 
-('6','samedi', 1, '08:00', '12:00',now(), now()), 
-('7','dimanche', 0, null, null, now(), now());
+values (md5('lundi1'),'lundi', 1, '08:00', '16:00', 1, now(), now()),
+(md5('mardi2'),'mardi', 1, '08:00', '16:00', 2, now(), now()), 
+(md5('3mercredi'),'mercredi', 1, '08:00', '16:00', 3, now(), now()), 
+(md5('4jeudi') ,'jeudi', 1, '08:00', '16:00', 4, now(), now()),
+(md5('5vendredi'),'vendredi', 1, '08:00', '16:00', 5, now(), now()), 
+(md5('6samedi'),'samedi', 1, '08:00', '12:00', 6, now(), now()), 
+(md5('7dimanche'),'dimanche', 0, null, null, 7, now(), now());
 
 insert into date_exception
 values (md5('Nouvel An'),'Nouvel An','2024-01-01', now(), now()),
@@ -44,6 +50,19 @@ values(md5('0000010001'), md5('000001'), 'super', 'user', 'sysadmin', 'ADMIN', '
 
 insert into direction
 values(md5('00000101'), 'Direction générale', 'DG', 'Gérer l\'ensemble du service', 1, now(), now());
+
+insert into niveau_etude
+values
+(md5('00000101'), 'Zéro', 0, 0, 'HUIS', now(), now()),
+(md5('00000102'), 'Primaire', 1, 0, 'AA2', now(), now()),
+(md5('00000103'), 'PP4', 2, 1, 'AA1', now(), now()),
+(md5('00000104'), 'PP5', 2, 1, 'AA1', now(), now()),
+(md5('00000105'), 'D6', 3, 1, 'AGA2', now(), now()),
+(md5('00000106'), 'Graduat', 4, 1, 'AGA1', now(), now()),
+(md5('00000107'), 'Licence', 5, 1, 'ATA2', now(), now()),
+(md5('00000108'), 'Master', 6, 1, 'ATA1', now(), now()),
+(md5('00000109'), 'Ingénierie', 7, 1, 'ATA1', now(), now()),
+(md5('00000110'), 'Doctorat', 8, 1, 'ATA1', now(), now());
 
 insert into departement
 values(md5('00000101departement'), md5('00000101'), 'Departement administratif', '', now(), now()),

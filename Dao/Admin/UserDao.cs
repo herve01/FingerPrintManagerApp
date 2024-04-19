@@ -12,7 +12,7 @@ namespace FingerPrintManagerApp.Dao.Admin
 {
     public class UserDao : Dao<User>
     {
-        public UserDao()
+        public UserDao(DbConnection connection = null) : base(connection)
         {
             TableName = "user";
         }
@@ -21,14 +21,14 @@ namespace FingerPrintManagerApp.Dao.Admin
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 var hash = PasswordStorage.CreateHash(user.PassWd);
                 var split = hash.Split(':');
                 var salt = split[0];
                 var pwd = string.Format("{0}:{1}", split[1], split[2]);
                 
-                Request.CommandText = "insert into user(id, nom, prenom, type, username, sexe, email, passwd, m_salt, telephone, entite_id, adding_date, last_update_time) " +
+                Request.CommandText = "insert into user(id, nom, prenom, type, username, sexe, email, passwd, m_salt, telephone, entite_id, created_at, updated_at) " +
                     "values (@v_id, @v_nom, @v_prenom, @v_type, @v_username, @v_sexe, @v_email, @v_passwd, @v_m_salt, @v_telephone, @v_entite_id, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -78,7 +78,7 @@ namespace FingerPrintManagerApp.Dao.Admin
                     "email = @v_email, " +
                     "telephone = @v_telephone, " +
                     "entite_id = @v_entite_id, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_nom", DbType.String, user.Nom));
@@ -586,7 +586,7 @@ namespace FingerPrintManagerApp.Dao.Admin
             {
                 Request.CommandText = "select * " +
                     "from user " +
-                    "where (@v_siege = 1 or entite_id = @v_entite_id) and last_update_time >= @v_time ";
+                    "where (@v_siege = 1 or entite_id = @v_entite_id) and updated_at >= @v_time ";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_siege", DbType.Int32, entite.EstPrincipale ? 1 : 0));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, entite.Id));

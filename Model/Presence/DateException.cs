@@ -48,7 +48,7 @@ namespace FingerPrintManagerApp.Model.Presence
 
         public override string ToString()
         {
-            return Date.ToString("yyyydd"); 
+            return Date.ToString("ddMM"); 
         }
 
         public override bool Equals(object obj)

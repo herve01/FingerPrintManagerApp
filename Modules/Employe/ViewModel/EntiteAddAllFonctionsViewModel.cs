@@ -54,12 +54,12 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             var pattern = FilterText.Trim().ToLower().NoAccent();
             var unite = string.Empty;
 
-            //if (fonction.Niveau == UniteType.Direction)
-            //    unite = ((DirectionInterne)fonction.Unite).Denomination;
-            //else if (fonction.Niveau == UniteType.Division)
-            //    unite = ((Division)fonction.Unite).Denomination;
-            //if (fonction.Niveau == UniteType.Bureau)
-            //    unite = ((Bureau)fonction.Unite).Denomination;
+            if (fonction.Niveau == UniteType.Direction)
+                unite = ((Direction)fonction.Unite).Denomination;
+            else if (fonction.Niveau == UniteType.Departement)
+                unite = ((Departement)fonction.Unite).Denomination;
+            if (fonction.Niveau == UniteType.Agence)
+                unite = ((Entite)fonction.Unite).Description;
 
             return fonction.Grade.Id.ToLower().Contains(pattern) || unite.ToLower().NoAccent().Contains(pattern);
         }

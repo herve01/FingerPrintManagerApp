@@ -11,7 +11,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class EmployeDao : Dao<Model.Employe.Employe>
     {
-        public EmployeDao()
+        public EmployeDao(DbConnection connection = null) : base(connection)
         {
             TableName = "employe";
         }
@@ -22,16 +22,13 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.Transaction = Connection.BeginTransaction();
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe(id, matricule, nom, post_nom, prenom, sexe, photo, etat_civil, lieu_naissance, date_naissance, immatriculation_cnssap, " +
-                    "province_origine_id, personne_contact, qualite_contact, position_id, est_mecanise_salaire, est_mecanise_prime, est_recense, est_affecte, " +
-                    "telephone, email, numero, avenue, commune_id, conjoint, telephone_conjoint, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe(id, matricule, nom, post_nom, prenom, sexe, photo, etat_civil, lieu_naissance, date_naissance, " +
+                    "est_affecte, telephone, email, created_at, updated_at) " +
 
-                    "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, @v_immatriculation_cnssap, " +
-                    "@v_province_origine_id, @v_personne_contact, @v_qualite_contact, @v_position_id, @v_est_mecanise_salaire, @v_est_mecanise_prime, @v_est_recense, @v_est_affecte, " +
-                    "@v_telephone, @v_email, @v_numero, @v_avenue, @v_commune_id, @v_conjoint, @v_telephone_conjoint, now(), now())";
-
+                    "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, " +
+                    "@v_est_affecte, @v_telephone, @v_email, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_matricule", DbType.String, instance.Matricule));
@@ -43,22 +40,9 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_etat_civil", DbType.String, instance.EtatCivil));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_lieu_naissance", DbType.String, instance.LieuNaissance));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date_naissance", DbType.Date, instance.DateNaissance));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_immatriculation_cnssap", DbType.String, instance.ImmatriculationCNSSAP));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_province_origine_id", DbType.Int32, instance.ProvinceOrigine.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_personne_contact", DbType.String, instance.PersonneContact));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_qualite_contact", DbType.String, instance.QualiteContact));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_position_id", DbType.String, instance.Etat.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_salaire", DbType.Boolean, instance.EstMecaniseSalaire));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_prime", DbType.Boolean, instance.EstMecanisePrime));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_recense", DbType.Boolean, instance.EstRecense));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_affecte", DbType.Boolean, instance.EstAffecte));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone", DbType.String, instance.Telephone));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_email", DbType.String, instance.Email));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_numero", DbType.String, instance.Address.Number));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_avenue", DbType.String, instance.Address.Street));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_commune_id", DbType.String, instance.Address.Commune.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_conjoint", DbType.String, instance.Conjoint));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone_conjoint", DbType.String, instance.TelephoneConjoint));
 
                 var feed = Request.ExecuteNonQuery();
 
@@ -84,58 +68,16 @@ namespace FingerPrintManagerApp.Dao.Employe
                     instance.Id = null;
                     Request.Transaction.Rollback();
 
-                    return -5;
-                }
-
-                if (instance.CurrentFonctionNomination.IsRequired && instance.CurrentFonctionNomination.Error == string.Empty && new EmployeFonctionDao().Add(Request, instance.CurrentFonctionNomination) <= 0)
-                {
-                    instance.Id = null;
-                    Request.Transaction.Rollback();
-
-                    return -6;
-                }
-
-                if (!instance.CurrentFonctionNomination.GradeAssocie.Equals(instance.GradeEngagement) && new EmployeGradeDao().Add(Request, instance.GradeEngagement) <= 0)
-                {
-                    instance.Id = null;
-                    Request.Transaction.Rollback();
-
                     return -3;
                 }
 
-                //if (!instance.GradeEngagement.Equals(instance.CurrentGradeNomination) && new EmployeGradeDao().Add(Request, instance.CurrentGradeNomination) <= 0)
-                //{
-                //    instance.Id = null;
-                //    Request.Transaction.Rollback();
-
-                //    return -4;
-                //}
-
-                //if (instance.CurrentStatutaireGradeNomination.Grade != null && instance.CurrentStatutaireGradeNomination.Error == string.Empty && new EmployeGradeDao().Add(Request, instance.CurrentStatutaireGradeNomination) <= 0)
-                //{
-                //    instance.Id = null;
-                //    Request.Transaction.Rollback();
-
-                //    return -12;
-                //}
-
-                foreach (var enfant in instance.Enfants)
-                    if (new EnfantEmployeDao().Add(Request, enfant) <= 0)
-                    {
-                        instance.Id = null;
-                        Request.Transaction.Rollback();
-
-                        return -7;
-                    }
-
-                if (new EmployeEtudeDao().Add(Request, instance.CurrentHighEtude) <= 0)
+                if (instance.EstAffecte && new EmployeGradeDao().Add(Request, instance.CurrentGrade) <= 0)
                 {
                     instance.Id = null;
                     Request.Transaction.Rollback();
 
-                    return -8;
+                    return -4;
                 }
-
                 Request.Transaction.Commit();
 
                 return feed;
@@ -163,16 +105,13 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.Transaction = Connection.BeginTransaction();
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe(id, matricule, nom, post_nom, prenom, sexe, photo, etat_civil, lieu_naissance, date_naissance, immatriculation_cnssap, " +
-                    "province_origine_id, personne_contact, qualite_contact, position_id, est_mecanise_salaire, est_mecanise_prime, est_recense, est_affecte, " +
-                    "telephone, email, numero, avenue, commune_id, conjoint, telephone_conjoint, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe(id, matricule, nom, post_nom, prenom, sexe, photo, etat_civil, lieu_naissance, date_naissance, " +
+                    "est_affecte, telephone, email, created_at, updated_at) " +
 
-                    "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, @v_immatriculation_cnssap, " +
-                    "@v_province_origine_id, @v_personne_contact, @v_qualite_contact, @v_position_id, @v_est_mecanise_salaire, @v_est_mecanise_prime, @v_est_recense, @v_est_affecte, " +
-                    "@v_telephone, @v_email, @v_numero, @v_avenue, @v_commune_id, @v_conjoint, @v_telephone_conjoint, now(), now())";
-
+                    "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, " +
+                    "@v_est_affecte, @v_telephone, @v_email, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_matricule", DbType.String, instance.Matricule));
@@ -184,22 +123,9 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_etat_civil", DbType.String, instance.EtatCivil));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_lieu_naissance", DbType.String, instance.LieuNaissance));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date_naissance", DbType.Date, instance.DateNaissance));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_immatriculation_cnssap", DbType.String, instance.ImmatriculationCNSSAP));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_province_origine_id", DbType.Int32, instance.ProvinceOrigine.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_personne_contact", DbType.String, instance.PersonneContact));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_qualite_contact", DbType.String, instance.QualiteContact));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_position_id", DbType.String, instance.Etat.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_salaire", DbType.Boolean, instance.EstMecaniseSalaire));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_prime", DbType.Boolean, instance.EstMecanisePrime));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_recense", DbType.Boolean, instance.EstRecense));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_affecte", DbType.Boolean, instance.EstAffecte));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone", DbType.String, instance.Telephone));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_email", DbType.String, instance.Email));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_numero", DbType.String, instance.Address.Number));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_avenue", DbType.String, instance.Address.Street));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_commune_id", DbType.String, instance.Address.Commune.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_conjoint", DbType.String, instance.Conjoint));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone_conjoint", DbType.String, instance.TelephoneConjoint));
 
                 var feed = await Request.ExecuteNonQueryAsync();
 
@@ -226,56 +152,15 @@ namespace FingerPrintManagerApp.Dao.Employe
                     instance.Id = null;
                     Request.Transaction.Rollback();
 
-                    return -5;
-                }
-
-                if (instance.CurrentFonctionNomination.IsRequired && await new EmployeFonctionDao().AddAsync(Request, instance.CurrentFonctionNomination) <= 0)
-                {
-                    instance.Id = null;
-                    Request.Transaction.Rollback();
-
-                    return -6;
-                }
-
-                if (!instance.CurrentFonctionNomination.GradeAssocie.Equals(instance.GradeEngagement) && await new EmployeGradeDao().AddAsync(Request, instance.GradeEngagement) <= 0)
-                {
-                    instance.Id = null;
-                    Request.Transaction.Rollback();
-
                     return -3;
                 }
 
-                //if (!instance.GradeEngagement.Equals(instance.CurrentGradeNomination) && await new EmployeGradeDao().AddAsync(Request, instance.CurrentGradeNomination) <= 0)
-                //{
-                //    instance.Id = null;
-                //    Request.Transaction.Rollback();
-
-                //    return -4;
-                //}
-
-                //if (instance.CurrentStatutaireGradeNomination.Grade != null && instance.CurrentStatutaireGradeNomination.Error == string.Empty && await new EmployeGradeDao().AddAsync(Request, instance.CurrentStatutaireGradeNomination) <= 0)
-                //{
-                //    instance.Id = null;
-                //    Request.Transaction.Rollback();
-
-                //    return -12;
-                //}
-
-                foreach (var enfant in instance.Enfants)
-                    if (await new EnfantEmployeDao().AddAsync(Request, enfant) <= 0)
-                    {
-                        instance.Id = null;
-                        Request.Transaction.Rollback();
-
-                        return -7;
-                    }
-
-                if (await new EmployeEtudeDao().AddAsync(Request, instance.CurrentHighEtude) <= 0)
+                if ( await new EmployeGradeDao().AddAsync(Request, instance.CurrentGrade) <= 0)
                 {
                     instance.Id = null;
                     Request.Transaction.Rollback();
 
-                    return -8;
+                    return -4;
                 }
 
                 Request.Transaction.Commit();
@@ -314,23 +199,10 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "etat_civil = @v_etat_civil, " +
                     "lieu_naissance = @v_lieu_naissance, " +
                     "date_naissance = @v_date_naissance, " +
-                    "immatriculation_cnssap = @v_immatriculation_cnssap, " +
-                    "province_origine_id = @v_province_origine_id, " +
-                    "personne_contact = @v_personne_contact, " +
-                    "qualite_contact = @v_qualite_contact, " +
-                    "position_id = @v_position_id, " +
-                    "est_mecanise_salaire = @v_est_mecanise_salaire, " +
-                    "est_mecanise_prime = @v_est_mecanise_prime, " +
-                    "est_recense = @v_est_recense, " +
                     "est_affecte = @v_est_affecte, " +
                     "telephone = @v_telephone, " +
                     "email = @v_email, " +
-                    "numero = @v_numero, " +
-                    "avenue = @v_avenue, " +
-                    "commune_id = @v_commune_id, " +
-                    "conjoint = @v_conjoint, " +
-                    "telephone_conjoint = @v_telephone_conjoint, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_matricule", DbType.String, instance.Matricule));
@@ -342,22 +214,9 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_etat_civil", DbType.String, instance.EtatCivil));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_lieu_naissance", DbType.String, instance.LieuNaissance));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date_naissance", DbType.Date, instance.DateNaissance));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_immatriculation_cnssap", DbType.String, instance.ImmatriculationCNSSAP));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_province_origine_id", DbType.Int32, instance.ProvinceOrigine.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_personne_contact", DbType.String, instance.PersonneContact));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_qualite_contact", DbType.String, instance.QualiteContact));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_position_id", DbType.String, instance.Etat.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_salaire", DbType.Boolean, instance.EstMecaniseSalaire));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_prime", DbType.Boolean, instance.EstMecanisePrime));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_recense", DbType.Boolean, instance.EstRecense));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_affecte", DbType.Boolean, instance.EstAffecte));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone", DbType.String, instance.Telephone));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_email", DbType.String, instance.Email));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_numero", DbType.String, instance.Address.Number));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_avenue", DbType.String, instance.Address.Street));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_commune_id", DbType.String, instance.Address.Commune.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_conjoint", DbType.String, instance.Conjoint));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone_conjoint", DbType.String, instance.TelephoneConjoint));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
 
                 var feed = Request.ExecuteNonQuery();
@@ -394,23 +253,10 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "etat_civil = @v_etat_civil, " +
                     "lieu_naissance = @v_lieu_naissance, " +
                     "date_naissance = @v_date_naissance, " +
-                    "immatriculation_cnssap = @v_immatriculation_cnssap, " +
-                    "province_origine_id = @v_province_origine_id, " +
-                    "personne_contact = @v_personne_contact, " +
-                    "qualite_contact = @v_qualite_contact, " +
-                    "position_id = @v_position_id, " +
-                    "est_mecanise_salaire = @v_est_mecanise_salaire, " +
-                    "est_mecanise_prime = @v_est_mecanise_prime, " +
-                    "est_recense = @v_est_recense, " +
                     "est_affecte = @v_est_affecte, " +
                     "telephone = @v_telephone, " +
                     "email = @v_email, " +
-                    "numero = @v_numero, " +
-                    "avenue = @v_avenue, " +
-                    "commune_id = @v_commune_id, " +
-                    "conjoint = @v_conjoint, " +
-                    "telephone_conjoint = @v_telephone_conjoint, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_matricule", DbType.String, instance.Matricule));
@@ -422,22 +268,9 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_etat_civil", DbType.String, instance.EtatCivil));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_lieu_naissance", DbType.String, instance.LieuNaissance));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date_naissance", DbType.Date, instance.DateNaissance));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_immatriculation_cnssap", DbType.String, instance.ImmatriculationCNSSAP));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_province_origine_id", DbType.Int32, instance.ProvinceOrigine.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_personne_contact", DbType.String, instance.PersonneContact));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_qualite_contact", DbType.String, instance.QualiteContact));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_position_id", DbType.String, instance.Etat.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_salaire", DbType.Boolean, instance.EstMecaniseSalaire));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_mecanise_prime", DbType.Boolean, instance.EstMecanisePrime));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_recense", DbType.Boolean, instance.EstRecense));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_affecte", DbType.Boolean, instance.EstAffecte));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone", DbType.String, instance.Telephone));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_email", DbType.String, instance.Email));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_numero", DbType.String, instance.Address.Number));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_avenue", DbType.String, instance.Address.Street));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_commune_id", DbType.String, instance.Address.Commune.Id));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_conjoint", DbType.String, instance.Conjoint));
-                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_telephone_conjoint", DbType.String, instance.TelephoneConjoint));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
 
                 var feed = await Request.ExecuteNonQueryAsync();
@@ -488,13 +321,11 @@ namespace FingerPrintManagerApp.Dao.Employe
             try
             {
                 Request.CommandText = "update employe " +
-                    "set position_id = @v_position_id, " +
-                    "est_affecte = @v_est_affecte, " +
-                    "last_update_time = now() " +
+                    "set est_affecte = @v_est_affecte, " +
+                    "updated_at = now() " +
                     "where id = @v_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_position_id", DbType.String, instance.Etat.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_affecte", DbType.Boolean, instance.EstAffecte));
 
                 var feed = Request.ExecuteNonQuery();
@@ -516,7 +347,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "update employe " +
                     "set est_mecanise_salaire = 1, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
@@ -540,7 +371,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "update employe " +
                     "set est_mecanise_prime = 1, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
@@ -564,7 +395,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "update employe " +
                     "set est_affecte = @v_val, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_val", DbType.Boolean, estAffecte));
@@ -589,7 +420,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "update employe " +
                     "set est_recense = 1, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
@@ -610,7 +441,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "update employe " +
                     "set photo = @v_photo, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_photo", DbType.Binary, photo));
@@ -639,46 +470,26 @@ namespace FingerPrintManagerApp.Dao.Employe
             instance.LieuNaissance = row["lieu_naissance"].ToString();
             instance.DateNaissance = DateTime.Parse(row["date_naissance"].ToString());
             
-            instance.ProvinceOrigine = new ProvinceDao().Get(int.Parse(row["province_origine_id"].ToString()));
-            instance.PersonneContact = row["personne_contact"].ToString();
-            instance.QualiteContact = row["qualite_contact"].ToString();
-            //instance.Etat = new PositionAdministrativeDao().Get(row["position_id"].ToString());
-            instance.EstMecaniseSalaire = bool.Parse(row["est_mecanise_salaire"].ToString());
-            instance.EstMecanisePrime = bool.Parse(row["est_mecanise_prime"].ToString());
-            instance.EstRecense = bool.Parse(row["est_recense"].ToString());
+
             instance.EstAffecte = bool.Parse(row["est_affecte"].ToString());
             instance.Telephone = row["telephone"].ToString();
             instance.Email = row["email"].ToString();
-            instance.Address.Number = row["numero"].ToString();
-            instance.Address.Street = row["avenue"].ToString();
-            instance.Address.Commune = new CommuneDao().GetCommune(int.Parse(row["commune_id"].ToString()));
 
-            instance.GradeEngagement = new EmployeGradeDao().GetInitial(instance);
-            //instance.CurrentGradeNomination = new EmployeGradeDao().GetCurrent(instance);
-            //instance.CurrentStatutaireGradeNomination = new EmployeGradeDao().GetCurrent(instance, GradeEmployeType.Officiel);
+
+            instance.CurrentGrade = new EmployeGradeDao().GetInitial(instance);
 
             instance.LastAffectation = new AffectationDao().GetCurrent(instance);
 
             if (instance.EstAffecte)
             {
                 instance.CurrentAffectation = instance.LastAffectation;
-                instance.FonctionsInterim = new EmployeFonctionDao().GetAllInterim(instance);
             }
 
             if (!(row["photo"] is DBNull))
                 instance.Photo = (byte[])row["photo"];
-
-            if (!(row["immatriculation_cnssap"] is DBNull))
-                instance.ImmatriculationCNSSAP = row["immatriculation_cnssap"].ToString();
-
+        
             if (!(row["matricule"] is DBNull))
                 instance.Matricule = row["matricule"].ToString();
-
-            if (!(row["conjoint"] is DBNull))
-                instance.Conjoint = row["conjoint"].ToString();
-
-            if (!(row["telephone_conjoint"] is DBNull))
-                instance.TelephoneConjoint = row["telephone_conjoint"].ToString();
 
             instance.Empreintes = new EmployeEmpreinteDao().GetAll(instance);
 
@@ -881,7 +692,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "inner join position_administrative P " +
                     "on E.position_id = P.id " +
                     "where P.is_down = 0 and (@v_siege = 1 or get_employe_current_entite(E.id) = @v_entite_id) " +
-                    "and last_update_time >= @v_time";
+                    "and updated_at >= @v_time";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_siege", DbType.Int32, estSiege));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, entite.Id));
@@ -1073,22 +884,11 @@ namespace FingerPrintManagerApp.Dao.Employe
                 { "etat_civil", reader["etat_civil"] },
                 { "lieu_naissance", reader["lieu_naissance"] },
                 { "date_naissance", reader["date_naissance"] },
-                { "immatriculation_cnssap", reader["immatriculation_cnssap"] },
-                { "province_origine_id", reader["province_origine_id"] },
-                { "personne_contact", reader["personne_contact"] },
-                { "qualite_contact", reader["qualite_contact"] },
-                { "position_id", reader["position_id"] },
-                { "est_mecanise_salaire", reader["est_mecanise_salaire"] },
-                { "est_mecanise_prime", reader["est_mecanise_prime"] },
                 { "est_recense", reader["est_recense"] },
                 { "est_affecte", reader["est_affecte"] },
                 { "telephone", reader["telephone"] },
                 { "email", reader["email"] },
-                { "numero", reader["numero"] },
-                { "avenue", reader["avenue"] },
-                { "commune_id", reader["commune_id"] },
-                { "conjoint", reader["conjoint"] },
-                { "telephone_conjoint", reader["telephone_conjoint"] }
+
             };
         }
 
@@ -1192,7 +992,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                             { "sexe", Reader["sexe"] },
                             { "matricule", Reader["matricule"] },
                             { "direction", Reader["direction"] },
-                            { "division", Reader["division"] },
+                            { "departement", Reader["departement"] },
                             { "bureau", Reader["bureau"] }
                         });
 
@@ -1566,7 +1366,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                             { "grade_actuel_date", Reader["grade_actuel_date"] },
                             { "fonction_actuelle_intitule", Reader["fonction_actuelle_intitule"] },
                             { "bureau", Reader["bureau"] },
-                            { "division", Reader["division"] },
+                            { "departement", Reader["departement"] },
                             { "direction", Reader["direction"] },
                             { "entite", Reader["entite"] },
                             { "conjoint", Reader["conjoint"] },

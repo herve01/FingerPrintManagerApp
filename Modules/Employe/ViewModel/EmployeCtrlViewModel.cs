@@ -23,11 +23,11 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<EmployeListViewModel>());
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<FonctionViewModel>());
-            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<BureauViewModel>());
-            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<DivisionViewModel>());
-            //pageViewModels.Add(IoC.Container.Instance.Kernel.Get<DirectionInterneViewModel>());
+            //pageViewModels.Add(IoC.Container.Instance.Kernel.Get<BureauViewModel>());
+            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<DepartementViewModel>());
+            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<DirectionViewModel>());
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<DomaineEtudeViewModel>());
-            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<NiveauEtudeViewModel>());
+            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<AffectationViewModel>());
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<EntiteViewModel>());
 
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<Modules.Presence.ViewModel.PresenceEmployeViewModel>());

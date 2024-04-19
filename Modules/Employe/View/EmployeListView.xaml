@@ -192,7 +192,7 @@
                             Margin="5,0" />
 
                     <ctrl:HightlightTextBlock TextAlignment="Left"  
-                                              Text="{Binding CurrentAffectation.Division.Denomination, FallbackValue='-'}" 
+                                              Text="{Binding CurrentAffectation.Direction.Denomination, FallbackValue='-'}" 
                                               HightlightText="{Binding Data.EmployeFilterText, Source={StaticResource proxy}}" 
                                               Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,480'}"
                                               TextWrapping="WrapWithOverflow"
@@ -206,7 +206,7 @@
                             Margin="5,0" />
 
                     <ctrl:HightlightTextBlock TextAlignment="Left"  
-                                              Text="{Binding CurrentAffectation.Bureau.Denomination, FallbackValue='-'}" 
+                                              Text="{Binding Nom, FallbackValue='-'}" 
                                               HightlightText="{Binding Data.EmployeFilterText, Source={StaticResource proxy}}" 
                                               Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,480'}"
                                               TextWrapping="WrapWithOverflow"
@@ -411,7 +411,7 @@
                                 Grid.Column="2"
                                 Visibility="{Binding EmployeLoading, Converter={StaticResource boolToVisibilityConverter}}"
                             >
-                            <Image gif:ImageBehavior.AnimatedSource="/Humager;component/View/Image/preloader.gif"
+                            <Image gif:ImageBehavior.AnimatedSource="/FingerPrintManagerApp;component/View/Image/preloader.gif"
                                    Height="20"
                                    Width="20"
                                    VerticalAlignment="Center"

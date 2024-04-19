@@ -1292,7 +1292,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             private global::System.Data.DataColumn columnbureau;
             
-            private global::System.Data.DataColumn columndivision;
+            private global::System.Data.DataColumn columndepartement;
             
             private global::System.Data.DataColumn columndirection;
             
@@ -1689,9 +1689,9 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn divisionColumn {
+            public global::System.Data.DataColumn departementColumn {
                 get {
-                    return this.columndivision;
+                    return this.columndepartement;
                 }
             }
             
@@ -1809,7 +1809,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                         string grade_actuel_acte, 
                         string fonction_actuelle_intitule, 
                         string bureau, 
-                        string division, 
+                        string departement, 
                         string direction, 
                         string entite, 
                         string conjoint, 
@@ -1860,7 +1860,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                         grade_actuel_acte,
                         fonction_actuelle_intitule,
                         bureau,
-                        division,
+                        departement,
                         direction,
                         entite,
                         conjoint,
@@ -1941,7 +1941,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                 this.columngrade_actuel_acte = base.Columns["grade_actuel_acte"];
                 this.columnfonction_actuelle_intitule = base.Columns["fonction_actuelle_intitule"];
                 this.columnbureau = base.Columns["bureau"];
-                this.columndivision = base.Columns["division"];
+                this.columndepartement = base.Columns["departement"];
                 this.columndirection = base.Columns["direction"];
                 this.columnentite = base.Columns["entite"];
                 this.columnconjoint = base.Columns["conjoint"];
@@ -2039,8 +2039,8 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                 base.Columns.Add(this.columnfonction_actuelle_intitule);
                 this.columnbureau = new global::System.Data.DataColumn("bureau", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbureau);
-                this.columndivision = new global::System.Data.DataColumn("division", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndivision);
+                this.columndepartement = new global::System.Data.DataColumn("departement", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndepartement);
                 this.columndirection = new global::System.Data.DataColumn("direction", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndirection);
                 this.columnentite = new global::System.Data.DataColumn("entite", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2053,7 +2053,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                                 this.columnid}, true));
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
-                this.columndivision.DefaultValue = ((string)(""));
+                this.columndepartement.DefaultValue = ((string)(""));
                 this.columndirection.DefaultValue = ((string)(""));
                 this.columnentite.DefaultValue = ((string)(""));
                 this.columnconjoint.DefaultValue = ((string)(""));
@@ -5597,7 +5597,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             private global::System.Data.DataColumn columndirection;
             
-            private global::System.Data.DataColumn columndivision;
+            private global::System.Data.DataColumn columndepartement;
             
             private global::System.Data.DataColumn columnbureau;
             
@@ -5716,9 +5716,9 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn divisionColumn {
+            public global::System.Data.DataColumn departementColumn {
                 get {
-                    return this.columndivision;
+                    return this.columndepartement;
                 }
             }
             
@@ -5767,7 +5767,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ListeAgentsAffectesRow AddListeAgentsAffectesRow(ReportInfoRow parentReportInfoRowByFK_ReportInfo_ListeAgentsAffectes, string entite, bool est_siege, string nom, string post_nom, string prenom, string grade, string sexe, string matricule, string direction, string division, string bureau) {
+            public ListeAgentsAffectesRow AddListeAgentsAffectesRow(ReportInfoRow parentReportInfoRowByFK_ReportInfo_ListeAgentsAffectes, string entite, bool est_siege, string nom, string post_nom, string prenom, string grade, string sexe, string matricule, string direction, string departement, string bureau) {
                 ListeAgentsAffectesRow rowListeAgentsAffectesRow = ((ListeAgentsAffectesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -5780,7 +5780,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                         sexe,
                         matricule,
                         direction,
-                        division,
+                        departement,
                         bureau};
                 if ((parentReportInfoRowByFK_ReportInfo_ListeAgentsAffectes != null)) {
                     columnValuesArray[0] = parentReportInfoRowByFK_ReportInfo_ListeAgentsAffectes[0];
@@ -5817,7 +5817,7 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                 this.columnsexe = base.Columns["sexe"];
                 this.columnmatricule = base.Columns["matricule"];
                 this.columndirection = base.Columns["direction"];
-                this.columndivision = base.Columns["division"];
+                this.columndepartement = base.Columns["departement"];
                 this.columnbureau = base.Columns["bureau"];
             }
             
@@ -5844,8 +5844,8 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
                 base.Columns.Add(this.columnmatricule);
                 this.columndirection = new global::System.Data.DataColumn("direction", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndirection);
-                this.columndivision = new global::System.Data.DataColumn("division", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndivision);
+                this.columndepartement = new global::System.Data.DataColumn("departement", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndepartement);
                 this.columnbureau = new global::System.Data.DataColumn("bureau", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbureau);
                 this.columnpost_nom.Caption = "postnom";
@@ -10426,17 +10426,17 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string division {
+            public string departement {
                 get {
-                    if (this.IsdivisionNull()) {
+                    if (this.IsdepartementNull()) {
                         return string.Empty;
                     }
                     else {
-                        return ((string)(this[this.tableFicheIndividuelle.divisionColumn]));
+                        return ((string)(this[this.tableFicheIndividuelle.departementColumn]));
                     }
                 }
                 set {
-                    this[this.tableFicheIndividuelle.divisionColumn] = value;
+                    this[this.tableFicheIndividuelle.departementColumn] = value;
                 }
             }
             
@@ -11034,14 +11034,14 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsdivisionNull() {
-                return this.IsNull(this.tableFicheIndividuelle.divisionColumn);
+            public bool IsdepartementNull() {
+                return this.IsNull(this.tableFicheIndividuelle.departementColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetdivisionNull() {
-                this[this.tableFicheIndividuelle.divisionColumn] = global::System.Convert.DBNull;
+            public void SetdepartementNull() {
+                this[this.tableFicheIndividuelle.departementColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13781,18 +13781,18 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string division {
+            public string departement {
                 get {
                     try {
-                        return ((string)(this[this.tableListeAgentsAffectes.divisionColumn]));
+                        return ((string)(this[this.tableListeAgentsAffectes.departementColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("La valeur pour la colonne \'division\' dans la table \'ListeAgentsAffectes\' est DBNu" +
+                        throw new global::System.Data.StrongTypingException("La valeur pour la colonne \'departement\' dans la table \'ListeAgentsAffectes\' est DBNu" +
                                 "ll.", e);
                     }
                 }
                 set {
-                    this[this.tableListeAgentsAffectes.divisionColumn] = value;
+                    this[this.tableListeAgentsAffectes.departementColumn] = value;
                 }
             }
             
@@ -13946,14 +13946,14 @@ namespace FingerPrintManagerApp.Modules.Employe.Reporting.Dataset {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsdivisionNull() {
-                return this.IsNull(this.tableListeAgentsAffectes.divisionColumn);
+            public bool IsdepartementNull() {
+                return this.IsNull(this.tableListeAgentsAffectes.departementColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetdivisionNull() {
-                this[this.tableListeAgentsAffectes.divisionColumn] = global::System.Convert.DBNull;
+            public void SetdepartementNull() {
+                this[this.tableListeAgentsAffectes.departementColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

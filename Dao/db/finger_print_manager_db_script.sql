@@ -8,11 +8,12 @@ create table finger_print_manager_db_info(
 );
        
 create table if not exists horaire_travail_semaine(
-    id int,
-	designation varchar(10) not null,
+    id varchar(32),
+	jour varchar(15) not null,
     est_ouvrable tinyint(1),
 	heure_debut time null,
     heure_fin time null,
+    numero int,
 	created_at datetime,
     updated_at datetime,
     constraint pk_horaire_travail_semaine primary key(id)
@@ -138,6 +139,40 @@ create table if not exists grade(
 	constraint pk_grade primary key(id)
 );
 
+create table if not exists fonction(
+	id varchar(32),
+	grade_id varchar(6) not null,
+	intitule varchar(100) not null,
+    niveau enum('Direction', 'Departement', 'Agence'),
+    unite_id varchar(12) not null, /* Identifiant de la direction ou la division ou le bureau d'affectation */
+    entite_id varchar(6) not null,
+	description text,
+	created_at datetime,
+    updated_at datetime,
+	constraint pk_fonction primary key(id),
+	constraint fk_fonction_grade foreign key(grade_id) references grade(id) on update cascade,
+	constraint fk_fonction_entite foreign key(entite_id) references entite(id) on update cascade
+);
+
+create table if not exists niveau_etude(
+	id varchar(32),
+	intitule varchar(30) not null,
+    niveau int not null,
+    a_domaine tinyint(1) default 1,
+    grade_recrutement_id varchar(6) not null,
+	created_at datetime,
+    updated_at datetime,
+	constraint pk_niveau_etude primary key(id)
+);
+
+create table if not exists domaine_etude(
+	id varchar(32),
+	intitule varchar(300) not null,
+	created_at datetime,
+    updated_at datetime,
+	constraint pk_domaine_etude primary key(id)
+);
+
 create table if not exists employe(
 	id varchar(32),
 	matricule varchar(14) unique,
@@ -149,12 +184,47 @@ create table if not exists employe(
 	etat_civil varchar(12) not null,
 	lieu_naissance varchar(20) not null,
 	date_naissance date not null,
+	province_origine_id int default 0,
     est_affecte tinyint(1) default 0,
 	telephone VARCHAR(14),
 	email VARCHAR(100) UNIQUE,
+	numero varchar(12) not null,
+	avenue varchar(25) not null,
+	commune_id int not null,
+    conjoint varchar(100),
 	created_at datetime,
     updated_at datetime,
-	constraint pk_employe primary key(id)
+	constraint pk_employe primary key(id),
+	constraint fk_employe_commune foreign key(commune_id) references commune(id) on update cascade,
+    constraint fk_employe_province_origine foreign key(province_origine_id) references province(id) on update cascade
+);
+
+create table if not exists employe_etude(
+	id varchar(32),
+	employe_id varchar(32) not null,
+	niveau_id varchar(32) not null,
+    domaine_id varchar(32),
+	annee_obtention int not null,
+	created_at datetime,
+    updated_at datetime,
+    constraint pk_employe_niveau primary key(id),
+    constraint fk_employe_niveau_employe foreign key(employe_id) references employe(id) on update cascade,
+	constraint fk_employe_niveau_niveau_etude foreign key(niveau_id) references niveau_etude(id) on update cascade,
+    constraint fk_employe_niveau_domaine_etude foreign key(domaine_id) references domaine_etude(id) on update cascade
+);
+
+create table if not exists enfant_employe(
+	id varchar(32),
+	employe_id varchar(32) not null,
+	nom varchar(30) not null,
+	post_nom varchar(30) not null,
+	prenom varchar(30) not null,
+	sexe enum('Homme', 'Femme') not null,
+    date_naissance date not null,
+    created_at datetime,
+    updated_at datetime,
+    constraint pk_enfant_employe primary key(id),
+    constraint fk_enfant_employe_employe foreign key(employe_id) references employe(id) on update cascade
 );
 
 create table if not exists employe_empreinte(
@@ -171,7 +241,7 @@ create table if not exists employe_empreinte(
 );
 
 create table if not exists periode(
-	id varchar(32),
+	id varchar(10),
 	mois int not null,
     annee int not null,
 	created_at datetime,
@@ -181,7 +251,7 @@ create table if not exists periode(
 
 create table if not exists presence(
 	id varchar(32),
-    periode_id varchar(32) not null,
+    periode_id varchar(10) not null,
 	employe_id varchar(32) not null,
     date date,
     mode enum('Utilisateur', 'Empreinte','QrCode', 'Smart_card', 'RFID'),
@@ -197,7 +267,7 @@ create table if not exists presence(
 create table if not exists employe_grade(
 	id varchar(32),
 	employe_id varchar(32) not null,
-	grade_id varchar(6) not null,
+	grade_id varchar(32) not null,
     est_initial tinyint(1) default 0,
     type enum('Commissionnement', 'Officiel'),
 	date date,
@@ -208,13 +278,29 @@ create table if not exists employe_grade(
 	constraint fk_employe_grade_grade foreign key(grade_id) references grade(id) on update cascade
 );
 
+create table if not exists employe_fonction(
+	id varchar(32),
+	employe_id varchar(32) not null,
+	fonction_id varchar(32) not null,
+	date date,
+    type enum('Officiel', 'Interim'),
+    state enum('Running', 'Pause') default 'Running',
+    date_fin date,
+	created_at datetime,
+    updated_at datetime,
+	constraint pk_employe_fonction primary key(id),
+	constraint fk_employe_fonction_employe foreign key(employe_id) references employe(id) on update cascade,
+	constraint fk_employe_fonction_fonction foreign key(fonction_id) references fonction(id) on update cascade,
+	constraint fk_employe_fonction_acte foreign key(acte_id) references acte_nomination(id) on update cascade
+);
+
 create table if not exists affectation(
 	id varchar(32),
 	employe_id varchar(32) not null,
 	ancienne_entite_id varchar(32),
 	nouvelle_entite_id varchar(32) not null,
-    niveau enum('Direction', 'Departement'),
-    unite_id varchar(12) not null, /* Identifiant de la direction ou la division ou le bureau d'affectation */
+    niveau enum('Direction', 'Departement', 'Agence'),
+    unite_id varchar(32) not null, /* Identifiant de la direction ou la division ou le bureau d'affectation */
 	date date,
 	created_at datetime,
     updated_at datetime,

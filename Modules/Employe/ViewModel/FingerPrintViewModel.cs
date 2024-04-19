@@ -1,8 +1,11 @@
-﻿using FingerPrintManagerApp.Dialog.Service;
+﻿using DPFP.Capture;
+using DPFP.Error;
+using FingerPrintManagerApp.Dialog.Service;
 using FingerPrintManagerApp.Model.Employe;
 using FingerPrintManagerApp.Model.Helper;
 using FingerPrintManagerApp.ViewModel.Command;
 using libzkfpcsharp;
+using Sample;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,12 +16,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 {
-    public class FingerPrintViewModel : DialogViewModelBase
+    public class FingerPrintViewModel : DialogViewModelBase, DPFP.Capture.EventHandler
     {
+        DPFP.Capture.Capture _capturer;
+        DPFP.Processing.Enrollment _enroller;
+
         private object _lock = new object();
 
         private ObservableCollection<EmployeEmpreinte> empreintes;
@@ -60,6 +67,9 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             Doigt = doigts[CurrentFingerIndex];
 
+         
+
+
         }
 
         private bool OnDoigtFilter(object obj)
@@ -80,7 +90,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         byte[] FPBuffer;
         int RegisterCount = 0;
-        const int REGISTER_FINGER_COUNT = 3;
+        const int REGISTER_FINGER_COUNT = 4;
 
         byte[][] RegTmps = new byte[3][];
         byte[] RegTmp = new byte[2048];
@@ -281,191 +291,112 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             InitDevice();
         }
 
+
         void InitDevice()
         {
             DeviceFailed = DeviceSucceeded = false;
 
-            int ret = zkfperrdef.ZKFP_ERR_OK;
-            if ((ret = zkfp2.Init()) == zkfperrdef.ZKFP_ERR_OK)
-            {
-                int nCount = zkfp2.GetDeviceCount();
-                if (nCount > 0)
-                {
-                    ret = zkfp.ZKFP_ERR_OK;
-                    if (IntPtr.Zero == (mDevHandle = zkfp2.OpenDevice(0)))
-                    {
-                        //Status = "L'ouverture de l'appareil a échoué !";
-                        DeviceFailed = true;
-                        return;
-                    }
-                    if (IntPtr.Zero == (mDBHandle = zkfp2.DBInit()))
-                    {
-                        DeviceFailed = true;
-                        //MessageBox.Show("Init DB fail");
-                        zkfp2.CloseDevice(mDevHandle);
-                        mDevHandle = IntPtr.Zero;
-                        return;
-                    }
+            _capturer = new DPFP.Capture.Capture();
+            _enroller = new DPFP.Processing.Enrollment();
+            _capturer.EventHandler = this;
 
-                    RegisterCount = 0;
-                    cbRegTmp = 0;
-
-                    for (int i = 0; i < 3; i++)
-                        RegTmps[i] = new byte[2048];
-
-                    byte[] paramValue = new byte[4];
-                    int size = 4;
-                    zkfp2.GetParameters(mDevHandle, 1, paramValue, ref size);
-                    zkfp2.ByteArray2Int(paramValue, ref mfpWidth);
-
-                    size = 4;
-                    zkfp2.GetParameters(mDevHandle, 2, paramValue, ref size);
-                    zkfp2.ByteArray2Int(paramValue, ref mfpHeight);
-
-                    FPBuffer = new byte[mfpWidth * mfpHeight];
-
-                    size = 4;
-                    zkfp2.GetParameters(mDevHandle, 3, paramValue, ref size);
-                    zkfp2.ByteArray2Int(paramValue, ref mfpDpi);
-
-                    Thread captureThread = new Thread(new ThreadStart(DoCapture));
-                    captureThread.IsBackground = true;
-                    captureThread.Start();
-                    canPrint = true;
-                    ScanCount = REGISTER_FINGER_COUNT;
-
-                    initDeviceSucceeded = true;
-
-                    AllScanned = Employe.Empreintes.Count == doigts.Count;
-
-                    if (!AllScanned)
-                        DeviceSucceeded = true;
-                }
-                else
-                {
-                    zkfp2.Terminate();
-                    //Status = "Aucun appareil n'est connecté.";
-                }
-            }
+            if (_capturer == null)
+                DeviceFailed = true;
             else
             {
-                DeviceFailed = true;
-                //Status = "L'initialisation de l'appreil a échoué !";
+                _capturer.StartCapture();
+                canPrint = true;
+                ScanCount = REGISTER_FINGER_COUNT;
+                initDeviceSucceeded = true;
+
+                AllScanned = Employe.Empreintes.Count == doigts.Count;
+
+                if (!AllScanned)
+                    DeviceSucceeded = true;
             }
         }
 
-        private void DoCapture()
+        byte[] saveFinger;
+        void Process(DPFP.Sample Sample)
         {
-            while (canPrint)
+            try
             {
-                try
+                var bmp = FingerPrintUtil.ConvertSampleToBitmap(Sample);
+                PrintFingerImage = ImageUtil.BitmapToByte(bmp);
+
+                foreach (var empreinte in Employe.Empreintes) //ici nous verifions si le doigt inserer existe déjà
                 {
-                    cbCapTmp = 2048;
-                    int ret = zkfp2.AcquireFingerprint(mDevHandle, FPBuffer, CapTmp, ref cbCapTmp);
-
-                    if (ret == zkfp.ZKFP_ERR_OK)
-                        CallBack(MESSAGE_CAPTURED_OK);
-
-                    Thread.Sleep(200);
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
-
-        void CallBack(int msg)
-        {
-            switch (msg)
-            {
-                case MESSAGE_CAPTURED_OK:
+                    if(FingerPrintUtil.verifiy(Sample, empreinte.Template))
                     {
-                        Status = string.Empty;
-
-                        var ms = new MemoryStream();
-                        Sample.BitmapFormat.GetBitmap(FPBuffer, mfpWidth, mfpHeight, ref ms);
-                        var bmp = new Bitmap(ms);
-                        PrintFingerImage = ImageUtil.BitmapToByte(bmp);
-
-                        foreach (var empreinte in Employe.Empreintes)
-                        {
-                            var score = zkfp2.DBMatch(mDBHandle, CapTmp, empreinte.Template);
-                            if (score >= 90)
-                            {
-                                Status = string.Format("Ce doigt << {0} >> est déjà enregistré !", empreinte.Doigt);
-                                return;
-                            }
-                        }
-
-                        var found = Identify(CapTmp).Result;
-
-                        if (found != null)
-                        {
-                            Status = string.Format("Cette empreinte est déjà enregistrée. Elle identifie : << {0} >>", found.Employe.Name);
-                            return;
-                        }
-
-                        if (RegisterCount > 0 && zkfp2.DBMatch(mDBHandle, CapTmp, RegTmps[RegisterCount - 1]) <= 0)
-                        {
-                            Status = string.Format("Veuillez appuyer 3 fois le même doit << {0} >> pour l'enrôlement. Recommencons !", Doigt);
-                            RegisterCount = 0;
-                            ScanCount = REGISTER_FINGER_COUNT;
-                            return;
-                        } 
-
-                        Array.Copy(CapTmp, RegTmps[RegisterCount], cbCapTmp);
-                        RegisterCount++;
-
-                        int ret = zkfp.ZKFP_ERR_OK;
-
-                        if (RegisterCount >= REGISTER_FINGER_COUNT)
-                        {
-                            RegisterCount = 0;
-                            Status = string.Empty;
-                            NextFinger = false;
-
-                            if (zkfp.ZKFP_ERR_OK == (ret = zkfp2.DBMerge(mDBHandle, RegTmps[0], RegTmps[1], RegTmps[2], RegTmp, ref cbRegTmp)))
-                            {
-                                //Status = "Enrôlement effectué avec succès !";
-
-                                var empreinte = new EmployeEmpreinte()
-                                {
-                                    Employe = Employe,
-                                    Image = PrintFingerImage,
-                                    Template = RegTmp,
-                                    Size = RegTmp.Length,
-                                    Finger = Dao.Employe.Util.ToFingers(Doigt)
-                                };
-
-                                Employe.Empreintes.Add(empreinte);
-                                empreintes.Add(empreinte);
-
-                                ViewContext.Send(x => {
-                                    DoigtsView.Refresh();
-                                }, null);
-
-                                AllScanned = empreintes.Count == doigts.Count;
-                                DeviceSucceeded = canPrint = !AllScanned;
-
-                                NextFinger = true;
-
-                                ScanCount = REGISTER_FINGER_COUNT;
-                            }
-                            else
-                            {
-                                Status = "Enrôlement échoué !";
-                            }
-
-                            return;
-                        }
-                        else
-                            ScanCount--;
-
+                        Status = string.Format("Ce doigt << {0} >> est déjà enregistré !", empreinte.Doigt);
+                        return;
                     }
-                    break;
+                }
 
-                default:
-                    break;
+
+                //if (RegisterCount > 0 && !FingerPrintUtil.verifiy(Sample, saveFinger)) //Ici on s'assure que la personne introduit le même doigt
+                //{
+                //    Status = string.Format("Veuillez appuyer 4 fois le même doit << {0} >> pour l'enrôlement. Recommencons !", Doigt);
+                //    RegisterCount = 0;
+                //    ScanCount = REGISTER_FINGER_COUNT;
+                //    return;
+                //}
+
+                RegisterCount++;
+
+                var features = FingerPrintUtil.ExtractFeatures(Sample, DPFP.Processing.DataPurpose.Enrollment);
+
+                if (features != null)
+                {
+                    _enroller.AddFeatures(features);
+                    ScanCount--;
+                }
+
+                if (RegisterCount >= REGISTER_FINGER_COUNT)
+                {
+                    RegisterCount = 0;
+                    Status = string.Empty;
+                    NextFinger = false;
+
+                    if (_enroller.TemplateStatus == DPFP.Processing.Enrollment.Status.Ready)
+                    {
+                        try
+                        {
+                            MemoryStream s = new MemoryStream();
+                            _enroller.Template.Serialize(s);
+
+                            var empreinte = new EmployeEmpreinte()
+                            {
+                                Employe = Employe,
+                                Image = PrintFingerImage,
+                                Template = s.ToArray(),
+                                Size = features.Size,
+                                Finger = Dao.Employe.Util.ToFingers(Doigt)
+                            };
+
+                            Employe.Empreintes.Add(empreinte);
+                            empreintes.Add(empreinte);
+
+                            ViewContext.Send(x => {
+                                DoigtsView.Refresh();
+                            }, null);
+
+                            AllScanned = empreintes.Count == doigts.Count;
+                            DeviceSucceeded = canPrint = !AllScanned;
+
+                            NextFinger = true;
+
+                            ScanCount = REGISTER_FINGER_COUNT;
+                        }
+                        catch (SDKException)
+                        {
+                            //MessageBox.Show(ex.Message);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
             }
         }
 
@@ -496,14 +427,13 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             try
             {
-                zkfp2.Terminate();
-                zkfp2.CloseDevice(mDevHandle);
+                _capturer.StopCapture();
             }
             catch (Exception)
             {
             }
             
-            CloseDialogWithResult(param as Window, DialogResult.No);
+            CloseDialogWithResult(param as Window, Dialog.Service.DialogResult.No);
         }
 
         public ICommand TryAgainCommand
@@ -586,6 +516,42 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             }
 
             return empreinte;
+        }
+
+        public void OnComplete(object Capture, string ReaderSerialNumber, DPFP.Sample Sample)
+        {
+            Process(Sample);
+        }
+
+        public void OnFingerGone(object Capture, string ReaderSerialNumber)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnFingerTouch(object Capture, string ReaderSerialNumber)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnReaderConnect(object Capture, string ReaderSerialNumber)
+        {
+            initDeviceSucceeded = true;
+            DeviceFailed = false;
+            DeviceSucceeded = !DeviceFailed;
+        }
+
+        public void OnReaderDisconnect(object Capture, string ReaderSerialNumber)
+        {
+            DeviceFailed = true;
+            DeviceSucceeded = !DeviceFailed;
+        }
+
+        public void OnSampleQuality(object Capture, string ReaderSerialNumber, CaptureFeedback CaptureFeedback)
+        {
+            if (CaptureFeedback == DPFP.Capture.CaptureFeedback.Good) ;
+            //("The quality of the fingerprint sample is good.");
+            else;
+            //("The quality of the fingerprint sample is poor.");
         }
 
         private RelayCommand _saveCommand;

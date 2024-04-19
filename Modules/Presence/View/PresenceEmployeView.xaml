@@ -485,7 +485,7 @@
                                             Grid.Column="0"
                                             Margin="3 0"
                                             >
-                                        <Image gif:ImageBehavior.AnimatedSource="/Humager;component/View/Image/preloader.gif"
+                                        <Image gif:ImageBehavior.AnimatedSource="/FingerPrintManagerApp;component/View/Image/preloader.gif"
                                                Height="20"
                                                Width="20"
                                                VerticalAlignment="Center"

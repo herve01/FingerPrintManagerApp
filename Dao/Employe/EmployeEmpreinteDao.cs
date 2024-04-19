@@ -9,7 +9,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class EmployeEmpreinteDao : Dao<EmployeEmpreinte>
     {
-        public EmployeEmpreinteDao()
+        public EmployeEmpreinteDao(DbConnection connection = null) : base(connection)
         {
             TableName = "employe_empreinte";
         }
@@ -18,9 +18,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_empreinte(id, employe_id, size, empreinte_image, empreinte_template, finger, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe_empreinte(id, employe_id, size, empreinte_image, empreinte_template, finger, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_size, @v_empreinte_image, @v_empreinte_template, @v_finger, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -58,9 +58,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_empreinte(id, employe_id, size, empreinte_image, empreinte_template, finger, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe_empreinte(id, employe_id, size, empreinte_image, empreinte_template, finger, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_size, @v_empreinte_image, @v_empreinte_template, @v_finger, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -138,7 +138,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "empreinte_template = @v_empreinte_template, " +
                     "empreinte_image = @v_empreinte_image, " +
                     "finger = @v_finger, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));

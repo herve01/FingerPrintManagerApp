@@ -13,7 +13,7 @@ namespace FingerPrintManagerApp.Dao.Presence
 {
     public class PresenceDao : Dao<Model.Presence.Presence>
     {
-        public PresenceDao()
+        public PresenceDao(DbConnection connection = null) : base(connection)
         {
             TableName = "presence";
         }
@@ -21,9 +21,9 @@ namespace FingerPrintManagerApp.Dao.Presence
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into presence(id, periode_id, employe_id, date, mode_pointage, heure_arrivee, adding_date, last_update_time) " +
+                Request.CommandText = "insert into presence(id, periode_id, employe_id, date, mode_pointage, heure_arrivee, created_at, updated_at) " +
                     "values(@v_id, @v_periode_id, @v_employe_id, @v_date, @v_mode_pointage, @v_heure_arrivee, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -58,9 +58,9 @@ namespace FingerPrintManagerApp.Dao.Presence
             try
             {
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into presence(id, periode_id, employe_id, date, mode_pointage, heure_arrivee, adding_date, last_update_time) " +
+                Request.CommandText = "insert into presence(id, periode_id, employe_id, date, mode_pointage, heure_arrivee, created_at, updated_at) " +
                      "values(@v_id, @v_periode_id, @v_employe_id, @v_date,  @v_mode_pointage, @v_heure_arrivee, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -102,7 +102,7 @@ namespace FingerPrintManagerApp.Dao.Presence
                     "mode_pointage = @v_mode_pointage, " +
                     "heure_arrivee = @v_heure_arrivee, " +
                     "heure_depart = @v_heure_depart, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_periode_id", DbType.String, instance.Periode.Id));
@@ -150,7 +150,7 @@ namespace FingerPrintManagerApp.Dao.Presence
 
                 Request.CommandText = "update presence " +
                     "set heure_depart = @v_heure_depart, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_heure_arrivee", DbType.Time, instance.HeureArrivee.TimeOfDay));
@@ -354,7 +354,7 @@ namespace FingerPrintManagerApp.Dao.Presence
             {
                 Request.CommandText = "select * " +
                     "from presence " +
-                    "where adding_date >= @v_time or last_update_time >= @v_time";
+                    "where created_at >= @v_time or updated_at >= @v_time";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_time", DbType.DateTime, lastUpdateTime));
 

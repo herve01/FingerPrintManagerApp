@@ -166,12 +166,12 @@
     <Compile Include="Dao\ContinentDao.cs" />
     <Compile Include="Dao\Dao.cs" />
     <Compile Include="Dao\Employe\AffectationDao.cs" />
-    <Compile Include="Dao\Employe\BureauDao.cs" />
-    <Compile Include="Dao\Employe\DivisionDao.cs" />
+    <Compile Include="Dao\Employe\DirectionDao.cs" />
+    <Compile Include="Dao\Employe\DirectionProvincialeDao.cs" />
+    <Compile Include="Dao\Employe\DepartementDao.cs" />
     <Compile Include="Dao\Employe\DomaineEtudeDao.cs" />
     <Compile Include="Dao\Employe\EmployeDao.cs" />
     <Compile Include="Dao\Employe\EmployeEmpreinteDao.cs" />
-    <Compile Include="Dao\Employe\EmployeEtudeDao.cs" />
     <Compile Include="Dao\Employe\EmployeFonctionDao.cs" />
     <Compile Include="Dao\Employe\EmployeGradeDao.cs" />
     <Compile Include="Dao\Employe\EnfantEmployeDao.cs" />
@@ -185,6 +185,8 @@
     <Compile Include="Dao\Helper\DbUtil.cs" />
     <Compile Include="Dao\Helper\TableKeyHelper.cs" />
     <Compile Include="Dao\PaysDao.cs" />
+    <Compile Include="Dao\Presence\DateExceptionDao.cs" />
+    <Compile Include="Dao\Presence\HoraireTravailSemaineDao.cs" />
     <Compile Include="Dao\Presence\PeriodeDao.cs" />
     <Compile Include="Dao\Presence\PresenceDao.cs" />
     <Compile Include="Dao\Presence\Util.cs" />
@@ -208,13 +210,19 @@
     <Compile Include="Model\Employe\Departement.cs" />
     <Compile Include="Model\Employe\Direction.cs" />
     <Compile Include="Model\Employe\DirectionProvinciale.cs" />
+    <Compile Include="Model\Employe\DomaineEtude.cs" />
     <Compile Include="Model\Employe\Employe.cs" />
     <Compile Include="Model\Employe\EmployeEmpreinte.cs" />
+    <Compile Include="Model\Employe\EmployeFonction.cs" />
     <Compile Include="Model\Employe\EmployeGrade.cs" />
+    <Compile Include="Model\Employe\EnfantEmploye.cs" />
     <Compile Include="Model\Employe\Entite.cs" />
     <Compile Include="Model\Employe\Enum.cs" />
+    <Compile Include="Model\Employe\Fonction.cs" />
     <Compile Include="Model\Employe\Grade.cs" />
+    <Compile Include="Model\Employe\NiveauEtude.cs" />
     <Compile Include="Model\Enum.cs" />
+    <Compile Include="Model\Helper\FingerPrintUtil.cs" />
     <Compile Include="Model\Helper\GS Helper\AntiAliasMode.cs" />
     <Compile Include="Model\Helper\GS Helper\Dpi.cs" />
     <Compile Include="Model\Helper\GS Helper\ErrorCode.cs" />
@@ -378,8 +386,9 @@
     </Compile>
     <Compile Include="Modules\Employe\ViewModel\Adapter\EnfantAddAdapter.cs" />
     <Compile Include="Modules\Employe\ViewModel\Adapter\FonctionAddAdapter.cs" />
-    <Compile Include="Modules\Employe\ViewModel\BureauViewModel.cs" />
-    <Compile Include="Modules\Employe\ViewModel\DivisionViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\AffectationViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\DirectionInterneViewModel.cs" />
+    <Compile Include="Modules\Employe\ViewModel\DepartementViewModel.cs" />
     <Compile Include="Modules\Employe\ViewModel\DomaineEtudeViewModel.cs" />
     <Compile Include="Modules\Employe\ViewModel\EditEmployeViewModel.cs" />
     <Compile Include="Modules\Employe\ViewModel\EmployeChoiceListViewModel.cs" />
@@ -393,11 +402,14 @@
     <Compile Include="Modules\Employe\ViewModel\FingerPrintViewModel.cs" />
     <Compile Include="Modules\Employe\ViewModel\FonctionViewModel.cs" />
     <Compile Include="Modules\Employe\ViewModel\NiveauEtudeViewModel.cs" />
-    <Compile Include="Modules\Employe\View\BureauView.xaml.cs">
-      <DependentUpon>BureauView.xaml</DependentUpon>
+    <Compile Include="Modules\Employe\View\AffectationView.xaml.cs">
+      <DependentUpon>AffectationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Employe\View\DivisionView.xaml.cs">
-      <DependentUpon>DivisionView.xaml</DependentUpon>
+    <Compile Include="Modules\Employe\View\DirectionInterneView.xaml.cs">
+      <DependentUpon>DirectionInterneView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Employe\View\DepartementView.xaml.cs">
+      <DependentUpon>DepartementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Employe\View\DomaineEtudeView.xaml.cs">
       <DependentUpon>DomaineEtudeView.xaml</DependentUpon>
@@ -692,11 +704,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Modules\Employe\View\BureauView.xaml">
+    <Page Include="Modules\Employe\View\AffectationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Modules\Employe\View\DivisionView.xaml">
+    <Page Include="Modules\Employe\View\DirectionInterneView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Employe\View\DepartementView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

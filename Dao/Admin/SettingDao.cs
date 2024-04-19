@@ -31,7 +31,7 @@ namespace FingerPrintManagerApp.Dao.Admin
             try
             {
                 Request.CommandText = "select * " +
-                    "from arg_store_db_info " +
+                    "from finger_print_manager_db_info " +
                     "where param = @v_key";
 
                 Request.Parameters.Clear();

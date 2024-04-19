@@ -329,7 +329,7 @@
                                                 Grid.Column="2"
                                                 Visibility="{Binding FonctionLoading, Converter={StaticResource boolToVisibilityConverter}}"
                                                 >
-                                        <Image gif:ImageBehavior.AnimatedSource="/Humager;component/View/Image/preloader.gif"
+                                        <Image gif:ImageBehavior.AnimatedSource="/FingerPrintManagerApp;component/View/Image/preloader.gif"
                                                     Height="20"
                                                     Width="20"
                                                     VerticalAlignment="Center"

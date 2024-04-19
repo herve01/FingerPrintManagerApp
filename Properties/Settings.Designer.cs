@@ -85,7 +85,7 @@ namespace FingerPrintManagerApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("senapi_drh_db")]
+        [global::System.Configuration.DefaultSettingValueAttribute("finger_print_manager_db")]
         public string local_dbname {
             get {
                 return ((string)(this["local_dbname"]));

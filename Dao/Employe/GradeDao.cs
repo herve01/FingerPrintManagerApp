@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class GradeDao : Dao<Grade>
     {
-        public GradeDao()
+        public GradeDao(DbConnection connection = null) : base(connection)
         {
             TableName = "grade";
         }
@@ -19,7 +19,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                Request.CommandText = "insert into grade(id, intitule, type, niveau, description, adding_date, last_update_id) " +
+                Request.CommandText = "insert into grade(id, intitule, type, niveau, description, created_at, updated_at) " +
                     "values(@v_id, @v_intitule, @v_type, @v_niveau, @v_description, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
@@ -52,7 +52,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                Request.CommandText = "insert into grade(id, intitule, type, niveau, description, adding_date, last_update_id) " +
+                Request.CommandText = "insert into grade(id, intitule, type, niveau, description, created_at, updated_at) " +
                     "values(@v_id, @v_intitule, @v_type, @v_niveau, @v_description, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
@@ -91,7 +91,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "intitule = @v_intitule, " +
                     "niveau = @v_niveau, " +
                     "description = @v_description, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
@@ -235,7 +235,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "select * " +
                     "from grade " +
-                    "where adding_date >= @v_time or last_update_time >= @v_time";
+                    "where created_at >= @v_time or updated_at >= @v_time";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_time", DbType.DateTime, lastUpdateTime));
 

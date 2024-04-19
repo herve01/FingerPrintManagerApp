@@ -71,9 +71,9 @@ namespace FingerPrintManagerApp.Model.Employe
                 return false;
             }
 
-            var division = (Departement)obj;
+            var departement = (Departement)obj;
 
-            return (!string.IsNullOrWhiteSpace(Id) && division.Id == Id) || (!string.IsNullOrWhiteSpace(Denomination) && Denomination.ToLower() == division.Denomination);
+            return (!string.IsNullOrWhiteSpace(Id) && departement.Id == Id) || (!string.IsNullOrWhiteSpace(Denomination) && Denomination.ToLower() == departement.Denomination);
         }
 
         public override int GetHashCode()
@@ -119,17 +119,17 @@ namespace FingerPrintManagerApp.Model.Employe
                 {
                     case "Denomination":
                         if (string.IsNullOrWhiteSpace(Denomination))
-                            error = "La dénomination de la division ne peut être vide.";
+                            error = "La dénomination de la departement ne peut être vide.";
                         break;
 
                     //case "Direction":
                     //    if (Direction == null)
-                    //        error = "La direction de la division doit être renseignée.";
+                    //        error = "La direction de la departement doit être renseignée.";
                     //    break;
 
                     //case "Mission":
                     //    if (string.IsNullOrWhiteSpace(Mission))
-                    //        error = "La mission de la division ne peut être vide.";
+                    //        error = "La mission de la departement ne peut être vide.";
                     //    break;
 
                     default:
@@ -156,68 +156,68 @@ namespace FingerPrintManagerApp.Model.Employe
 
         public static Departement BuildProvincial(Direction entite)
         {
-            //var division = new Departement()
+            //var departement = new Departement()
             //{
             //    Direction = entite,
             //    Denomination = "Division provinciale",
             //    Mission = "Gestion intégrale de l'agence."
             //};
 
-            //division.Bureaux.Add(new Bureau()
+            //departement.Bureaux.Add(new Bureau()
             //{
             //    Denomination = "Ressources humaines",
-            //    Division = division
+            //    Division = departement
             //});
 
-            //division.Bureaux.Add(new Bureau()
+            //departement.Bureaux.Add(new Bureau()
             //{
             //    Denomination = "Gestion administrative et financière",
-            //    Division = division
+            //    Division = departement
             //});
 
-            //division.Bureaux.Add(new Bureau()
+            //departement.Bureaux.Add(new Bureau()
             //{
             //    Denomination = "Secrétariat",
-            //    Division = division
+            //    Division = departement
             //});
 
-            //division.Bureaux.Add(new Bureau()
+            //departement.Bureaux.Add(new Bureau()
             //{
             //    Denomination = "Production",
-            //    Division = division
+            //    Division = departement
             //});
 
-            //division.Bureaux.Add(new Bureau()
+            //departement.Bureaux.Add(new Bureau()
             //{
             //    Denomination = "Etudes et planification",
-            //    Division = division
+            //    Division = departement
             //});
 
-            //division.Bureaux.Add(new Bureau()
+            //departement.Bureaux.Add(new Bureau()
             //{
             //    Denomination = "Magasinage et distribution",
-            //    Division = division
+            //    Division = departement
             //});
 
-            //division.Bureaux.Add(new Bureau()
+            //departement.Bureaux.Add(new Bureau()
             //{
             //    Denomination = "BANTIC",
-            //    Division = division
+            //    Division = departement
             //});
 
             //int k = 1;
 
             //while (k < 5)
             //{
-            //    division.Bureaux.Add(new Bureau()
+            //    departement.Bureaux.Add(new Bureau()
             //    {
             //        Denomination = "Point de vente " + k,
-            //        Division = division
+            //        Division = departement
             //    });
             //    k++;
             //}
 
-            //return division;
+            //return departement;
 
             return null;
         }
@@ -226,11 +226,11 @@ namespace FingerPrintManagerApp.Model.Employe
         {
             get
             {
-                var division = string.Format("{0}{1}", Denomination.ToLower().NoAccent().Contains("division") ? "" : "Division ", Denomination);
+                var departement = string.Format("{0}{1}", Denomination.ToLower().NoAccent().Contains("departement") ? "" : "Division ", Denomination);
 
-                //return string.Format("{1}{0}", Direction != null ? ", " + Direction.Description : "", division);
+                //return string.Format("{1}{0}", Direction != null ? ", " + Direction.Description : "", departement);
 
-                return division;
+                return departement;
             }
         }
 

@@ -125,7 +125,7 @@
                             VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
-                        <Image Source="/Humager;component/View/Image/emoji_triste.png"
+                        <Image Source="/FingerPrintManagerApp;component/View/Image/emoji_triste.png"
                                Height="50"/>
                         <Border Width="30" />
                         <TextBlock Text="Oups!"
@@ -174,7 +174,7 @@
                             VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
-                        <Image Source="/Humager;component/View/Image/emoji_good.png"
+                        <Image Source="/FingerPrintManagerApp;component/View/Image/emoji_good.png"
                                Height="50"/>
                         <Border Width="30" />
                         <TextBlock Text="Super!"
@@ -234,7 +234,7 @@
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            >
-                      Laissez reposer puis levez <Run FontWeight="Bold" Text="{Binding ScanCount, FallbackValue='3'}" /> fois votre <Run FontWeight="Bold" Text="{Binding Doigt, FallbackValue='doigt'}" /> sur le vitre d'acquisition de votre lecteur d'empreintes.
+                      Laissez reposer puis levez <Run FontWeight="Bold" Text="{Binding ScanCount, FallbackValue='4'}" /> fois votre <Run FontWeight="Bold" Text="{Binding Doigt, FallbackValue='doigt'}" /> sur le vitre d'acquisition de votre lecteur d'empreintes.
                     </TextBlock>
                 </StackPanel>
 

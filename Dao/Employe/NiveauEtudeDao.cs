@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 {
     public class NiveauEtudeDao : Dao<NiveauEtude>
     {
-        public NiveauEtudeDao()
+        public NiveauEtudeDao(DbConnection connection = null) : base(connection)
         {
             TableName = "niveau_etude";
         }

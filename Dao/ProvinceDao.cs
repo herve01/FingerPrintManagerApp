@@ -10,7 +10,7 @@ namespace FingerPrintManagerApp.Dao
 {
     public class ProvinceDao : Dao<Province>
     {
-        public ProvinceDao()
+        public ProvinceDao(DbConnection connection = null) : base(connection)
         {
         }
 
