@@ -144,8 +144,8 @@ create table if not exists fonction(
 	grade_id varchar(6) not null,
 	intitule varchar(100) not null,
     niveau enum('Direction', 'Departement', 'Agence'),
-    unite_id varchar(12) not null, /* Identifiant de la direction ou la division ou le bureau d'affectation */
-    entite_id varchar(6) not null,
+    unite_id varchar(32) not null, /* Identifiant de la direction ou la division ou le bureau d'affectation */
+    entite_id varchar(32) not null,
 	description text,
 	created_at datetime,
     updated_at datetime,
@@ -185,6 +185,8 @@ create table if not exists employe(
 	lieu_naissance varchar(20) not null,
 	date_naissance date not null,
 	province_origine_id int default 0,
+	personne_contact varchar(120),
+    qualite_contact varchar(30),
     est_affecte tinyint(1) default 0,
 	telephone VARCHAR(14),
 	email VARCHAR(100) UNIQUE,
@@ -267,7 +269,7 @@ create table if not exists presence(
 create table if not exists employe_grade(
 	id varchar(32),
 	employe_id varchar(32) not null,
-	grade_id varchar(32) not null,
+	grade_id varchar(6) not null,
     est_initial tinyint(1) default 0,
     type enum('Commissionnement', 'Officiel'),
 	date date,
@@ -290,8 +292,7 @@ create table if not exists employe_fonction(
     updated_at datetime,
 	constraint pk_employe_fonction primary key(id),
 	constraint fk_employe_fonction_employe foreign key(employe_id) references employe(id) on update cascade,
-	constraint fk_employe_fonction_fonction foreign key(fonction_id) references fonction(id) on update cascade,
-	constraint fk_employe_fonction_acte foreign key(acte_id) references acte_nomination(id) on update cascade
+	constraint fk_employe_fonction_fonction foreign key(fonction_id) references fonction(id) on update cascade
 );
 
 create table if not exists affectation(

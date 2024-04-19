@@ -172,6 +172,7 @@
     <Compile Include="Dao\Employe\DomaineEtudeDao.cs" />
     <Compile Include="Dao\Employe\EmployeDao.cs" />
     <Compile Include="Dao\Employe\EmployeEmpreinteDao.cs" />
+    <Compile Include="Dao\Employe\EmployeEtudeDao.cs" />
     <Compile Include="Dao\Employe\EmployeFonctionDao.cs" />
     <Compile Include="Dao\Employe\EmployeGradeDao.cs" />
     <Compile Include="Dao\Employe\EnfantEmployeDao.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Model\Employe\DomaineEtude.cs" />
     <Compile Include="Model\Employe\Employe.cs" />
     <Compile Include="Model\Employe\EmployeEmpreinte.cs" />
+    <Compile Include="Model\Employe\EmployeEtude.cs" />
     <Compile Include="Model\Employe\EmployeFonction.cs" />
     <Compile Include="Model\Employe\EmployeGrade.cs" />
     <Compile Include="Model\Employe\EnfantEmploye.cs" />

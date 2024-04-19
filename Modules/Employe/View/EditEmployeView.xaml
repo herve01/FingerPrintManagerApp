@@ -934,32 +934,7 @@
                                                        />
 
                                     <Border Margin="0 10"/>
-
-                                    <WrapPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Etat *" 
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-
-                                            <ComboBox ItemsSource="{Binding EtatsView}"
-                                                      SelectedValue="{Binding Etat, Mode=TwoWay}"
-                                                      DisplayMemberPath="Intitule"
-                                                      Width="370" 
-                                                      IsSynchronizedWithCurrentItem="True"
-                                                      FontWeight="DemiBold"
-                                                      VerticalAlignment="Center" 
-                                                      HorizontalAlignment="Stretch" 
-                                                      Style="{DynamicResource ComboBoxWebStyle}"
-                                                      Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                      />
-                                        </StackPanel>
-
-                                    </WrapPanel>
-
-
-                                    <Border Margin="0 10 0 5" />
-
+                                                              
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Autres informations " 
                                                    VerticalAlignment="Center"
@@ -970,27 +945,7 @@
                                         <Border Width="20" />
 
                                         <StackPanel Orientation="Horizontal">
-                                            <CheckBox Content="Recensé"
-                                                              VerticalAlignment="Center"
-                                                              IsChecked="{Binding Employe.EstRecense}" 
-                                                              Style="{DynamicResource WebCheckBoxStyle}"/>
-
-                                            <Border Margin="5 0" />
-
-                                            <CheckBox Content="Mécanisé pour salaire"
-                                                              VerticalAlignment="Center"
-                                                              IsChecked="{Binding Employe.EstMecaniseSalaire}" 
-                                                              Style="{DynamicResource WebCheckBoxStyle}"/>
-
-                                            <Border Margin="5 0" />
-
-                                            <CheckBox Content="Mécanisé pour prime"
-                                                              VerticalAlignment="Center"
-                                                              IsChecked="{Binding Employe.EstMecanisePrime}"
-                                                              Style="{DynamicResource WebCheckBoxStyle}"/>
-
-                                            <Border Margin="5 0" />
-
+                                           
                                             <CheckBox Content="Affecté"
                                                       IsEnabled="{Binding Employe.EstActif}"
                                                       VerticalAlignment="Center"
@@ -1002,40 +957,7 @@
 
                                     </StackPanel>
 
-                                    <Border Margin="0 20"
-                                                    Height="1"
-                                                    Background="{StaticResource Separator.Background.Small}" />
-
-                                    <TextBlock Text="Sécurité sociale"
-                                                       VerticalAlignment="Center"
-                                                       HorizontalAlignment="Left"
-                                                       FontSize="14"
-                                                       FontWeight="DemiBold"
-                                                        />
-
-                                    <Border Margin="0 10"/>
-
-                                    <WrapPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Numéro d'immatriculation CNNSAP " 
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-                                            <TextBox VerticalContentAlignment="Center" 
-                                                             Width="370" 
-                                                             Text="{Binding Employe.ImmatriculationCNSSAP, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                                             HorizontalAlignment="Left" 
-                                                             HorizontalContentAlignment="Left"
-                                                             Style="{DynamicResource TextBoxWebStyle}" 
-                                                             Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                        />
-                                        </StackPanel>
-
-
-
-                                    </WrapPanel>
-
-                                    <Border Margin="0 20"
+                                    <Border Margin="0 10"
                                                     Height="1"
                                                     Background="{StaticResource Separator.Background.Small}" />
 
@@ -1065,52 +987,7 @@
                                                         />
                                         </StackPanel>
 
-                                        <Border Width="20" />
-
-                                        <StackPanel>
-                                            <TextBlock Text="Acte d'engagement * " 
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBox VerticalContentAlignment="Center" 
-                                                         Width="340" 
-                                                         Text="{Binding Employe.GradeEngagement.Acte, ValidatesOnDataErrors=True}"
-                                                         HorizontalAlignment="Left" 
-                                                         IsEnabled="False"
-                                                         HorizontalContentAlignment="Left"
-                                                         Style="{DynamicResource TextBoxWebStyle}" 
-                                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                          />
-
-                                                <TextBlock Text="{Binding Employe.GradeEngagement.Acte.Description}"
-                                                           Padding="8"
-                                                           VerticalAlignment="Center" 
-                                                           FontWeight="DemiBold"
-                                                           Width="340"
-                                                           Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                                <Button Width="30"
-                                                        Grid.Column="1"
-                                                        ToolTip="Cliquez pour filtrer"
-                                                        Command="{Binding ChooseActeCommand}"
-                                                        CommandParameter="ENGAGEMENT"
-                                                        Background="#DD193952"
-                                                        Foreground="#ffffff"
-                                                        Tag="M11.170988,2.0000026C6.1139962,2.0000026 1.9999944,6.1120075 1.9999944,11.16603 1.9999944,16.219991 6.1139962,20.331996 11.170988,20.331996 16.227981,20.331996 20.341006,16.219991 20.341006,11.16603 20.341006,6.1120075 16.227981,2.0000026 11.170988,2.0000026z M11.170988,0C17.33003,0 22.341001,5.0089787 22.341001,11.16603 22.341001,13.76351 21.449155,16.156669 19.95551,18.055608L19.942527,18.071714 31.999898,30.615001 30.5589,32.001003 18.567029,19.525854 18.476871,19.605846C16.516895,21.303544 13.961804,22.332 11.170988,22.332 5.0119487,22.332 1.6168633E-07,17.32302 0,11.16603 1.6168633E-07,5.0089787 5.0119487,0 11.170988,0z"
-                                                        Style="{DynamicResource ButtonFlatIconStyle3}"
-                                                        />
-                                            </Grid>
-
-                                        </StackPanel>
-
-
-
+                           
                                     </WrapPanel>
 
                                     <Border Margin="0 5" />
@@ -1156,7 +1033,7 @@
                                     </WrapPanel>
 
                                     <StackPanel Visibility="{Binding Employe.EstAffecte, Converter={StaticResource boolToVisibilityConverter}}">
-                                        <Border Margin="0 20"
+                                        <Border Margin="0 10"
                                                     Height="1"
                                                     Background="{StaticResource Separator.Background.Small}" />
 
@@ -1238,7 +1115,7 @@
                                                     Visibility="{Binding IsSiege, Converter={StaticResource boolToVisibilityConverter}}"/>
                                             
                                             <StackPanel Visibility="{Binding ShowDivision, Converter={StaticResource boolToVisibilityConverter}}">
-                                                <TextBlock Text="Division " 
+                                                <TextBlock Text="Departement " 
                                                                    VerticalAlignment="Center"
                                                                    Style="{StaticResource FieldLabel}"/>
 
@@ -1259,7 +1136,7 @@
                                             <Border Width="20" />
 
                                             <StackPanel Visibility="{Binding ShowBureau, Converter={StaticResource boolToVisibilityConverter}}">
-                                                <TextBlock Text="Bureau " 
+                                                <TextBlock Text="Agence " 
                                                                    VerticalAlignment="Center"
                                                                    Style="{StaticResource FieldLabel}"/>
 
@@ -1280,49 +1157,6 @@
                                             
                                         </WrapPanel>
 
-                                        <Border Margin="0 5" />
-                                        
-                                        <StackPanel>
-                                            <TextBlock Text="Acte d'affectation *" 
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBox VerticalContentAlignment="Center" 
-                                                         Width="210" 
-                                                         Text="{Binding Employe.CurrentAffectation.Acte, ValidatesOnDataErrors=True}"
-                                                         HorizontalAlignment="Left" 
-                                                         IsEnabled="False"
-                                                         HorizontalContentAlignment="Left"
-                                                         Style="{DynamicResource TextBoxWebStyle}" 
-                                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                          />
-
-                                                <TextBlock Text="{Binding Employe.CurrentAffectation.Acte.Description}"
-                                                           Padding="8"
-                                                           VerticalAlignment="Center" 
-                                                           FontWeight="DemiBold"
-                                                           Width="210"
-                                                           Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                                <Button Width="30"
-                                                        Grid.Column="1"
-                                                        ToolTip="Cliquez pour filtrer"
-                                                        Command="{Binding ChooseActeCommand}"
-                                                        CommandParameter="AFFECTATION"
-                                                        Background="#DD193952"
-                                                        Foreground="#ffffff"
-                                                        Tag="M11.170988,2.0000026C6.1139962,2.0000026 1.9999944,6.1120075 1.9999944,11.16603 1.9999944,16.219991 6.1139962,20.331996 11.170988,20.331996 16.227981,20.331996 20.341006,16.219991 20.341006,11.16603 20.341006,6.1120075 16.227981,2.0000026 11.170988,2.0000026z M11.170988,0C17.33003,0 22.341001,5.0089787 22.341001,11.16603 22.341001,13.76351 21.449155,16.156669 19.95551,18.055608L19.942527,18.071714 31.999898,30.615001 30.5589,32.001003 18.567029,19.525854 18.476871,19.605846C16.516895,21.303544 13.961804,22.332 11.170988,22.332 5.0119487,22.332 1.6168633E-07,17.32302 0,11.16603 1.6168633E-07,5.0089787 5.0119487,0 11.170988,0z"
-                                                        Style="{DynamicResource ButtonFlatIconStyle3}"
-                                                        />
-                                            </Grid>
-
-                                        </StackPanel>
                                     </StackPanel>
 
                                     <Border Margin="0 20"
@@ -1335,89 +1169,6 @@
                                                        FontSize="14"
                                                        FontWeight="DemiBold"
                                                        />
-
-                                    <Border Margin="0 10"/>
-
-                                    <WrapPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Grade statutaire actuel" 
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-
-                                            <ComboBox ItemsSource="{Binding CurrentStatutaireGradesView}"
-                                                      SelectedValue="{Binding CurrentStatutaireGrade, Mode=TwoWay}"
-                                                      DisplayMemberPath="Id"
-                                                      Width="240" 
-                                                      IsSynchronizedWithCurrentItem="True"
-                                                      FontWeight="DemiBold"
-                                                      VerticalAlignment="Center" 
-                                                      HorizontalAlignment="Stretch" 
-                                                      Style="{DynamicResource ComboBoxWebStyle}"
-                                                      Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                      />
-                                        </StackPanel>
-
-                                        <Border Width="20" />
-
-                                        <StackPanel>
-                                            <TextBlock Text="Date de nomination au grade" 
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-                                            <DatePicker Padding="8 10"
-                                                        Width="240"
-                                                        SelectedDate="{Binding DateCurrentStatutaireGrade, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                                        Background="{StaticResource WebControlBackground}"
-                                                        Foreground="{StaticResource WebControlForeground}"
-                                                        BorderBrush="{StaticResource WebControlBackground}"
-                                                        Validation.ErrorTemplate="{StaticResource BorderValidationFailedTemplate}"/>
-                                        </StackPanel>
-
-                                        <Border Width="20" />
-
-                                        <StackPanel>
-                                            <TextBlock Text="Acte de nomination au grade" 
-                                                               VerticalAlignment="Center"
-                                                               Style="{StaticResource FieldLabel}"/>
-
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBox VerticalContentAlignment="Center" 
-                                                         Width="210" 
-                                                         Text="{Binding Employe.CurrentStatutaireGradeNomination.Acte, ValidatesOnDataErrors=True}"
-                                                         HorizontalAlignment="Left" 
-                                                         IsEnabled="False"
-                                                         HorizontalContentAlignment="Left"
-                                                         Style="{DynamicResource TextBoxWebStyle}" 
-                                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                          />
-
-                                                <TextBlock Text="{Binding Employe.CurrentGradeNomination.Acte.Description}"
-                                                           Padding="8"
-                                                           VerticalAlignment="Center" 
-                                                           FontWeight="DemiBold"
-                                                           Width="210"
-                                                           Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                                <Button Width="30"
-                                                        Grid.Column="1"
-                                                        ToolTip="Cliquez pour filtrer"
-                                                        Command="{Binding ChooseActeCommand}"
-                                                        CommandParameter="GRADE"
-                                                        Background="#DD193952"
-                                                        Foreground="#ffffff"
-                                                        Tag="M11.170988,2.0000026C6.1139962,2.0000026 1.9999944,6.1120075 1.9999944,11.16603 1.9999944,16.219991 6.1139962,20.331996 11.170988,20.331996 16.227981,20.331996 20.341006,16.219991 20.341006,11.16603 20.341006,6.1120075 16.227981,2.0000026 11.170988,2.0000026z M11.170988,0C17.33003,0 22.341001,5.0089787 22.341001,11.16603 22.341001,13.76351 21.449155,16.156669 19.95551,18.055608L19.942527,18.071714 31.999898,30.615001 30.5589,32.001003 18.567029,19.525854 18.476871,19.605846C16.516895,21.303544 13.961804,22.332 11.170988,22.332 5.0119487,22.332 1.6168633E-07,17.32302 0,11.16603 1.6168633E-07,5.0089787 5.0119487,0 11.170988,0z"
-                                                        Style="{DynamicResource ButtonFlatIconStyle3}"
-                                                        />
-                                            </Grid>
-
-                                        </StackPanel>
-                                    </WrapPanel>
 
                                     <Border Margin="0 5" />
                                     
@@ -1457,49 +1208,7 @@
                                                         Validation.ErrorTemplate="{StaticResource BorderValidationFailedTemplate}"/>
                                         </StackPanel>
 
-                                        <Border Width="20" />
-
-                                        <StackPanel>
-                                            <TextBlock Text="Acte de nomination au grade" 
-                                                               VerticalAlignment="Center"
-                                                               Style="{StaticResource FieldLabel}"/>
-
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBox VerticalContentAlignment="Center" 
-                                                         Width="210" 
-                                                         Text="{Binding Employe.CurrentGradeNomination.Acte, ValidatesOnDataErrors=True}"
-                                                         HorizontalAlignment="Left" 
-                                                         IsEnabled="False"
-                                                         HorizontalContentAlignment="Left"
-                                                         Style="{DynamicResource TextBoxWebStyle}" 
-                                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                          />
-
-                                                <TextBlock Text="{Binding Employe.CurrentGradeNomination.Acte.Description}"
-                                                           Padding="8"
-                                                           VerticalAlignment="Center" 
-                                                           FontWeight="DemiBold"
-                                                           Width="210"
-                                                           Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                                <Button Width="30"
-                                                        Grid.Column="1"
-                                                        ToolTip="Cliquez pour filtrer"
-                                                        Command="{Binding ChooseActeCommand}"
-                                                        CommandParameter="GRADE"
-                                                        Background="#DD193952"
-                                                        Foreground="#ffffff"
-                                                        Tag="M11.170988,2.0000026C6.1139962,2.0000026 1.9999944,6.1120075 1.9999944,11.16603 1.9999944,16.219991 6.1139962,20.331996 11.170988,20.331996 16.227981,20.331996 20.341006,16.219991 20.341006,11.16603 20.341006,6.1120075 16.227981,2.0000026 11.170988,2.0000026z M11.170988,0C17.33003,0 22.341001,5.0089787 22.341001,11.16603 22.341001,13.76351 21.449155,16.156669 19.95551,18.055608L19.942527,18.071714 31.999898,30.615001 30.5589,32.001003 18.567029,19.525854 18.476871,19.605846C16.516895,21.303544 13.961804,22.332 11.170988,22.332 5.0119487,22.332 1.6168633E-07,17.32302 0,11.16603 1.6168633E-07,5.0089787 5.0119487,0 11.170988,0z"
-                                                        Style="{DynamicResource ButtonFlatIconStyle3}"
-                                                        />
-                                            </Grid>
-
-                                        </StackPanel>
+                              
                                     </WrapPanel>
                                     
                                     <Border Margin="0 5" />
@@ -1541,49 +1250,7 @@
                                                         Validation.ErrorTemplate="{StaticResource BorderValidationFailedTemplate}"/>
                                         </StackPanel>
 
-                                        <Border Width="20" />
-
-                                        <StackPanel>
-                                            <TextBlock Text="Acte de nomination à la fonction actuelle" 
-                                                               VerticalAlignment="Center"
-                                                               Style="{StaticResource FieldLabel}"/>
-
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBox VerticalContentAlignment="Center" 
-                                                         Width="210" 
-                                                         Text="{Binding Employe.CurrentFonctionNomination.Acte, ValidatesOnDataErrors=True}"
-                                                         HorizontalAlignment="Left" 
-                                                         IsEnabled="False"
-                                                         HorizontalContentAlignment="Left"
-                                                         Style="{DynamicResource TextBoxWebStyle}" 
-                                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                          />
-
-                                                <TextBlock Text="{Binding Employe.CurrentFonctionNomination.Acte.Description}"
-                                                           Padding="8"
-                                                           VerticalAlignment="Center" 
-                                                           FontWeight="DemiBold"
-                                                           Width="210"
-                                                           Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                                <Button Width="30"
-                                                        Grid.Column="1"
-                                                        ToolTip="Cliquez pour filtrer"
-                                                        Command="{Binding ChooseActeCommand}"
-                                                        CommandParameter="FONCTION"
-                                                        Background="#DD193952"
-                                                        Foreground="#ffffff"
-                                                        Tag="M11.170988,2.0000026C6.1139962,2.0000026 1.9999944,6.1120075 1.9999944,11.16603 1.9999944,16.219991 6.1139962,20.331996 11.170988,20.331996 16.227981,20.331996 20.341006,16.219991 20.341006,11.16603 20.341006,6.1120075 16.227981,2.0000026 11.170988,2.0000026z M11.170988,0C17.33003,0 22.341001,5.0089787 22.341001,11.16603 22.341001,13.76351 21.449155,16.156669 19.95551,18.055608L19.942527,18.071714 31.999898,30.615001 30.5589,32.001003 18.567029,19.525854 18.476871,19.605846C16.516895,21.303544 13.961804,22.332 11.170988,22.332 5.0119487,22.332 1.6168633E-07,17.32302 0,11.16603 1.6168633E-07,5.0089787 5.0119487,0 11.170988,0z"
-                                                        Style="{DynamicResource ButtonFlatIconStyle3}"
-                                                        />
-                                            </Grid>
-
-                                        </StackPanel>
+                                     
                                     </WrapPanel>
 
                                 </StackPanel>

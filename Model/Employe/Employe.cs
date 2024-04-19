@@ -15,24 +15,43 @@ namespace FingerPrintManagerApp.Model.Employe
         private EtatCivil _etatCivil;
         private string _lieuNaissance;
         private DateTime _dateNaissance;
+        private EmployeFonction _currentFonction;
         private EmployeGrade _currentGrade;
         private Affectation _currentAffectation;
         private Affectation _lastAffectation;
-        
+        private EmployeEtude _currentHighEtude;
+        private Province _provinceOrigine;
+        private string _personneContact;
+        private string _qualiteContact;
+
         private bool _estAffecte;
 
         /* Adresse et Téléphone */
         private string _telephone;
         private string _email;
-     
+
+        private Address _address;
+
+        private string _conjoint;
+        private string _telephoneConjoint;
+
+        public List<EnfantEmploye> Enfants { get; set; }
+        public List<EmployeEtude> Etudes { get; set; }
         public List<EmployeEmpreinte> Empreintes { get; set; }
-       
+        public List<EmployeFonction> FonctionsInterim { get; set; }
+
+
         public Employe()
         {
+            Address = new Address() { IsRequired = true };
             Id = string.Empty;
+            Enfants = new List<EnfantEmploye>();
+            Etudes = new List<EmployeEtude>();
             Empreintes = new List<EmployeEmpreinte>();
             CurrentGrade = new EmployeGrade() { Employe = this, EstInitial = true };
-            CurrentAffectation = new Affectation() { Employe = this };   
+            CurrentAffectation = new Affectation() { Employe = this };
+            CurrentHighEtude = new EmployeEtude() { Employe = this };
+
         }
        
         public string Matricule
@@ -147,6 +166,9 @@ namespace FingerPrintManagerApp.Model.Employe
                     _etatCivil = value;
                     RaisePropertyChanged(() => EtatCivil);
                     RaisePropertyChanged(() => EstMarie);
+
+                    if (!EstMarie)
+                        Conjoint = TelephoneConjoint = null;
                 }
             }
         }
@@ -183,7 +205,21 @@ namespace FingerPrintManagerApp.Model.Employe
                 }
             }
         }
-     
+        public Province ProvinceOrigine
+        {
+            get
+            {
+                return _provinceOrigine;
+            }
+            set
+            {
+                if (value != _provinceOrigine)
+                {
+                    _provinceOrigine = value;
+                    RaisePropertyChanged(() => ProvinceOrigine);
+                }
+            }
+        }
         public EmployeGrade CurrentGrade
         {
             get
@@ -232,6 +268,40 @@ namespace FingerPrintManagerApp.Model.Employe
             }
         }
 
+        public EmployeEtude CurrentHighEtude
+        {
+            get
+            {
+                return _currentHighEtude;
+            }
+            set
+            {
+                if (value != _currentHighEtude)
+                {
+                    _currentHighEtude = value;
+                    RaisePropertyChanged(() => CurrentHighEtude);
+                }
+            }
+        }
+
+        public EmployeFonction CurrentFonctionNomination
+        {
+            get
+            {
+                return _currentFonction;
+            }
+            set
+            {
+                if (value != _currentFonction)
+                {
+                    _currentFonction = value;
+                    RaisePropertyChanged(() => CurrentFonctionNomination);
+                    RaisePropertyChanged(() => CurrentGrade);
+                }
+            }
+        }
+
+  
         public bool EstMarie
         {
             get
@@ -283,6 +353,83 @@ namespace FingerPrintManagerApp.Model.Employe
                 {
                     _email = value;
                     RaisePropertyChanged(() => Email);
+                }
+            }
+        }
+
+        public Address Address
+        {
+            get
+            {
+                return _address;
+            }
+            set
+            {
+                if (value != _address)
+                {
+                    _address = value;
+                    RaisePropertyChanged(() => Address);
+                }
+            }
+        }
+        public string Conjoint
+        {
+            get
+            {
+                return _conjoint;
+            }
+            set
+            {
+                if (value != _conjoint)
+                {
+                    _conjoint = value;
+                    RaisePropertyChanged(() => Conjoint);
+                }
+            }
+        }
+        public string TelephoneConjoint
+        {
+            get
+            {
+                return _telephoneConjoint;
+            }
+            set
+            {
+                if (value != _telephoneConjoint)
+                {
+                    _telephoneConjoint = value;
+                    RaisePropertyChanged(() => TelephoneConjoint);
+                }
+            }
+        }
+
+        public string PersonneContact
+        {
+            get
+            {
+                return _personneContact;
+            }
+            set
+            {
+                if (value != _personneContact)
+                {
+                    _personneContact = value;
+                    RaisePropertyChanged(() => PersonneContact);
+                }
+            }
+        }
+        public string QualiteContact
+        {
+            get
+            {
+                return _qualiteContact;
+            }
+            set
+            {
+                if (value != _qualiteContact)
+                {
+                    _qualiteContact = value;
+                    RaisePropertyChanged(() => QualiteContact);
                 }
             }
         }
@@ -374,15 +521,22 @@ namespace FingerPrintManagerApp.Model.Employe
             Photo = backup.Photo;
             EtatCivil = backup.EtatCivil;
 
+            ProvinceOrigine = backup.ProvinceOrigine;
+
+            PersonneContact = backup.PersonneContact;
+            QualiteContact = backup.QualiteContact;
             LieuNaissance = backup.LieuNaissance;
             DateNaissance = backup.DateNaissance;
             CurrentGrade = backup.CurrentGrade;
-
+            CurrentHighEtude = backup.CurrentHighEtude;
             CurrentAffectation = backup.CurrentAffectation;
             EstAffecte = backup.EstAffecte;
             Telephone = backup.Telephone;
 
             Email = backup.Email;
+            Address = backup.Address;
+            Conjoint = backup.Conjoint;
+            TelephoneConjoint = backup.TelephoneConjoint;
         }
 
 
@@ -438,7 +592,33 @@ namespace FingerPrintManagerApp.Model.Employe
                             error = "Le téléphone de l'employé ne peut être vide.";
                         else if (!ValueValidator.IsValidPhoneNumber(Telephone))
                             error = "Le numéro de téléphone saisi n'est pas valide.";
-                        break;               
+                        break;
+
+                    case "PersonneContact":
+                        if (string.IsNullOrWhiteSpace(PersonneContact))
+                            error = "La personne à contacter doit être spécifiée.";
+                        break;
+
+                    case "QualiteContact":
+                        if (string.IsNullOrWhiteSpace(QualiteContact))
+                            error = "La qualité de la personne à contacter doit être spécifiée.";
+                        break;
+
+                    case "Conjoint":
+                        if (EstMarie && string.IsNullOrWhiteSpace(Conjoint))
+                            error = "Les noms du (de la) conjoint(e) doivent être spécifiés.";
+                        break;
+
+                    case "TelephoneConjoint":
+                        if (EstMarie)
+                        {
+                            if (string.IsNullOrWhiteSpace(TelephoneConjoint))
+                                error = "Le téléphone du (de la) conjoint(e) doit être spécifié.";
+                            else if (!ValueValidator.IsValidPhoneNumber(TelephoneConjoint))
+                                error = "Le numéro de téléphone saisi n'est pas valide.";
+                        }
+
+                        break;
 
                     case "CurrentGrade":
                         error = CurrentGrade.Error;
@@ -479,8 +659,6 @@ namespace FingerPrintManagerApp.Model.Employe
                 else if (this["Telephone"] != string.Empty)
                     return this["Telephone"];
                
-                else if (this["ActeEngagement"] != string.Empty)
-                    return this["ActeEngagement"];
 
                 return string.Empty;
             }
