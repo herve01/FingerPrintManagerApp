@@ -112,17 +112,17 @@ namespace FingerPrintManagerApp.Model
 
             var dic = new Dictionary<string, object>()
             {
-                { "entite_id", "000001" },
-                { "firm_name", "SENAPI" },
+                { "entite_id", "04fc711301f3c784d66955d98d399afb" },
+                { "firm_name", "OCC" },
                 { "firm_address", "43, Avenue des forces armées, Gombe / Kinshasa" },
                 { "report_header", ReportHeader },
                 { "firm_logo", FirmLogo }
             };
 
-            //var table = Dao.DbUtil.DicToTable(new List<Dictionary<string, object>>() { dic });
-            //table.TableName = "ReportInfo";
+            var table = Dao.DbUtil.DicToTable(new List<Dictionary<string, object>>() { dic });
+            table.TableName = "ReportInfo";
 
-            return null;
+            return table;
         }
     }
 }

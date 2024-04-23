@@ -284,7 +284,7 @@
                                    />
 
                             <Border Height="3" />
-                            <TextBlock Text="{Binding Employe.Name, FallbackValue='Utilisez le scanneur pour vous identifier !'}"
+                            <TextBlock Text="{Binding Message, FallbackValue='Utilisez le scanneur pour vous identifier !'}"
                                        HorizontalAlignment="Center"
                                        FontSize="36"
                                        FontWeight="ExtraBold"

@@ -256,7 +256,7 @@ create table if not exists presence(
     periode_id varchar(10) not null,
 	employe_id varchar(32) not null,
     date date,
-    mode enum('Utilisateur', 'Empreinte','QrCode', 'Smart_card', 'RFID'),
+    mode_pointage enum('Utilisateur', 'Empreinte','QrCode', 'Smart_card', 'RFID'),
     heure_arrivee time,
     heure_depart time,
 	created_at datetime,

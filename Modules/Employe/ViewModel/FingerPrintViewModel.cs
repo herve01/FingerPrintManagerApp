@@ -319,7 +319,6 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             }
         }
 
-        List<byte[]> storeFinger = new List<byte[]>();
         void Process(DPFP.Sample Sample)
         {
             try
@@ -359,10 +358,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                     _enroller.AddFeatures(features);
                     ScanCount--;
                 }
-
                 //EnrollmentControl enrol = new EnrollmentControl();
-
-                
 
                 if (RegisterCount >= REGISTER_FINGER_COUNT)
                 {

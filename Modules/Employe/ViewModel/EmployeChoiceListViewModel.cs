@@ -58,8 +58,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             var motif = FilterText.Trim().ToLower().NoAccent();
 
             return employe.Name.ToLower().NoAccent().Contains(motif) || employe.Sexe.ToString().ToLower().NoAccent().Contains(motif) ||
-                (!string.IsNullOrWhiteSpace(employe.Matricule) && employe.Matricule.ToLower().NoAccent().Contains(motif));
-                //|| employe.CurrentGrade.Id.ToLower().NoAccent().Contains(motif);
+                (!string.IsNullOrWhiteSpace(employe.Matricule) && employe.Matricule.ToLower().NoAccent().Contains(motif))
+                || employe.CurrentGradeNomination.Grade.Id.ToLower().NoAccent().Contains(motif);
         }
 
         private int _count;

@@ -12,14 +12,20 @@ using System.Threading.Tasks;
 using System.Speech.Synthesis;
 using FingerPrintManagerApp.Model;
 using DPFP.Capture;
+using CrystalDecisions.CrystalReports.ViewerObjectModel;
+using DPFP.Error;
+using FingerPrintManagerApp.Model.Helper;
+using DPFP;
+using System.Globalization;
+using CrystalDecisions.Shared;
 
 namespace FingerPrintManagerApp.Modules.Presence.ViewModel
 {
     public class PresenceWindowViewModel : ViewModelBase, DPFP.Capture.EventHandler
     {
 
-        DPFP.Capture.Capture Capturer;
-        public static DPFP.Processing.Enrollment Enroller;
+        DPFP.Capture.Capture _capturer;
+        DPFP.Processing.Enrollment _enroller;
 
         DispatcherTimer timer;
         private SpeechSynthesizer Parleur { get; set; }
@@ -34,6 +40,7 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
 
             Salutation = "Salut,";
             ScanStatus = "";
+            Message = "Utilisez le scanneur pour vous identifier !";
 
             SetupSpeaker();
         }
@@ -153,6 +160,7 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
         private string _scanStatus;
         private DateTime _currentTime;
         private string _salutation;
+        private string _message;
         private Model.Employe.Employe _employe;
         private Model.Presence.Periode _currentPeriode;
 
@@ -165,6 +173,19 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
                 {
                     _salutation = value;
                     RaisePropertyChanged(() => Salutation);
+                }
+            }
+        }
+
+        public string Message
+        {
+            get { return _message; }
+            set
+            {
+                if (_message != value)
+                {
+                    _message = value;
+                    RaisePropertyChanged(() => Message);
                 }
             }
         }
@@ -244,74 +265,90 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
             InitDevice();
         }
 
+        //void InitDevice()
+        //{
+        //    initDeviceSucceeded = false;
+        //    int ret = zkfperrdef.ZKFP_ERR_OK;
+        //    if ((ret = zkfp2.Init()) == zkfperrdef.ZKFP_ERR_OK)
+        //    {
+        //        int nCount = zkfp2.GetDeviceCount();
+        //        if (nCount > 0)
+        //        {
+        //            ret = zkfp.ZKFP_ERR_OK;
+        //            if (IntPtr.Zero == (mDevHandle = zkfp2.OpenDevice(0)))
+        //            {
+        //                Status = "L'ouverture de l'appareil a échoué !";
+        //                DeviceFailed = true;
+        //                return;
+        //            }
+        //            if (IntPtr.Zero == (mDBHandle = zkfp2.DBInit()))
+        //            {
+        //                DeviceFailed = true;
+        //                //MessageBox.Show("Init DB fail");
+        //                zkfp2.CloseDevice(mDevHandle);
+        //                mDevHandle = IntPtr.Zero;
+        //                return;
+        //            }
+
+        //            RegisterCount = 0;
+        //            cbRegTmp = 0;
+
+        //            for (int i = 0; i < 3; i++)
+        //                RegTmps[i] = new byte[2048];
+
+        //            byte[] paramValue = new byte[4];
+        //            int size = 4;
+        //            zkfp2.GetParameters(mDevHandle, 1, paramValue, ref size);
+        //            zkfp2.ByteArray2Int(paramValue, ref mfpWidth);
+
+        //            size = 4;
+        //            zkfp2.GetParameters(mDevHandle, 2, paramValue, ref size);
+        //            zkfp2.ByteArray2Int(paramValue, ref mfpHeight);
+
+        //            FPBuffer = new byte[mfpWidth * mfpHeight];
+
+        //            size = 4;
+        //            zkfp2.GetParameters(mDevHandle, 3, paramValue, ref size);
+        //            zkfp2.ByteArray2Int(paramValue, ref mfpDpi);
+
+        //            Thread captureThread = new Thread(new ThreadStart(DoCapture));
+        //            captureThread.IsBackground = true;
+        //            captureThread.Start();
+        //            canPrint = true;
+
+        //            initDeviceSucceeded = true;
+
+        //            DeviceSucceeded = true;
+        //        }
+        //        else
+        //        {
+        //            zkfp2.Terminate();
+        //            Status = "Aucun appareil n'est connecté.";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        DeviceFailed = true;
+        //        Status = "L'initialisation de l'appreil a échoué !";
+        //    }
+        //}
         void InitDevice()
         {
-            initDeviceSucceeded = false;
-            int ret = zkfperrdef.ZKFP_ERR_OK;
-            if ((ret = zkfp2.Init()) == zkfperrdef.ZKFP_ERR_OK)
-            {
-                int nCount = zkfp2.GetDeviceCount();
-                if (nCount > 0)
-                {
-                    ret = zkfp.ZKFP_ERR_OK;
-                    if (IntPtr.Zero == (mDevHandle = zkfp2.OpenDevice(0)))
-                    {
-                        Status = "L'ouverture de l'appareil a échoué !";
-                        DeviceFailed = true;
-                        return;
-                    }
-                    if (IntPtr.Zero == (mDBHandle = zkfp2.DBInit()))
-                    {
-                        DeviceFailed = true;
-                        //MessageBox.Show("Init DB fail");
-                        zkfp2.CloseDevice(mDevHandle);
-                        mDevHandle = IntPtr.Zero;
-                        return;
-                    }
+            DeviceFailed = DeviceSucceeded = false;
 
-                    RegisterCount = 0;
-                    cbRegTmp = 0;
+            _capturer = new DPFP.Capture.Capture();
+            _enroller = new DPFP.Processing.Enrollment();
+            _capturer.EventHandler = this;
 
-                    for (int i = 0; i < 3; i++)
-                        RegTmps[i] = new byte[2048];
-
-                    byte[] paramValue = new byte[4];
-                    int size = 4;
-                    zkfp2.GetParameters(mDevHandle, 1, paramValue, ref size);
-                    zkfp2.ByteArray2Int(paramValue, ref mfpWidth);
-
-                    size = 4;
-                    zkfp2.GetParameters(mDevHandle, 2, paramValue, ref size);
-                    zkfp2.ByteArray2Int(paramValue, ref mfpHeight);
-
-                    FPBuffer = new byte[mfpWidth * mfpHeight];
-
-                    size = 4;
-                    zkfp2.GetParameters(mDevHandle, 3, paramValue, ref size);
-                    zkfp2.ByteArray2Int(paramValue, ref mfpDpi);
-
-                    Thread captureThread = new Thread(new ThreadStart(DoCapture));
-                    captureThread.IsBackground = true;
-                    captureThread.Start();
-                    canPrint = true;
-
-                    initDeviceSucceeded = true;
-
-                    DeviceSucceeded = true;
-                }
-                else
-                {
-                    zkfp2.Terminate();
-                    Status = "Aucun appareil n'est connecté.";
-                }
-            }
+            if (_capturer == null)
+                DeviceFailed = true;
             else
             {
-                DeviceFailed = true;
-                Status = "L'initialisation de l'appreil a échoué !";
+                _capturer.StartCapture();
+                canPrint = true;
+                initDeviceSucceeded = true;
             }
         }
-
         private void DoCapture()
         {
             while (canPrint && inCaptureRange)
@@ -344,7 +381,7 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
                         var ms = new MemoryStream();
                         Sample.BitmapFormat.GetBitmap(FPBuffer, mfpWidth, mfpHeight, ref ms);
                         
-                        Identify(CapTmp);
+                        //Identify(CapTmp);
 
                         canPrint = true;
 
@@ -356,99 +393,164 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
             }
         }
 
-        private async Task Identify(byte[] template)
+
+
+        private async Task Process(DPFP.Sample Sample)
         {
-            var count = new Dao.Employe.EmployeEmpreinteDao().Count();
-
-            Model.Employe.Employe employe = null;
-
-            if (count > 0)
+            try
             {
-                int k = 0;
-                int limit = 5;
+                bool failMsg = true;
+                Status = ScanStatus = string.Empty;
 
-                bool found = false;
+                CultureInfo culture = new CultureInfo("fr-FR", true);
+                var date = DateTime.Now;
+                var jour = date.ToString("dddd", culture);
 
-                while (k < count)
+                var horaire = AppConfig.HoraireTravailSemaines.Find(h => h.Jour == jour);
+
+                //Verifions si aujourd'hui est un jour ouvrable
+                if (horaire.EstOuvrable)
                 {
-                    var empreintes = await new Dao.Employe.EmployeEmpreinteDao().GetAllAsync(k, limit);
-                    foreach (var print in empreintes)
+                    failMsg = false;
+                    var exception = AppConfig.DateExceptions.Find(d => d.ToString() == date.ToString("ddMM"));
+
+                    if (exception == null) //la date d'aujourd'hui n'est pas ferié
                     {
-                        var score = zkfp2.DBMatch(mDBHandle, template, print.Template);
-                        if (score >= 90)
+                        failMsg = false;
+
+                        var count = new Dao.Employe.EmployeEmpreinteDao().Count();
+
+                        Model.Employe.Employe employe = null;
+
+                        if (count > 0)
                         {
-                            employe = print.Employe;
-                            found = true;
-                            break;
+                            int k = 0;
+                            int limit = 5;
+
+                            bool found = false;
+
+                            while (k < count)
+                            {
+                                var empreintes = await new Dao.Employe.EmployeEmpreinteDao().GetAllAsync(k, limit);
+                                foreach (var empreinte in empreintes)
+                                {
+                                    if (FingerPrintUtil.verifiy(Sample, empreinte.Template))
+                                    {
+                                        employe = empreinte.Employe;
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                if (found)
+                                    break;
+
+                                k += limit;
+                            }
                         }
-                    }
 
-                    if (found)
-                        break;
-
-                    k += limit;
-                }
-            }
-
-            if (employe != null)
-            {
-                Presence = await new Dao.Presence.PresenceDao().GetAsync(employe, DateTime.Today);
-
-                if (DateTime.Now.Hour < 12)
-                {
-                    DejaPointe = Presence != null;
-
-                    if (DejaPointe)
-                        Status = "Vous avez déjà pointé !";
-                    else
-                    {
-                        var presence = new Model.Presence.Presence()
+                        if (employe != null)
                         {
-                            Employe = employe,
-                            Periode = CurrentPeriode,
-                            Date = DateTime.Today,
-                            HeureArrivee = DateTime.Now,
-                            Mode = Model.Presence.ModePointage.Empreinte
-                        };
+                            failMsg = false;
 
-                        var feed = await new Dao.Presence.PresenceDao().AddAsync(presence);
+                            Presence = await new Dao.Presence.PresenceDao().GetAsync(employe, DateTime.Today);
 
-                        if (feed > 0)
-                            await Pointe(employe);
-                    }
-                }
-                else
-                {
-                    if (Presence != null)
-                    {
-                        DejaPointe = new Dao.Presence.PresenceDao().CheckDepaturePointage(Presence);
+                            if (DateTime.Now.Hour <= horaire.ClotureHeureMatin)
+                            {
+                                DejaPointe = Presence != null;
 
-                        if (DejaPointe)
-                            Status = "Vous avez déjà pointé !";
+                                if (DejaPointe)
+                                    await ErrorMsgVoice("Vous avez déjà pointé pour l'arrivé !", true) ;
+                                else
+                                {
+                                    var presence = new Model.Presence.Presence()
+                                    {
+                                        Employe = employe,
+                                        Periode = CurrentPeriode,
+                                        Date = DateTime.Today,
+                                        HeureArrivee = DateTime.Now,
+                                        Mode = Model.Presence.ModePointage.Empreinte
+                                    };
+
+                                    var feed = await new Dao.Presence.PresenceDao().AddAsync(presence);
+
+                                    if (feed > 0)
+                                        await Pointe(employe);
+                                }
+                            }
+                            else
+                            {
+                                if (Presence != null)
+                                {
+                                    if (DateTime.Now.Hour >= horaire.DebutHeureSoir)
+                                    {
+                                        DejaPointe = new Dao.Presence.PresenceDao().CheckDepaturePointage(Presence);
+
+                                        if (DejaPointe)
+                                            await ErrorMsgVoice("Vous avez déjà pointé pour la sortie!", true) ;
+                                        else
+                                        {
+                                            Presence.HeureDepart = DateTime.Now;
+
+                                            var feed = await new Dao.Presence.PresenceDao().MarkDeparture(Presence);
+
+                                            if (feed > 0)
+                                                await Pointe(employe);
+                                        }
+                                    }
+                                    else
+                                        Message = $"{employe.Name} il n'est pas encore l'heure de partir";
+                                }
+                            }
+                        }
                         else
                         {
-                            Presence.HeureDepart = DateTime.Now;
-
-                            var feed = await new Dao.Presence.PresenceDao().MarkDeparture(Presence);
-
-                            if (feed > 0)
-                                await Pointe(employe);
+                            await ErrorMsgVoice("Empreinte non reconnue dans le système !", true);
                         }
                     }
-                }
-            }
-            else
-                ScanStatus = "Fail";
+                    else
+                        Message = $"{exception.Date.ToString("dd-MM-yyyy")} est une date fériée ";
 
+                }
+                else
+                    Message = $"{horaire.Jour} n'est pas un jour ouvrable";
+
+
+                if (failMsg)
+                    ScanStatus = "Fail";
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        async Task ErrorMsgVoice(string msg, bool withVoice = false)
+        {
+            ScanStatus = "Fail";
+            Message = msg;
+
+            if(withVoice)
+                Speak(msg);
+            await Task.Delay(5000);
+            Message = "Utilisez le scanneur pour vous identifier !";
         }
 
         async Task Pointe(Model.Employe.Employe employe)
         {
-            Salutation = DateTime.Now.Hour < 12 ? "Bienvenu" : "Au revoir";
-            var endWord = DateTime.Now.Hour < 12 ? "Bon service." : "Bonne soirée.";
+
+            CultureInfo culture = new CultureInfo("fr-FR", true);
+            var date = DateTime.Now;
+            var jour = date.ToString("dddd", culture);
+
+            var horaire = AppConfig.HoraireTravailSemaines.Find(h => h.Jour == jour);
+
+            Salutation = DateTime.Now.Hour < horaire.ClotureHeureMatin ? "Bienvenu" : "Au revoir";
+            var endWord = DateTime.Now.Hour < horaire.ClotureHeureMatin ? "Bon service." : "Bonne soirée.";
             var civility = employe.Sexe == Model.Sex.Femme ? "Madame" : "Monsieur";
 
             Employe = employe;
+
+            Message = Employe.Name;
 
             var msg = string.Format("{0} {1} {2}, {3}", Salutation, civility, Employe.Prenom, endWord);
 
@@ -461,6 +563,7 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
             Presence = null;
             DejaPointe = false;
             Salutation = "Salut";
+            Message = "Utilisez le scanneur pour vous identifier !";
         }
 
         public ICommand ClosingCommand
@@ -491,27 +594,33 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
 
         public void OnComplete(object Capture, string ReaderSerialNumber, DPFP.Sample Sample)
         {
-            throw new NotImplementedException();
+            Task.Run(async () =>
+            {
+                await Process(Sample);
+            });    
         }
 
         public void OnFingerGone(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void OnFingerTouch(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void OnReaderConnect(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            initDeviceSucceeded = true;
+            DeviceFailed = false;
+            DeviceSucceeded = !DeviceFailed;
         }
 
         public void OnReaderDisconnect(object Capture, string ReaderSerialNumber)
         {
-            throw new NotImplementedException();
+            DeviceFailed = true;
+            DeviceSucceeded = !DeviceFailed;
         }
 
         public void OnSampleQuality(object Capture, string ReaderSerialNumber, CaptureFeedback CaptureFeedback)

@@ -74,7 +74,7 @@ namespace FingerPrintManagerApp.Dao.Presence
 
                 return feed;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return -1;
             }
@@ -445,7 +445,7 @@ namespace FingerPrintManagerApp.Dao.Presence
                     while (Reader.Read())
                         list.Add(new Dictionary<string, object>()
                         {
-                            { "entite_id", "000001" },
+                            { "entite_id", AppConfig.CurrentUser.Entite.Id },
                             { "nom", Reader["nom"] },
                             { "post_nom", Reader["post_nom"] },
                             { "prenom", Reader["prenom"] },

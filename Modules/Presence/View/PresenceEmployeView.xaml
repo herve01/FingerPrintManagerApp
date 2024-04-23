@@ -80,7 +80,7 @@
                     <Border Grid.Column="3" 
                             Margin="5,0" />
 
-                    <ctrl:HightlightTextBlock Text="{Binding Employe.CurrentGrade.Id}" 
+                    <ctrl:HightlightTextBlock Text="{Binding Employe.CurrentGradeNomination.Grade.Id}" 
                                               HightlightText="{Binding Data.FilterText, Source={StaticResource proxy}}" 
                                               Grid.Column="4"
                                               TextWrapping="WrapWithOverflow"
@@ -277,7 +277,7 @@
                                                     <TextBlock.Text>
                                                         <MultiBinding StringFormat="{}{0} • {1} • {2}" FallbackValue="Sexe • Etat civil • Matricule">
                                                             <Binding Path="Presence.Employe.Sexe" />
-                                                            <Binding Path="Presence.Employe.CurrentGrade.Id" />
+                                                            <Binding Path="Presence.Employe.CurrentGradeNomination.Grade.Id" />
                                                             <Binding Path="Presence.Employe.Matricule" />
                                                         </MultiBinding>
                                                     </TextBlock.Text>

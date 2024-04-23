@@ -30,23 +30,20 @@ namespace FingerPrintManagerApp
             DbConfig.ServerName = FingerPrintManagerApp.Properties.Settings.Default.local_server;
             DbConfig.DbPort = FingerPrintManagerApp.Properties.Settings.Default.local_port;
             AppConfig.LocalCountryCode = FingerPrintManagerApp.Properties.Settings.Default.local_country_code;
-            //SetupReportInfo();
+
+            SetupReportInfo();
 
             LoadTips(HelpPath);
 
             InitConfData();
         }
 
-
         void InitConfData()
         {
             if (ConnectionHelper.GetConnection() != null)
             {
-                //AppConfig.MainCurrency = new Dao.Financial.CurrencyDao().GetMainCurrency();
-
                 AppConfig.HoraireTravailSemaines = new Dao.Presence.HoraireTravailSemaineDao().GetAll();
                 AppConfig.DateExceptions = new Dao.Presence.DateExceptionDao().GetAll();
-
             }
         }
 

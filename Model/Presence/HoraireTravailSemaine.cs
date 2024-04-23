@@ -45,6 +45,7 @@ namespace FingerPrintManagerApp.Model.Presence
                 {
                     _heureDebut = value;
                     RaisePropertyChanged(() => HeureDebut);
+                    RaisePropertyChanged(() => ClotureHeureMatin);
                 }
             }
         }
@@ -60,6 +61,7 @@ namespace FingerPrintManagerApp.Model.Presence
                 {
                     _heureFin = value;
                     RaisePropertyChanged(() => HeureFin);
+                    RaisePropertyChanged(() => DebutHeureSoir);
                 }
             }
         }
@@ -93,6 +95,23 @@ namespace FingerPrintManagerApp.Model.Presence
                 }
             }
         }
+
+        public int ClotureHeureMatin
+        {
+            get
+            {
+                return HeureDebut.Value.Hour;
+            }
+        }
+
+        public int DebutHeureSoir
+        {
+            get
+            {
+                return HeureFin.Value.Hour;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())

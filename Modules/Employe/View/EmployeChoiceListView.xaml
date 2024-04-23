@@ -159,7 +159,7 @@
                              Style="{DynamicResource searchControl}" 
                              Foreground="#007ACC"  />
 
-                <Image gif:ImageBehavior.AnimatedSource="/Humager;component/View/Image/preloader.gif"
+                <Image gif:ImageBehavior.AnimatedSource="/FingerPrintManagerApp;component/View/Image/preloader.gif"
                            Height="24"
                            Width="24"
                            Margin="5 0"
