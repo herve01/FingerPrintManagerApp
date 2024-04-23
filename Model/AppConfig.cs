@@ -112,7 +112,7 @@ namespace FingerPrintManagerApp.Model
 
             var dic = new Dictionary<string, object>()
             {
-                { "entite_id", "04fc711301f3c784d66955d98d399afb" },
+                { "entite_id", AppConfig.CurrentUser.Entite.Id },
                 { "firm_name", "OCC" },
                 { "firm_address", "43, Avenue des forces armées, Gombe / Kinshasa" },
                 { "report_header", ReportHeader },
