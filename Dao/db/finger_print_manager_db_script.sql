@@ -143,7 +143,7 @@ create table if not exists fonction(
 	grade_id varchar(6) not null,
 	intitule varchar(100) not null,
     niveau enum('Direction', 'Departement', 'Agence'),
-    unite_id varchar(32) not null, /* Identifiant de la direction ou la division ou le bureau d'affectation */
+    unite_id varchar(32) not null, /* Identifiant de la direction ou la departement ou le bureau d'affectation */
     entite_id varchar(32) not null,
 	description text,
 	created_at datetime,
@@ -301,7 +301,7 @@ create table if not exists affectation(
 	ancienne_entite_id varchar(32),
 	nouvelle_entite_id varchar(32) not null,
     niveau enum('Direction', 'Departement', 'Agence'),
-    unite_id varchar(32) not null, /* Identifiant de la direction ou la division ou le bureau d'affectation */
+    unite_id varchar(32) not null, /* Identifiant de la direction ou la departement ou le bureau d'affectation */
 	date date,
 	created_at datetime,
     updated_at datetime,
@@ -310,3 +310,135 @@ create table if not exists affectation(
 	constraint fk_affectation_ancienne_entite foreign key(ancienne_entite_id) references entite(id) on update cascade,
 	constraint fk_affectation_nouvelle_entite foreign key(nouvelle_entite_id) references entite(id) on update cascade
 );
+
+
+
+delimiter %
+drop PROCEDURE if exists sp_registre_presence_journaliere%
+CREATE  PROCEDURE sp_registre_presence_journaliere(IN v_entite_id varchar(32), in v_date datetime)
+BEGIN
+    
+	select e.nom, e.post_nom, e.prenom, e.sexe, e.matricule, addtime(v_date, p.heure_arrivee) heure_arrivee, 
+    addtime(v_date, p.heure_depart) heure_depart, eg.grade_id grade, 
+    ifnull(get_affectation_direction(a.unite_id, a.niveau), 'Non affectés') AS direction,
+    get_entite_name(ifnull(get_employe_current_entite(e.id), '04fc711301f3c784d66955d98d399afb')) entite_name, 
+    CASE 
+        WHEN p.id is null THEN 0  
+		ELSE 1
+	END est_present
+    from employe e
+    inner join employe_grade eg
+    on eg.employe_id = e.id and eg.id = get_employe_grade_actuel_id(e.id)
+	inner join grade g ON g.id = eg.grade_id 
+    left join affectation a ON a.id = get_employe_current_affectation(e.id) and a.nouvelle_entite_id = get_employe_current_entite(e.id)
+    left JOIN entite et ON a.nouvelle_entite_id = et.id 
+    left join 
+    (
+		select p.* 
+		from presence p
+        where date(p.date) = date(v_date)
+	) p
+    on p.employe_id = e.id
+    where ((get_employe_current_entite(e.id) is null and v_entite_id = '04fc711301f3c784d66955d98d399afb') or get_employe_current_entite(e.id) = v_entite_id)
+	order by g.niveau DESC, e.nom, e.post_nom, e.prenom asc;
+END%
+
+
+delimiter %
+drop FUNCTION if exists get_employe_current_entite%
+CREATE FUNCTION get_employe_current_entite(v_employe_id varchar(32)) 
+RETURNS varchar(32)
+begin
+	declare v_entite_id varchar(32);
+    
+    select nouvelle_entite_id into v_entite_id
+    from affectation 
+    where employe_id = v_employe_id
+    order by id desc
+    limit 1;
+    
+    return v_entite_id;
+end%
+
+DELIMITER %
+DROP FUNCTION IF EXISTS get_employe_grade_actuel_id%
+CREATE  FUNCTION get_employe_grade_actuel_id(v_employe_id varchar(32)) 
+RETURNS varchar(32)
+BEGIN
+	  DECLARE v_rep varchar(32);
+  
+      SELECT ed.id into v_rep 
+      FROM employe_grade ed
+      inner join grade g
+      on ed.grade_id = g.id
+      WHERE ed.employe_id = v_employe_id and ed.type = 'Officiel'
+      order by g.niveau desc
+      limit 1;
+    
+    return v_rep;
+END %
+
+delimiter %
+drop function if exists get_employe_current_affectation%
+create function get_employe_current_affectation(v_employe_id varchar(32))
+returns varchar(32)
+begin
+	declare v_affectation_id varchar(32);
+    
+    select id into v_affectation_id
+    from affectation 
+    where employe_id = v_employe_id
+    order by id desc
+    limit 1;
+    
+    return v_affectation_id;
+end
+%
+
+
+
+DELIMITER %
+DROP FUNCTION IF EXISTS get_affectation_direction%
+CREATE FUNCTION get_affectation_direction(v_unite_id varchar(32), v_type_unite varchar(9)) 
+RETURNS varchar(200)
+BEGIN 
+	DECLARE v_rep varchar(200);
+	DECLARE tempo INT;
+    
+	IF v_type_unite = 'Direction' THEN 
+		SELECT denomination INTO v_rep
+		FROM direction 
+		WHERE id = v_unite_id;
+	ELSE	
+		IF v_type_unite = 'Departement' THEN 
+			SELECT d.denomination INTO v_rep 
+			FROM departement dv
+				INNER JOIN direction d ON dv.direction_id = d.id 
+			WHERE dv.id = v_unite_id;
+		END IF;
+	END IF;
+	
+	RETURN v_rep;
+
+END %
+
+
+DELIMITER %
+DROP FUNCTION IF EXISTS get_entite_name%
+CREATE  FUNCTION get_entite_name(v_entite_id varchar(32)) 
+RETURNS varchar(100) 
+BEGIN
+	  DECLARE v_rep varchar(100);
+  
+      SELECT 
+      CASE 
+        	WHEN et.est_principale = 1 THEN "Siège social"  
+            WHEN et.est_principale = 0 THEN CONCAT('Agence de ', z.nom) 
+			ELSE null
+      END INTO v_rep 
+      FROM entite et 
+      INNER JOIN zone z ON et.zone_id = z.id
+      where et.id = v_entite_id;
+    
+    RETURN v_rep;
+END %
