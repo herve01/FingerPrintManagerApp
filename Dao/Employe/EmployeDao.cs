@@ -28,7 +28,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                    "province_origine_id, personne_contact, qualite_contact, est_affecte, " +
                    "telephone, email, numero, avenue, commune_id, conjoint, telephone_conjoint, created_at, updated_at) " +
 
-                   "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, @v_immatriculation_cnssap, " +
+                   "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, " +
                    "@v_province_origine_id, @v_personne_contact, @v_qualite_contact, @v_est_affecte, " +
                    "@v_telephone, @v_email, @v_numero, @v_avenue, @v_commune_id, @v_conjoint, @v_telephone_conjoint, now(), now())";
 
@@ -99,13 +99,21 @@ namespace FingerPrintManagerApp.Dao.Employe
                     return -5;
                 }
 
+                if (!instance.CurrentGrade.Equals(instance.CurrentGradeNomination) && new EmployeGradeDao().Add(Request, instance.CurrentGradeNomination) <= 0)
+                {
+                    instance.Id = null;
+                    Request.Transaction.Rollback();
+
+                    return -6;
+                }
+
                 foreach (var enfant in instance.Enfants)
                     if (new EnfantEmployeDao().Add(Request, enfant) <= 0)
                     {
                         instance.Id = null;
                         Request.Transaction.Rollback();
 
-                        return -6;
+                        return -7;
                     }
 
                 if (new EmployeEtudeDao().Add(Request, instance.CurrentHighEtude) <= 0)
@@ -113,7 +121,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     instance.Id = null;
                     Request.Transaction.Rollback();
 
-                    return -7;
+                    return -8;
                 }
 
                 Request.Transaction.Commit();
@@ -149,7 +157,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                    "province_origine_id, personne_contact, qualite_contact, est_affecte, " +
                    "telephone, email, numero, avenue, commune_id, conjoint, telephone_conjoint, created_at, updated_at) " +
 
-                   "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, @v_immatriculation_cnssap, " +
+                   "values(@v_id, @v_matricule, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_photo, @v_etat_civil, @v_lieu_naissance, @v_date_naissance, " +
                    "@v_province_origine_id, @v_personne_contact, @v_qualite_contact, @v_est_affecte, " +
                    "@v_telephone, @v_email, @v_numero, @v_avenue, @v_commune_id, @v_conjoint, @v_telephone_conjoint, now(), now())";
 
@@ -211,12 +219,20 @@ namespace FingerPrintManagerApp.Dao.Employe
                     return -4;
                 }
 
-                if (!instance.CurrentGrade.Equals(instance.CurrentGrade) && await new EmployeGradeDao().AddAsync(Request, instance.CurrentGrade) <= 0)
+                if (!instance.CurrentGradeNomination.Equals(instance.CurrentGrade) && await new EmployeGradeDao().AddAsync(Request, instance.CurrentGrade) <= 0)
                 {
                     instance.Id = null;
                     Request.Transaction.Rollback();
 
                     return -5;
+                }
+
+                if (!instance.CurrentGrade.Equals(instance.CurrentGradeNomination) && await new EmployeGradeDao().AddAsync(Request, instance.CurrentGradeNomination) <= 0)
+                {
+                    instance.Id = null;
+                    Request.Transaction.Rollback();
+
+                    return -6;
                 }
 
                 foreach (var enfant in instance.Enfants)
@@ -225,7 +241,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                         instance.Id = null;
                         Request.Transaction.Rollback();
 
-                        return -6;
+                        return -7;
                     }
 
                 if (await new EmployeEtudeDao().AddAsync(Request, instance.CurrentHighEtude) <= 0)
@@ -233,7 +249,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     instance.Id = null;
                     Request.Transaction.Rollback();
 
-                    return -7;
+                    return -8;
                 }
 
                 Request.Transaction.Commit();
@@ -587,6 +603,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             instance.Address.Street = row["avenue"].ToString();
             instance.Address.Commune = new CommuneDao(Connection).GetCommune(int.Parse(row["commune_id"].ToString()));
 
+            instance.CurrentGradeNomination = new EmployeGradeDao().GetCurrent(instance, GradeEmployeType.Officiel);
             instance.CurrentGrade = new EmployeGradeDao().GetInitial(instance);
 
             instance.LastAffectation = new AffectationDao().GetCurrent(instance);
@@ -594,6 +611,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             if (instance.EstAffecte)
             {
                 instance.CurrentAffectation = instance.LastAffectation;
+                instance.FonctionsInterim = new EmployeFonctionDao().GetAllInterim(instance);
             }
 
             if (!(row["photo"] is DBNull))
@@ -680,10 +698,8 @@ namespace FingerPrintManagerApp.Dao.Employe
             try
             {
                 Request.CommandText = "select count(*) " +
-                    "from employe E " +
-                    "inner join position_administrative P " +
-                    "on E.position_id = P.id " +
-                    "where P.is_down = 0 and (@v_siege = 1 or get_employe_current_entite(E.id) = @v_entite_id)";
+                    "from employe " +
+                    "where @v_siege = 1 or get_employe_current_entite(E.id) = @v_entite_id";
 
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_siege", DbType.Int32, estSiege));
@@ -878,11 +894,9 @@ namespace FingerPrintManagerApp.Dao.Employe
 
             try
             {
-                Request.CommandText = "select E.* " +
-                    "from employe E " +
-                    "inner join position_administrative P " +
-                    "on E.position_id = P.id " +
-                    "where P.is_down = 0 and (@v_siege = 1 or get_employe_current_entite(E.id) = @v_entite_id)";
+                Request.CommandText = "select * " +
+                    "from employe " +
+                    "where @v_siege = 1 or get_employe_current_entite(id) = @v_entite_id";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_siege", DbType.Int32, estSiege));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_entite_id", DbType.String, entite.Id));

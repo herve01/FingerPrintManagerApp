@@ -130,7 +130,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             }
         }
 
-        private Direction Create(Dictionary<string, object> row, bool withDivisions, bool withFonctions)
+        private Direction Create(Dictionary<string, object> row, bool withDepartements, bool withFonctions)
         {
             var instance = new Direction();
 
@@ -141,6 +141,12 @@ namespace FingerPrintManagerApp.Dao.Employe
            
             if (!(row["mission"] is DBNull))
                 instance.Mission = row["mission"].ToString();
+
+            if (withFonctions)
+                instance.Fonctions = new FonctionDao(Connection).GetAll(instance);
+
+            if (withDepartements)
+                instance.Departements = new DepartementDao(Connection).GetAll(instance);
 
             return instance;
 

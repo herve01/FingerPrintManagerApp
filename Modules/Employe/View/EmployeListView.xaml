@@ -96,8 +96,6 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
 
@@ -112,7 +110,7 @@
                             Margin="5,0" />
 
                     <Grid Grid.Column="2"
-                          Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='39,480'}">
+                          Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='39,380'}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -166,7 +164,7 @@
                                     Margin="5,0" />
 
                     <ctrl:HightlightTextBlock TextAlignment="Left"  
-                                              Text="{Binding CurrentGrade.Id, FallbackValue='-'}" 
+                                              Text="{Binding CurrentGradeNomination.Grade.Id, FallbackValue='-'}" 
                                               HightlightText="{Binding Data.EmployeFilterText, Source={StaticResource proxy}}" 
                                               Grid.Column="4"
                                               VerticalAlignment="Center"
@@ -192,7 +190,7 @@
                             Margin="5,0" />
 
                     <ctrl:HightlightTextBlock TextAlignment="Left"  
-                                              Text="{Binding CurrentAffectation.Direction.Denomination, FallbackValue='-'}" 
+                                              Text="{Binding CurrentAffectation.Departement.Denomination, FallbackValue='-'}" 
                                               HightlightText="{Binding Data.EmployeFilterText, Source={StaticResource proxy}}" 
                                               Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,480'}"
                                               TextWrapping="WrapWithOverflow"
@@ -206,7 +204,7 @@
                             Margin="5,0" />
 
                     <ctrl:HightlightTextBlock TextAlignment="Left"  
-                                              Text="{Binding Nom, FallbackValue='-'}" 
+                                              Text="{Binding CurrentAffectation.Entite.Description, FallbackValue='-'}" 
                                               HightlightText="{Binding Data.EmployeFilterText, Source={StaticResource proxy}}" 
                                               Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,480'}"
                                               TextWrapping="WrapWithOverflow"
@@ -215,33 +213,14 @@
                                               Grid.Column="10"
                                               FontSize="13"/>
 
+
+                    
                     <Border Width="1" 
                             Grid.Column="11" 
                             Margin="5,0" />
 
-                    <StackPanel Grid.Column="12">
-                        <ctrl:HightlightTextBlock TextAlignment="Left"  
-                                                  Text="{Binding Etat.Intitule, FallbackValue='-'}" 
-                                                  HightlightText="{Binding Data.EmployeFilterText, Source={StaticResource proxy}}" 
-                                                  TextTrimming="CharacterEllipsis"
-                                                  VerticalAlignment="Center"
-                                                  FontWeight="DemiBold"
-                                                  FontSize="13"/>
-
-                        <ctrl:HightlightTextBlock TextAlignment="Left"  
-                                                  Text="{Binding Etat.Categorie.Intitule, FallbackValue='-'}" 
-                                                  HightlightText="{Binding Data.EmployeFilterText, Source={StaticResource proxy}}" 
-                                                  TextTrimming="CharacterEllipsis"
-                                                  VerticalAlignment="Center"
-                                                  FontSize="13"/>
-                    </StackPanel>
-                    
-                    <Border Width="1" 
-                            Grid.Column="13" 
-                            Margin="5,0" />
-
                     <StackPanel Orientation="Horizontal"
-                                Grid.Column="14">
+                                Grid.Column="12">
                         <Button Command="{Binding Data.VisualizeEmployeCommand, Source={StaticResource proxy}}" 
                                 Style="{DynamicResource ButtonFlatIconStyle}"
                                 ToolTip="Voir plus de détails sur l'employé"
@@ -693,8 +672,6 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="80" />
                                 </Grid.ColumnDefinitions>
 
@@ -712,7 +689,7 @@
                                     Margin="5,0" />
 
                                 <TextBlock FontWeight="DemiBold" 
-                                       Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='39,480'}"
+                                       Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='39,380'}"
                                        Text="Employé" 
                                        FontSize="14"
                                        Grid.Column="2" 
@@ -748,8 +725,8 @@
                                         Margin="5,0" />
 
                                 <TextBlock FontWeight="DemiBold" 
-                                           Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,480'}"
-                                           Text="Division" 
+                                           Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,380'}"
+                                           Text="Departement" 
                                            FontSize="14"
                                            Grid.Column="8" 
                                            Typography.Capitals="AllSmallCaps"
@@ -761,27 +738,16 @@
 
 
                                 <TextBlock FontWeight="DemiBold" 
-                                           Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,480'}"
-                                           Text="Bureau" 
+                                           Width="{Binding ElementName=brd, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='30,380'}"
+                                           Text="Entité" 
                                            FontSize="14"
                                            Grid.Column="10" 
                                            Typography.Capitals="AllSmallCaps"
                                            />
 
-                                <Border Width="1" 
-                                        Grid.Column="11" 
-                                        Margin="5,0" />
-
-                                <TextBlock FontWeight="DemiBold" 
-                                       TextAlignment="Left"  
-                                       Text="Etat" 
-                                       FontSize="13"
-                                       Grid.Column="12"
-                                       Typography.Capitals="AllSmallCaps"
-                               />
 
                                 <Border Width="1" 
-                                    Grid.Column="13" 
+                                    Grid.Column="11" 
                                     Margin="5,0" 
                             />
 
@@ -789,7 +755,7 @@
                                        TextAlignment="Left"  
                                        Text="Actions" 
                                        FontSize="14"
-                                       Grid.Column="14"
+                                       Grid.Column="12"
                                        Typography.Capitals="AllSmallCaps"
                                />
                             </Grid>

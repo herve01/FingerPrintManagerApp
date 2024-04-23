@@ -19,7 +19,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "insert into enfant_employe(id, employe_id, nom, post_nom, prenom, sexe, date_naissance, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_date_naissance, now(), now())";
@@ -60,7 +60,7 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "insert into enfant_employe(id, employe_id, nom, post_nom, prenom, sexe, date_naissance, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_nom, @v_post_nom, @v_prenom, @v_sexe, @v_date_naissance, now(), now())";

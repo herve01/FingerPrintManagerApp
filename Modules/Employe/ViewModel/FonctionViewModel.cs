@@ -125,9 +125,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             var pattern = FilterText.Trim().ToLower().NoAccent();
 
-            return fonction.Intitule.ToLower().NoAccent().Contains(pattern);
-                
-                //|| fonction.Grade.Denomination.ToLower().NoAccent().Contains(pattern);
+            return fonction.Intitule.ToLower().NoAccent().Contains(pattern)
+                || fonction.Grade.Intitule.ToLower().NoAccent().Contains(pattern);
 
         }
 
@@ -143,13 +142,13 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         private bool _showDepartement;
         private bool _showEntite;
+        private bool _showDirection;
 
         private Direction _selectedDirection;
         private Departement _selectedDepartement;
-        private Entite _selectedEntite;
+        private Entite _selectedAgence;
         private Grade _selectedGrade;
         // SelectedUnite
-
 
         public Direction SelectedDirection
         {
@@ -169,7 +168,8 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
                     GradesView.Refresh();
 
-                    LoadDepartements();
+                    if(ShowDepartement)
+                         LoadDepartements();
 
                     EstimateName();
                 }
@@ -197,28 +197,26 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 }
             }
         }
-
-        public Entite SelectedEntite
+        public Entite SelectedAgence
         {
             get
             {
-                return this._selectedEntite;
+                return this._selectedAgence;
             }
             set
             {
-                if (_selectedEntite != value)
+                if (_selectedAgence != value)
                 {
-                    _selectedEntite = value;
-                    RaisePropertyChanged(() => SelectedEntite);
+                    _selectedAgence = value;
+                    RaisePropertyChanged(() => SelectedAgence);
 
                     if (SelectedUnite == UniteType.Agence)
-                        Fonction.Unite = SelectedEntite;
+                        Fonction.Unite = (object)SelectedAgence;
 
                     EstimateName();
                 }
             }
         }
-
         public Grade SelectedGrade
         {
             get
@@ -252,14 +250,9 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                     _isSiege = value;
 
                     RaisePropertyChanged(() => IsSiege);
-
-                    UniteTypesView.Refresh();
-
-                    SelectedUnite = (UniteType)uniteTypes.GetValue(2);
                 }
             }
         }
-
         public bool InitState
         {
             get
@@ -276,7 +269,6 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 }
             }
         }
-
         public bool ShowDepartement
         {
             get
@@ -289,11 +281,10 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 {
                     _showDepartement = value;
                     RaisePropertyChanged(() => ShowDepartement);
-
                 }
             }
         }
-        public bool ShowEntite
+        public bool ShowAgence
         {
             get
             {
@@ -304,13 +295,25 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                 if (_showEntite != value)
                 {
                     _showEntite = value;
-                    RaisePropertyChanged(() => ShowEntite);
-
+                    RaisePropertyChanged(() => ShowAgence);
                 }
             }
         }
-
-
+        public bool ShowDirection
+        {
+            get
+            {
+                return this._showDirection;
+            }
+            set
+            {
+                if (_showDirection != value)
+                {
+                    _showDirection = value;
+                    RaisePropertyChanged(() => ShowDirection);
+                }
+            }
+        }
         public string Action
         {
             get
@@ -401,14 +404,25 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                     _selectedUnite = value;
                     RaisePropertyChanged(() => SelectedUnite);
 
-                    Fonction.Unite = SelectedUnite == UniteType.Direction ? (object)SelectedDirection : SelectedUnite == UniteType.Departement ? (object)SelectedDepartement : (object)SelectedEntite;
+                    Fonction.Unite = SelectedUnite == UniteType.Direction ? (object)SelectedDirection : SelectedUnite == UniteType.Departement ? (object)SelectedDepartement : (object)SelectedAgence;
 
-                    ShowDepartement = ShowEntite = false;
-
-                    if (SelectedUnite == UniteType.Departement)
-                        ShowDepartement = true;
-                    else if (SelectedUnite == UniteType.Agence)
-                        ShowEntite = ShowDepartement = true;
+                    ShowDirection = ShowDepartement = ShowAgence = false;
+              
+                    if (SelectedUnite == UniteType.Agence)
+                    {
+                        ShowAgence = true;
+                        LoadAgences();
+                    }
+                    else
+                    {
+                        ShowDirection = true;
+                        LoadDirections();
+                        if(SelectedUnite == UniteType.Departement)
+                        {
+                            ShowDepartement = true;
+                            //LoadDepartements();
+                        }
+                    }
 
                     GradesView.Refresh();
 
@@ -431,7 +445,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         {
             UpdateTimer.IsEnabled = false;
 
-            await LoadFonctionChanges();
+            //await LoadFonctionChanges();
 
             LastDataUpdateTime = DateTime.Now;
 
@@ -441,21 +455,21 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         protected override async Task Load(object param)
         { 
             IsSiege = AppConfig.CurrentUser.Entite.EstPrincipale;
+            ////SelectedUnite = UniteType.Direction;
+
+            //UniteTypesView.MoveCurrentToFirst();
 
             FonctionsView.GroupDescriptions.Clear();
 
             if (IsSiege)
-                FonctionsView.GroupDescriptions.Add(new PropertyGroupDescription("Direction.Denomination"));
+                FonctionsView.GroupDescriptions.Add(new PropertyGroupDescription("Entite.Direction.Description"));
             else
                 FonctionsView.GroupDescriptions.Add(new PropertyGroupDescription("Entite"));
 
             if (!IsInit)
             {
-                if (IsSiege)
-                    await LoadDirections();
-                else
-                    await LoadDepartementProvinciale();
-
+                //if (IsSiege)
+                //    await LoadDirections();
                 await LoadFonctions();
                 await LoadGrades();
               
@@ -502,50 +516,32 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             list.ForEach(c => { directions.Add(c); });
 
             DirectionsView.MoveCurrentToFirst();
-
-        }
-
-        async Task LoadDepartementProvinciale()
-        {
-            //departements.Clear();
-
-            //var departement = AppConfig.CurrentUser.Entite.Departement;
-
-            //if (departement.Agences.Count == 0)
-            //    departement.Agences = await Task.Run(() => new EntiteDao().GetAllAsync(departement));
-
-            //departements.Add(departement);
-            //DepartementsView.MoveCurrentToFirst();
         }
 
         private void LoadDepartements()
         {
-            //departements.Clear();
+            departements.Clear();
 
-            //if (SelectedDirection == null)
-            //    return;
+            if (SelectedDirection == null && !ShowDepartement)
+                return;
 
-            //SelectedDirection.Departements.ForEach(d => departements.Add(d));
+            SelectedDirection?.Departements.ForEach(d => departements.Add(d));
 
-            //DepartementsView.MoveCurrentToFirst();
+            DepartementsView.MoveCurrentToFirst();
         }
 
-        private void LoadAgences()
+        private async Task LoadAgences()
         {
-            //agences.Clear();
+            agences.Clear();
 
-            //if (SelectedDirection?.Secretariat != null)
-            //{
-            //    agences.Add(SelectedDirection.Secretariat);
-            //    AgencesView.MoveCurrentToFirst();
-            //}
+            if (SelectedDirection == null & !ShowAgence)
+                return;
 
-            //if (SelectedDepartement == null)
-            //    return;
+            var list = await Task.Run(() => new EntiteDao().GetAllAgencesAsync());
 
-            //SelectedDepartement.Agences.ForEach(b => agences.Add(b));
+            list.ForEach(b => agences.Add(b));
 
-            //AgencesView.MoveCurrentToFirst();
+            AgencesView.MoveCurrentToFirst();
 
         }
 

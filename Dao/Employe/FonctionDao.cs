@@ -21,9 +21,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
 
                 object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id 
-                    : (instance.Niveau == UniteType.Direction ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
+                    : (instance.Niveau == UniteType.Departement ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "insert into fonction(id, grade_id, intitule, niveau, unite_id, entite_id, description, created_at, updated_at) " +
                     "values(@v_id, @v_grade_id, @v_intitule, @v_niveau, @v_unite_id, @v_entite_id, @v_description, now(), now())";
@@ -66,9 +66,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             try
             {
                 object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
-                              : (instance.Niveau == UniteType.Direction ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
+                              : (instance.Niveau == UniteType.Departement ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "insert into fonction(id, grade_id, intitule, niveau, unite_id, entite_id, description, created_at, updated_at) " +
                     "values(@v_id, @v_grade_id, @v_intitule, @v_niveau, @v_unite_id, @v_entite_id, @v_description, now(), now())";
@@ -190,7 +190,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             }
         }
 
-        private Fonction Create(Dictionary<string, object> row, bool withEntite, bool withUnite)
+        private Fonction Create(Dictionary<string, object> row, bool withEntite, bool withUnite, bool withGrade = true)
         {
             var instance = new Fonction();
 
@@ -199,7 +199,9 @@ namespace FingerPrintManagerApp.Dao.Employe
             instance.Description = row["description"].ToString();
 
             instance.Niveau = Util.ToUniteType(row["niveau"].ToString());
-            instance.Grade = new GradeDao().Get(row["grade_id"].ToString());
+
+            if(withEntite)
+                instance.Grade = new GradeDao(Connection).Get(row["grade_id"].ToString());
 
             if (withUnite)
             {
@@ -352,7 +354,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 foreach (var item in _instances)
                 {
-                    var fonction = Create(item, false, false);
+                    var fonction = Create(item, false, false, false);
                     fonction.Unite = direction;
                     intances.Add(fonction);
                 }

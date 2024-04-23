@@ -16,7 +16,7 @@ namespace FingerPrintManagerApp
     /// <summary>
     /// Logique d'interaction pour App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application, INotifyPropertyChanged
     {
         public static Dictionary<string, string> Tips;
         public static string HelpPath;
@@ -33,6 +33,8 @@ namespace FingerPrintManagerApp
             //SetupReportInfo();
 
             LoadTips(HelpPath);
+
+            InitConfData();
         }
 
 
@@ -41,6 +43,9 @@ namespace FingerPrintManagerApp
             if (ConnectionHelper.GetConnection() != null)
             {
                 //AppConfig.MainCurrency = new Dao.Financial.CurrencyDao().GetMainCurrency();
+
+                AppConfig.HoraireTravailSemaines = new Dao.Presence.HoraireTravailSemaineDao().GetAll();
+                AppConfig.DateExceptions = new Dao.Presence.DateExceptionDao().GetAll();
 
             }
         }
@@ -79,7 +84,6 @@ namespace FingerPrintManagerApp
                     AppConfig.CurrentUser = _user;
                     NotifyPropertyChanged();
                 }
-
             }
         }
 

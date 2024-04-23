@@ -12,14 +12,14 @@ namespace FingerPrintManagerApp.Model.Employe
         private bool _estGenerale;
         //private Bureau _secretariat;
         
-        //public List<Division> Divisions { get; set; }
-        //public List<Fonction> Fonctions { get; set; }
+        public List<Departement> Departements { get; set; }
+        public List<Fonction> Fonctions { get; set; }
 
         public Direction()
         {
             Id = string.Empty;
-            //Divisions = new List<Division>();
-            //Fonctions = new List<Fonction>();
+            Departements = new List<Departement>();
+            Fonctions = new List<Fonction>();
         }
 
         public string Denomination

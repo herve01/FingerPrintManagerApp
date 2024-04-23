@@ -30,7 +30,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<AffectationViewModel>());
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<EntiteViewModel>());
 
-            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<Modules.Presence.ViewModel.PresenceEmployeViewModel>());
+            //pageViewModels.Add(IoC.Container.Instance.Kernel.Get<Modules.Presence.ViewModel.PresenceEmployeViewModel>());
 
             foreach (var vm in pageViewModels)
                 vm.Parent = this;

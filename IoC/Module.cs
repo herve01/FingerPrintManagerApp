@@ -42,23 +42,7 @@ namespace FingerPrintManagerApp.IoC
             Bind<DomaineEtudeViewModel>().ToSelf();
             //#endregion
 
-            //#region Carrière
-            //Bind<CarriereCtrlViewModel>().ToSelf();
-            //Bind<CarriereDefaultViewModel>().ToSelf();
-            //Bind<MecanisationViewModel>().ToSelf();
-            //Bind<RecensementViewModel>().ToSelf();
-            //Bind<RepriseViewModel>().ToSelf();
-            //Bind<AlitementViewModel>().ToSelf();
-            //Bind<DisponibiliteViewModel>().ToSelf();
-            //Bind<SuspensionViewModel>().ToSelf();
-            //Bind<DecesViewModel>().ToSelf();
-            //Bind<RetraiteViewModel>().ToSelf();
-            //Bind<FormationViewModel>().ToSelf();
-            //Bind<DetachementViewModel>().ToSelf();
-            //Bind<AffectationViewModel>().ToSelf();
-            //Bind<PromotionViewModel>().ToSelf();
-            //Bind<NominationViewModel>().ToSelf();
-            //#endregion
+
 
             //#region Admin
             Bind<AdminWindowViewModel>().ToSelf();
@@ -74,6 +58,7 @@ namespace FingerPrintManagerApp.IoC
             Bind<PresenceDefaultViewModel>().ToSelf();
             Bind<PresenceWindowViewModel>().ToSelf();
             Bind<PresenceEmployeViewModel>().ToSelf();
+            Bind<SuiviViewModel>().ToSelf();
             //#endregion
         }
     }

@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace FingerPrintManagerApp.Model.Employe
 {
     public class EmployeGrade : ModelBase
@@ -8,6 +10,7 @@ namespace FingerPrintManagerApp.Model.Employe
         private GradeEmployeType _type;
         private Grade _grade;
         private Employe _employe;
+        private DateTime _date;
 
         public EmployeGrade()
         {
@@ -57,6 +60,22 @@ namespace FingerPrintManagerApp.Model.Employe
                 {
                     _estInitial = value;
                     RaisePropertyChanged(() => EstInitial);
+                }
+            }
+        }
+
+        public DateTime Date
+        {
+            get
+            {
+                return _date;
+            }
+            set
+            {
+                if (value != _date)
+                {
+                    _date = value;
+                    RaisePropertyChanged(() => Date);
                 }
             }
         }
@@ -123,7 +142,7 @@ namespace FingerPrintManagerApp.Model.Employe
                 if (this["Grade"] != string.Empty)
                     return this["Grade"];
 
-                return Error;
+                return string.Empty;
             }
         }
     }

@@ -199,7 +199,6 @@ namespace FingerPrintManagerApp.Dao.Employe
             return instance;
         }
 
-
         public DirectionProvinciale Get(Entite entite)
         {
             DirectionProvinciale instance = null;

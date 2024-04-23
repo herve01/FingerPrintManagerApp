@@ -148,8 +148,8 @@ namespace FingerPrintManagerApp.Dialog.View
 
         void InitCrop()
         {
-            //clipRectangle.Width = clipSize.Width;
-            //clipRectangle.Height = clipSize.Height;
+            clipRectangle.Width = clipSize.Width;
+            clipRectangle.Height = clipSize.Height;
 
             var hR = imgSource.Source.Height / clipSize.Height;
             var estimatedWith = imgSource.Source.Width / hR;

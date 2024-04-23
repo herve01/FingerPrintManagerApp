@@ -23,6 +23,7 @@ namespace FingerPrintManagerApp.Model.Employe
         private Province _provinceOrigine;
         private string _personneContact;
         private string _qualiteContact;
+        private EmployeGrade _currentGradeNomination;
 
         private bool _estAffecte;
 
@@ -40,7 +41,6 @@ namespace FingerPrintManagerApp.Model.Employe
         public List<EmployeEmpreinte> Empreintes { get; set; }
         public List<EmployeFonction> FonctionsInterim { get; set; }
 
-
         public Employe()
         {
             Address = new Address() { IsRequired = true };
@@ -49,9 +49,11 @@ namespace FingerPrintManagerApp.Model.Employe
             Etudes = new List<EmployeEtude>();
             Empreintes = new List<EmployeEmpreinte>();
             CurrentGrade = new EmployeGrade() { Employe = this, EstInitial = true };
+            CurrentGradeNomination = new EmployeGrade() { Employe = this, Type = GradeEmployeType.Officiel };
+            CurrentFonctionNomination = new EmployeFonction() { Employe = this, Type = FonctionEmployeType.Officiel, IsRequired = false };
+
             CurrentAffectation = new Affectation() { Employe = this };
             CurrentHighEtude = new EmployeEtude() { Employe = this };
-
         }
        
         public string Matricule
@@ -69,7 +71,6 @@ namespace FingerPrintManagerApp.Model.Employe
                 }
             }
         }
-
         public string Nom
         {
             get
@@ -136,7 +137,6 @@ namespace FingerPrintManagerApp.Model.Employe
                 }
             }
         }
-
         public byte[] Photo
         {
             get
@@ -236,6 +236,22 @@ namespace FingerPrintManagerApp.Model.Employe
             }
         }
 
+        public EmployeGrade CurrentGradeNomination
+        {
+            get
+            {
+                return _currentGradeNomination;
+            }
+            set
+            {
+                if (value != _currentGradeNomination)
+                {
+                    _currentGradeNomination = value;
+                    RaisePropertyChanged(() => CurrentGradeNomination);
+                    RaisePropertyChanged(() => CurrentGrade);
+                }
+            }
+        }
         public Affectation CurrentAffectation
         {
             get
@@ -676,7 +692,14 @@ namespace FingerPrintManagerApp.Model.Employe
         {
             get
             {
-                return Prenom?.Substring(0,1) + "" + Nom?.Substring(0, 1) + "" + PostNom?.Substring(0, 1);
+                try
+                {
+                    return Prenom?.Substring(0, 1) + "" + Nom?.Substring(0, 1) + "" + PostNom?.Substring(0, 1);
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }             
             }
         }
     }

@@ -125,5 +125,10 @@ namespace FingerPrintManagerApp.Model.Employe
                 return string.Empty;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{Province.Nom}";
+        }
     }
 }

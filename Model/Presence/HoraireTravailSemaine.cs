@@ -7,28 +7,29 @@ namespace FingerPrintManagerApp.Model.Presence
 {
     public class HoraireTravailSemaine : ModelBase, IEditableObject, IDataErrorInfo, ICloneable
     {
-        private string _designation;
+        private string _jour;
         private DateTime? _heureDebut;
         private DateTime? _heureFin;
         private bool _estOuvrable;
+        private int _numero;
 
         public HoraireTravailSemaine()
         {
             Id = string.Empty;
         }
 
-        public string Designation
+        public string Jour
         {
             get
             {
-                return _designation;
+                return _jour;
             }
             set
             {
-                if (value != _designation)
+                if (value != _jour)
                 {
-                    _designation = value;
-                    RaisePropertyChanged(() => Designation);
+                    _jour = value;
+                    RaisePropertyChanged(() => Jour);
                 }
             }
         }
@@ -77,6 +78,21 @@ namespace FingerPrintManagerApp.Model.Presence
                 }
             }
         }
+        public int Numero
+        {
+            get
+            {
+                return _numero;
+            }
+            set
+            {
+                if (value != _numero)
+                {
+                    _numero = value;
+                    RaisePropertyChanged(() => Numero);
+                }
+            }
+        }
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -115,10 +131,11 @@ namespace FingerPrintManagerApp.Model.Presence
                 return;
 
             Id = backup.Id;
-            Designation = backup.Designation;
+            Jour = backup.Jour;
             HeureDebut = backup.HeureDebut;
             HeureFin = backup.HeureFin;
             EstOuvrable = backup.EstOuvrable;
+            Numero = backup.Numero;
         }
 
 
@@ -130,8 +147,8 @@ namespace FingerPrintManagerApp.Model.Presence
 
                 switch (columnName)
                 {
-                    case "Designation":
-                        if (string.IsNullOrWhiteSpace(Designation))
+                    case "Jour":
+                        if (string.IsNullOrWhiteSpace(Jour))
                             error = "La designtion ne peut être vide.";
                         break;
 
@@ -157,8 +174,8 @@ namespace FingerPrintManagerApp.Model.Presence
         {
             get
             {
-                if (this["Designation"] != string.Empty)
-                    return this["Designation"];
+                if (this["Jour"] != string.Empty)
+                    return this["Jour"];
 
                 //else if (this["Annee"] != string.Empty)
                 //    return this["Annee"];

@@ -92,13 +92,13 @@ namespace FingerPrintManagerApp.Dao.Employe
                 if (OwnAction)
                     Request.Transaction = Connection.BeginTransaction();
 
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
-                //     : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
+                object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
+                     : (instance.Niveau == UniteType.Departement ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
 
                 var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into affectation(id, employe_id, ancienne_entite_id, nouvelle_entite_id, acte_id, niveau, unite_id, date, created_at, updated_at) " +
-                    "values(@v_id, @v_employe_id, @v_ancienne_entite_id, @v_nouvelle_entite_id, @v_acte_id, @v_niveau, @v_unite_id, @v_date, now(), now())";
+                Request.CommandText = "insert into affectation(id, employe_id, ancienne_entite_id, nouvelle_entite_id, niveau, unite_id, date, created_at, updated_at) " +
+                    "values(@v_id, @v_employe_id, @v_ancienne_entite_id, @v_nouvelle_entite_id, @v_niveau, @v_unite_id, @v_date, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
@@ -106,7 +106,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_nouvelle_entite_id", DbType.String, instance.Entite.Id));
                 //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte?.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_niveau", DbType.String, instance.Niveau));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
 
                 var feed = await Request.ExecuteNonQueryAsync();
@@ -136,7 +136,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 return feed;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (OwnAction)
                     Request.Transaction.Rollback();
@@ -159,14 +159,13 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                //object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
-                //    : (instance.Niveau == UniteType.Direction ? (instance.Unite as Division).Id : (instance.Unite as Bureau).Id);
-                
+                object uniteId = instance.Niveau == UniteType.Direction ? (instance.Unite as Direction).Id
+                     : (instance.Niveau == UniteType.Departement ? (instance.Unite as Departement).Id : (instance.Unite as Entite).Id);
+
                 Request.CommandText = "update affectation " +
                     "set employe_id = @v_employe_id, " +
                     "ancienne_entite_id = @v_ancienne_entite_id, " +
                     "nouvelle_entite_id = @v_nouvelle_entite_id, "+
-                    "acte_id = @v_acte_id, " +
                     "niveau = @v_niveau, " +
                     "unite_id = @v_unite_id, " +
                     "date = @v_date, " +
@@ -178,7 +177,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_nouvelle_entite_id", DbType.String, instance.Entite.Id));
                 //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_niveau", DbType.Single, instance.Niveau));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_unite_id", DbType.String, uniteId));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
 
@@ -223,21 +222,21 @@ namespace FingerPrintManagerApp.Dao.Employe
             
             instance.Niveau = Util.ToUniteType(row["niveau"].ToString());
 
-            //var niveau = Util.ToUniteType(row["niveau"].ToString());
-            //switch (niveau)
-            //{
-            //    case UniteType.Direction:
-            //        instance.Unite = new DirectionDao().Get(row["unite_id"].ToString());
-            //        break;
-            //    case UniteType.Division:
-            //        instance.Unite = new DivisionDao().Get(row["unite_id"].ToString());
-            //        break;
-            //    case UniteType.Bureau:
-            //        instance.Unite = new BureauDao().Get(row["unite_id"].ToString());
-            //        break;
-            //    default:
-            //        break;
-            //}
+            var niveau = Util.ToUniteType(row["niveau"].ToString());
+            switch (niveau)
+            {
+                case UniteType.Direction:
+                    instance.Unite = new DirectionDao().Get(row["unite_id"].ToString());
+                    break;
+                case UniteType.Departement:
+                    instance.Unite = new DepartementDao().Get(row["unite_id"].ToString());
+                    break;
+                case UniteType.Agence:
+                    instance.Unite = new EntiteDao().Get(row["unite_id"].ToString());
+                    break;
+                default:
+                    break;
+            }
 
             //if (!(row["acte_id"] is DBNull))
             //    instance.Acte = new ActeNominationDao().Get(row["acte_id"].ToString());
@@ -455,7 +454,6 @@ namespace FingerPrintManagerApp.Dao.Employe
                 { "employe_id", reader["employe_id"] },
                 { "ancienne_entite_id", reader["ancienne_entite_id"] },
                 { "nouvelle_entite_id", reader["nouvelle_entite_id"] },
-                { "acte_id", reader["acte_id"] },
                 { "niveau", reader["niveau"] },
                 { "unite_id", reader["unite_id"] },
                 { "date", reader["date"] }

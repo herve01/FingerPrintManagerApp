@@ -1,4 +1,5 @@
 ﻿using FingerPrintManagerApp.Model;
+using FingerPrintManagerApp.Model.Employe;
 using FingerPrintManagerApp.Model.Presence;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,11 @@ namespace FingerPrintManagerApp.Dao.Presence
             var instance = new HoraireTravailSemaine();
 
             instance.Id = row["id"].ToString();
-            instance.Designation = row["designation"].ToString();
+            instance.Jour = row["jour"].ToString();
             instance.EstOuvrable = bool.Parse(row["est_ouvrable"].ToString());
             instance.HeureDebut = DateTime.Parse(row["heure_debut"].ToString());
             instance.HeureFin = DateTime.Parse(row["heure_fin"].ToString());
+            instance.Numero = int.Parse(row["numero"].ToString());
 
             return instance;
 
@@ -100,6 +102,40 @@ namespace FingerPrintManagerApp.Dao.Presence
                 {
                     var instance = Create(item);
                     intances.Add(instance);
+                }
+            }
+            catch (Exception)
+            {
+                if (Reader != null && !Reader.IsClosed)
+                    Reader.Close();
+            }
+
+            return intances;
+        }
+
+        public List<HoraireTravailSemaine> GetAll()
+        {
+            var intances = new List<HoraireTravailSemaine>();
+            var _instances = new List<Dictionary<string, object>>();
+
+            try
+            {
+                Request.CommandText = "select * " +
+                    "from horaire_travail_semaine " +
+                    "order by numero asc";
+
+
+                Reader = Request.ExecuteReader();
+
+                if (Reader.HasRows)
+                    while (Reader.Read())
+                        _instances.Add(Map(Reader));
+
+                Reader.Close();
+
+                foreach (var item in _instances)
+                {
+                    intances.Add(Create(item));
                 }
             }
             catch (Exception)
@@ -183,10 +219,11 @@ namespace FingerPrintManagerApp.Dao.Presence
             return new Dictionary<string, object>()
             {
                 { "id", reader["id"] },
-                { "designation", reader["designation"] },
+                { "jour", reader["jour"] },
                 { "est_ouvrable", reader["est_ouvrable"] },
                 { "heure_debut", reader["heure_debut"] },
                 { "heure_fin", reader["heure_fin"] },
+                 { "numero", reader["numero"] },
             };
         }
     }

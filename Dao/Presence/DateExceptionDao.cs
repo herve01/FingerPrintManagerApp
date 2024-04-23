@@ -109,6 +109,38 @@ namespace FingerPrintManagerApp.Dao.Presence
             return intances;
         }
 
+        public List<DateException> GetAll()
+        {
+            var intances = new List<DateException>();
+            var _instances = new List<Dictionary<string, object>>();
+
+            try
+            {
+                Request.CommandText = "select * " +
+                    "from date_exception ";
+
+                Reader = Request.ExecuteReader();
+
+                if (Reader.HasRows)
+                    while (Reader.Read())
+                        _instances.Add(Map(Reader));
+
+                Reader.Close();
+
+                foreach (var item in _instances)
+                {
+                    intances.Add(Create(item));
+                }
+            }
+            catch (Exception)
+            {
+                if (Reader != null && !Reader.IsClosed)
+                    Reader.Close();
+            }
+
+            return intances;
+        }
+
         public async Task<List<DateException>> GetAllAsync(DateTime lastUpdateTime)
         {
             var intances = new List<DateException>();

@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:FingerPrintManagerApp"
              xmlns:viewModel="clr-namespace:FingerPrintManagerApp.ViewModel"
              xmlns:view="clr-namespace:FingerPrintManagerApp.View"
-             xmlns:dialog="clr-namespace:FingerPrintManagerApp.Dialog.View"
              
              xmlns:adm_vm="clr-namespace:FingerPrintManagerApp.Modules.Admin.ViewModel"
              xmlns:adm_view="clr-namespace:FingerPrintManagerApp.Modules.Admin.View"
@@ -13,9 +12,10 @@
              
              xmlns:presence_vm="clr-namespace:FingerPrintManagerApp.Modules.Presence.ViewModel"
              xmlns:presence_view="clr-namespace:FingerPrintManagerApp.Modules.Presence.View"
-             
+              xmlns:dialog="clr-namespace:FingerPrintManagerApp.Dialog.View"
+            
              StartupUri="View/Main.xaml"
-             
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
              >
     <Application.Resources>
         <ResourceDictionary>
@@ -131,75 +131,6 @@
 
             <!--#endregion-->
 
-            <!--#region Carrière -->
-
-            <!--<DataTemplate DataType="{x:Type carriere_vm:MecanisationViewModel}">
-                <carriere_view:MecanisationView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:MecanisationDetailsViewModel}">
-                <carriere_view:MecanisationDetailsView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:RecensementViewModel}">
-                <carriere_view:RecensementView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:RecensementDetailsViewModel}">
-                <carriere_view:RecensementDetailsView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:RepriseViewModel}">
-                <carriere_view:RepriseView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:CarriereCtrlViewModel}">
-                <carriere_view:CarriereCtrlView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:CarriereDefaultViewModel}">
-                <carriere_view:CarriereDefaultView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:SuspensionViewModel}">
-                <carriere_view:SuspensionView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:DisponibiliteViewModel}">
-                <carriere_view:DisponibiliteView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:AlitementViewModel}">
-                <carriere_view:AlitementView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:DecesViewModel}">
-                <carriere_view:DecesView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:RetraiteViewModel}">
-                <carriere_view:RetraiteView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:FormationViewModel}">
-                <carriere_view:FormationView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:DetachementViewModel}">
-                <carriere_view:DetachementView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:AffectationViewModel}">
-                <carriere_view:AffectationView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:PromotionViewModel}">
-                <carriere_view:PromotionView />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type carriere_vm:NominationViewModel}">
-                <carriere_view:NominationOfficielleView />
-            </DataTemplate>-->
 
             <!--Presence-->
             <DataTemplate DataType="{x:Type presence_vm:PresenceEmployeViewModel}">
@@ -210,6 +141,10 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type presence_vm:PresenceCtrlViewModel}">
                 <presence_view:PresenceCtrlView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type presence_vm:SuiviViewModel}">
+                <presence_view:SuiviView />
             </DataTemplate>
             <!--#endregion-->
         </ResourceDictionary>

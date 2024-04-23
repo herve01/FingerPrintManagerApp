@@ -19,9 +19,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into niveau_etude(id, intitule, adding_date, last_update_time) " +
+                Request.CommandText = "insert into niveau_etude(id, intitule, created_at, updated_at) " +
                     "values(@v_id, @v_intitule, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -55,9 +55,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into niveau_etude(id, intitule, adding_date, last_update_time) " +
+                Request.CommandText = "insert into niveau_etude(id, intitule, created_at, updated_at) " +
                     "values(@v_id, @v_intitule, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -94,7 +94,7 @@ namespace FingerPrintManagerApp.Dao.Employe
 
                 Request.CommandText = "update niveau_etude " +
                     "set intitule = @v_intitule, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_intitule", DbType.String, instance.Intitule));
@@ -201,7 +201,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 Request.CommandText = "select * " +
                     "from niveau_etude " +
-                    "where adding_date >= @v_time or last_update_time >= @v_time";
+                    "where created_at >= @v_time or updated_at >= @v_time";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_time", DbType.DateTime, lastUpdateTime));
 

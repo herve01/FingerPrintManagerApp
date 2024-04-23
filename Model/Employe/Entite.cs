@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace FingerPrintManagerApp.Model.Employe
@@ -11,6 +12,8 @@ namespace FingerPrintManagerApp.Model.Employe
         private Address _address;
         private bool _estPrincipale;
         private EntiteType _type;
+
+        public List<Fonction> Fonctions { get; set; }
 
         public Entite()
         {

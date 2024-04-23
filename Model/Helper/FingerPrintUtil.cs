@@ -23,17 +23,17 @@ namespace FingerPrintManagerApp.Model.Helper
                 return null;
         }
 
-        public static bool verifiy(DPFP.Sample Sample, byte[] fingerPrint)
+        public static bool verifiy(DPFP.Sample Sample, byte[] template)
         {
             var Verificator = new DPFP.Verification.Verification();
             DPFP.FeatureSet feature = FingerPrintUtil.ExtractFeatures(Sample, DPFP.Processing.DataPurpose.Verification);
 
-            var stream = new MemoryStream(fingerPrint);
-            DPFP.Template template = new DPFP.Template(stream);
+            var stream = new MemoryStream(template);
+            DPFP.Template Dtemplate = new DPFP.Template(stream);
             //template.Serialize(stream);
 
             DPFP.Verification.Verification.Result result = new DPFP.Verification.Verification.Result();
-            Verificator.Verify(feature, template, ref result);
+            Verificator.Verify(feature, Dtemplate, ref result);
 
             return result.Verified;
         }

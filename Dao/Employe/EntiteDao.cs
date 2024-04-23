@@ -1,4 +1,5 @@
-﻿using FingerPrintManagerApp.Model.Employe;
+﻿using FingerPrintManagerApp.Model;
+using FingerPrintManagerApp.Model.Employe;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -199,10 +200,10 @@ namespace FingerPrintManagerApp.Dao.Employe
             instance.Address.Street = row["avenue"].ToString();
             instance.Type = Util.ToEntiteType(row["type"].ToString());
             instance.EstPrincipale = Convert.ToBoolean(row["est_principale"].ToString());
-            instance.Direction = new DirectionProvincialeDao(Connection).Get(row["direction_id"].ToString());
+            //instance.Direction = new DirectionProvincialeDao(Connection).Get(row["direction_id"].ToString());
 
-            //if (withDirection)
-            //    instance.Direction = new DirectionProvincialeDao().Get(row["direction_id"].ToString());
+            if (withDirection)
+                instance.Direction = new DirectionProvincialeDao().Get(row["direction_id"].ToString());
 
             return instance;
 
@@ -353,6 +354,81 @@ namespace FingerPrintManagerApp.Dao.Employe
                 foreach (var item in _instances)
                 {
                     Entite entite = Create(item, true);
+                    intances.Add(entite);
+                }
+            }
+            catch (Exception)
+            {
+                if (Reader != null && !Reader.IsClosed)
+                    Reader.Close();
+            }
+
+            return intances;
+        }
+
+        public async Task<List<Entite>> GetAllAgencesAsync()
+        {
+            var intances = new List<Entite>();
+            var _instances = new List<Dictionary<string, object>>();
+
+            try
+            {
+                var direction = AppConfig.CurrentUser.Entite.Direction;
+
+                Request.CommandText = "select * " +
+                    "from entite " +
+                    "where type ='Agence' and direction_id = @v_direction_id";
+
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_direction_id", DbType.String, direction.Id));
+
+                Reader = await Request.ExecuteReaderAsync();
+
+                if (Reader.HasRows)
+                    while (await Reader.ReadAsync())
+                        _instances.Add(Map(Reader));
+
+                Reader.Close();
+
+                foreach (var item in _instances)
+                {
+                    Entite entite = Create(item, false);
+                    intances.Add(entite);
+                }
+            }
+            catch (Exception)
+            {
+                if (Reader != null && !Reader.IsClosed)
+                    Reader.Close();
+            }
+
+            return intances;
+        }
+
+        public async Task<List<Entite>> GetAllAgencesAsync(DirectionProvinciale direction)
+        {
+            var intances = new List<Entite>();
+            var _instances = new List<Dictionary<string, object>>();
+
+            try
+            { 
+
+                Request.CommandText = "select * " +
+                    "from entite " +
+                    "where type ='Agence' and direction_id = @v_direction_id";
+
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_direction_id", DbType.String, direction.Id));
+
+                Reader = await Request.ExecuteReaderAsync();
+
+                if (Reader.HasRows)
+                    while (await Reader.ReadAsync())
+                        _instances.Add(Map(Reader));
+
+                Reader.Close();
+
+                foreach (var item in _instances)
+                {
+                    Entite entite = Create(item, false);
                     intances.Add(entite);
                 }
             }

@@ -81,8 +81,7 @@ create table if not exists entite(
 	constraint pk_entite primary key(id),
 	constraint fk_entite_zone foreign key(zone_id) references zone(id),
 	constraint fk_entite_direction foreign key(direction_id) references direction_provinciale(id) on update cascade,
-    constraint fk_entite_commune foreign key(commune_id) references commune(id) on update cascade,
-    constraint unique_entite_zone unique(zone_id)
+    constraint fk_entite_commune foreign key(commune_id) references commune(id) on update cascade
 );
 
 create table if not exists user (
@@ -194,6 +193,7 @@ create table if not exists employe(
 	avenue varchar(25) not null,
 	commune_id int not null,
     conjoint varchar(100),
+    telephone_conjoint varchar(14),
 	created_at datetime,
     updated_at datetime,
 	constraint pk_employe primary key(id),

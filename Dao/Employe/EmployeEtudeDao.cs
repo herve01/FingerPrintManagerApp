@@ -19,9 +19,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_etude(id, employe_id, niveau_id, domaine_id, annee_obtention, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe_etude(id, employe_id, niveau_id, domaine_id, annee_obtention, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_niveau_id, @v_domaine_id, @v_annee_obtention, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -58,9 +58,9 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_etude(id, employe_id, niveau_id, domaine_id, annee_obtention, adding_date, last_update_time) " +
+                Request.CommandText = "insert into employe_etude(id, employe_id, niveau_id, domaine_id, annee_obtention, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_niveau_id, @v_domaine_id, @v_annee_obtention, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
@@ -102,7 +102,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     "employe_id = @v_employe_id, " +
                     "domaine_id = @v_domaine_id, " +
                     "annee_obtention = @v_annee_obtention, " +
-                    "last_update_time = now() " +
+                    "updated_at = now() " +
                     "where id = @v_id;";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));

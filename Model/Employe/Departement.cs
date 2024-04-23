@@ -12,6 +12,8 @@ namespace FingerPrintManagerApp.Model.Employe
         private string _denomination;
         private string _mission;
 
+        public List<Fonction> Fonctions { get; set; }
+
         public Departement()
         {
             Id = string.Empty;

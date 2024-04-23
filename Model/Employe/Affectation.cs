@@ -205,9 +205,6 @@ namespace FingerPrintManagerApp.Model.Employe
                 if (this["Unite"] != string.Empty)
                     return this["Unite"];
 
-                if (this["Acte"] != string.Empty)
-                    return this["Acte"];
-
                 return string.Empty;
             }
         }

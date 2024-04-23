@@ -8,7 +8,7 @@
         xmlns:bhv="clr-namespace:FingerPrintManagerApp.ViewModel.Behavior"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Humager" 
+        Title="FingerPrintManager" 
         Name="MainWindow"
         Height="750" 
         MinHeight="200" 
@@ -101,7 +101,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Padding="10 3">
-                        <TextBlock Text="{Binding Source={x:Static Application.Current}, Path=User.Shop, StringFormat=Humager - \{0\}, FallbackValue='Humager', TargetNullValue='Humager'}"
+                        <TextBlock Text="{Binding Source={x:Static Application.Current}, Path=User.Entite.Description, StringFormat=FingerPrintManager - \{0\}, FallbackValue='FingerPrintManager', TargetNullValue='FingerPrintManager'}"
                                    FontSize="13.5"
                                    Foreground="{DynamicResource Primary.Foreground}"
                            />

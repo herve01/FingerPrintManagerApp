@@ -21,17 +21,17 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, acte_id, type, est_initial, date, created_at, updated_at) " +
-                    "values(@v_id, @v_employe_id, @v_grade_id, @v_acte_id, @v_type, @v_est_initial, @v_date, now(), now())";
+                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, type, est_initial, date, created_at, updated_at) " +
+                    "values(@v_id, @v_employe_id, @v_grade_id, @v_type, @v_est_initial, @v_date, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_grade_id", DbType.String, instance.Grade.Id));
                 //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_initial", DbType.Boolean, instance.EstInitial));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
-               
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_initial", DbType.Boolean, instance.EstInitial));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
+
                 var feed = Request.ExecuteNonQuery();
 
                 if (feed > 0)
@@ -62,16 +62,16 @@ namespace FingerPrintManagerApp.Dao.Employe
             {
                 var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, acte_id, type, est_initial, date, created_at, updated_at) " +
-                    "values(@v_id, @v_employe_id, @v_grade_id, @v_acte_id, @v_type, @v_est_initial, @v_date, now(), now())";
+                Request.CommandText = "insert into employe_grade(id, employe_id, grade_id, type, est_initial, date, created_at, updated_at) " +
+                    "values(@v_id, @v_employe_id, @v_grade_id, @v_type, @v_est_initial, @v_date, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_grade_id", DbType.String, instance.Grade.Id));
                 //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_initial", DbType.Boolean, instance.EstInitial));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_initial", DbType.Boolean, instance.EstInitial));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
 
                 var feed = await Request.ExecuteNonQueryAsync();
 
@@ -132,7 +132,6 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.CommandText = "update employe_grade " +
                     "set employe_id = @v_employe_id, " +
                     "grade_id = @v_grade_id, " +
-                    "acte_id = @v_acte_id, " +
                     "est_initial = @v_est_initial, " +
                     "type = @v_type, " +
                     "date = @v_date, " +
@@ -142,9 +141,9 @@ namespace FingerPrintManagerApp.Dao.Employe
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_grade_id", DbType.String, instance.Grade.Id));
                 //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_acte_id", DbType.String, instance.Acte.Id));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_initial", DbType.Boolean, instance.EstInitial));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
-                //Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_est_initial", DbType.Boolean, instance.EstInitial));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, instance.Id));
 
                 var feed = Request.ExecuteNonQuery();
@@ -185,7 +184,7 @@ namespace FingerPrintManagerApp.Dao.Employe
             instance.Grade = new GradeDao().Get(row["grade_id"].ToString());
             //instance.Acte = new ActeNominationDao().Get(row["acte_id"].ToString());
             instance.EstInitial = bool.Parse(row["est_initial"].ToString());
-            //instance.Date = DateTime.Parse(row["date"].ToString());
+            instance.Date = DateTime.Parse(row["date"].ToString());
             instance.Type = Util.ToGradeEmployeType(row["type"].ToString());
 
             if (withEmploye)
@@ -402,7 +401,6 @@ namespace FingerPrintManagerApp.Dao.Employe
                 { "id", reader["id"] },
                 { "employe_id", reader["employe_id"] },
                 { "grade_id", reader["grade_id"] },
-                { "acte_id", reader["acte_id"] },
                 { "est_initial", reader["est_initial"] },
                 { "date", reader["date"] },
                 { "type", reader["type"] }

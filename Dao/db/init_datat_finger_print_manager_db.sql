@@ -6,9 +6,9 @@ values ('creator','Stone Tech'),
        ('creation_country','Democratic Republic of Congo'), 
        ('dbname', 'finger_print_manager_db'),
        ('dbversion', 1),
-       ('great_logo', null),
-       ('report_header', null),
-       ('report_large_header', null)
+       ('great_logo', ''),
+       ('report_header', ''),
+       ('report_large_header', '')
        ;
        
 
@@ -43,7 +43,8 @@ INSERT INTO direction_provinciale
 VALUES (md5('00001'), 1, 1, now(), now());
 
 INSERT INTO entite
-VALUES (md5('000001'), md5('00001'), 'Direction', 1, '', '', 4, 1, now(), now());
+VALUES (md5('000001'), md5('00001'), 'Direction', 1, '', '', 4, 1, now(), now()),
+(md5('000002'), md5('00001'), 'Agence', 1, '', '', 2, 0, now(), now());
 
 insert into user
 values(md5('0000010001'), md5('000001'), 'super', 'user', 'sysadmin', 'ADMIN', 'Homme', '', '  ', 'uXX8EDvhhzxiTuAp6VSVBrqd:18', '2iLCkgiFi3Fez5scGXVXKwoLTVihAMMo', 1, now(), now());
@@ -63,6 +64,14 @@ values
 (md5('00000108'), 'Master', 6, 1, 'ATA1', now(), now()),
 (md5('00000109'), 'Ingénierie', 7, 1, 'ATA1', now(), now()),
 (md5('00000110'), 'Doctorat', 8, 1, 'ATA1', now(), now());
+
+insert into domaine_etude
+values
+(md5('0000010001'),	'Informatiques',now(), now()),
+(md5('0000010002'),	'Chimie', now(), now()),
+(md5('0000010003'),	'Droit', now(), now()),
+(md5('0000010004'),	'Economie', now(), now());
+				
 
 insert into departement
 values(md5('00000101departement'), md5('00000101'), 'Departement administratif', '', now(), now()),

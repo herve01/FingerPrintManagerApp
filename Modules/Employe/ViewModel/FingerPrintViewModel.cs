@@ -1,5 +1,6 @@
 ﻿using DPFP.Capture;
 using DPFP.Error;
+using DPFP.Gui.Enrollment;
 using FingerPrintManagerApp.Dialog.Service;
 using FingerPrintManagerApp.Model.Employe;
 using FingerPrintManagerApp.Model.Helper;
@@ -7,6 +8,7 @@ using FingerPrintManagerApp.ViewModel.Command;
 using libzkfpcsharp;
 using Sample;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
@@ -25,6 +27,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
     {
         DPFP.Capture.Capture _capturer;
         DPFP.Processing.Enrollment _enroller;
+        EnrollmentControl enrol;
 
         private object _lock = new object();
 
@@ -316,7 +319,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             }
         }
 
-        byte[] saveFinger;
+        List<byte[]> storeFinger = new List<byte[]>();
         void Process(DPFP.Sample Sample)
         {
             try
@@ -333,12 +336,17 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                     }
                 }
 
+                //MemoryStream ss = new MemoryStream();
+                //var kk = FingerPrintUtil.ExtractFeatures(Sample, DPFP.Processing.DataPurpose.Enrollment).Serialize(ss);
 
-                //if (RegisterCount > 0 && !FingerPrintUtil.verifiy(Sample, saveFinger)) //Ici on s'assure que la personne introduit le même doigt
+                //storeFinger.Add(ss.ToArray());
+
+                //if (RegisterCount > 0 && !FingerPrintUtil.verifiy(Sample, storeFinger[RegisterCount-1])) //Ici on s'assure que la personne introduit le même doigt
                 //{
                 //    Status = string.Format("Veuillez appuyer 4 fois le même doit << {0} >> pour l'enrôlement. Recommencons !", Doigt);
                 //    RegisterCount = 0;
                 //    ScanCount = REGISTER_FINGER_COUNT;
+                //    storeFinger.Clear();
                 //    return;
                 //}
 
@@ -351,6 +359,10 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                     _enroller.AddFeatures(features);
                     ScanCount--;
                 }
+
+                //EnrollmentControl enrol = new EnrollmentControl();
+
+                
 
                 if (RegisterCount >= REGISTER_FINGER_COUNT)
                 {
@@ -520,6 +532,38 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         public void OnComplete(object Capture, string ReaderSerialNumber, DPFP.Sample Sample)
         {
+            //Task.Run(() =>
+            //{
+            //    enrol = new EnrollmentControl
+            //    {
+            //        AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            //        MaxEnrollFingerCount = 2,
+            //        Name = "enrollControl",
+            //        BackgroundImageLayout = ImageLayout.Stretch,
+            //        Location = new System.Drawing.Point(0, 0),
+            //        ReaderSerialNumber = ReaderSerialNumber,
+            //        Visible = true,
+            //        Enabled = true
+
+            //    };
+
+            //    int kk = enrol.EnrolledFingerMask;
+            //});
+            //enrol = new EnrollmentControl
+            //{
+            //    AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            //    MaxEnrollFingerCount = 2,
+            //    Name = "enrollControl",
+            //    BackgroundImageLayout = ImageLayout.Stretch,
+            //    Location = new System.Drawing.Point(0, 0),
+            //    ReaderSerialNumber = "00000000-0000-0000-0000-000000000000",
+            //    Visible = true,
+            //    Enabled = true
+
+            //};
+
+            //int kk = enrol.EnrolledFingerMask;
+
             Process(Sample);
         }
 
@@ -530,7 +574,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         public void OnFingerTouch(object Capture, string ReaderSerialNumber)
         {
-            //throw new NotImplementedException();
+    
         }
 
         public void OnReaderConnect(object Capture, string ReaderSerialNumber)

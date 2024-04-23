@@ -77,7 +77,6 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             };
         }
 
-
         private bool OnFilterEmploye(object obj)
         {
             var employe = obj as Model.Employe.Employe;
@@ -95,7 +94,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
                    (allD || (nonA && string.IsNullOrWhiteSpace(employe.CurrentAffectation.Id))) &&
                    (employe.Name.ToLower().NoAccent().Contains(motif) ||
                     employe.Matricule.ToString().ToLower().NoAccent().Contains(motif) ||
-                    //employe.CurrentGrade.Id.ToLower().NoAccent().Contains(motif) ||
+                    employe.CurrentGrade.Grade.Id.ToLower().NoAccent().Contains(motif) ||
                     //employe.Etat.Intitule.ToLower().NoAccent().Contains(motif) ||
                     employe.Sexe.ToString().ToLower().NoAccent().Contains(motif) ||
                     (!string.IsNullOrWhiteSpace(employe.CurrentAffectation.Id) && employe.CurrentAffectation.Unite.ToString().ToLower().NoAccent().Contains(motif))

@@ -22,7 +22,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 if (OwnAction)
                     Request.Transaction = Connection.BeginTransaction();
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, now(), now())";
@@ -83,7 +83,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                 if (OwnAction)
                     Request.Transaction = Connection.BeginTransaction();
 
-                var id = Helper.TableKeyHelper.GetKey(TableName);
+                var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
                 Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, created_at, updated_at) " +
                     "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, now(), now())";
@@ -103,13 +103,13 @@ namespace FingerPrintManagerApp.Dao.Employe
                     return -1;
                 }
 
-                if (instance.Type == FonctionEmployeType.Officiel)
-                    if (await new EmployeGradeDao().AddAsync(Request, instance.GradeAssocie) <= 0)
-                    {
-                        if (OwnAction)
-                            Request.Transaction.Rollback();
-                        return -2;
-                    }
+                //if (instance.Type == FonctionEmployeType.Officiel)
+                //    if (await new EmployeGradeDao().AddAsync(Request, instance.GradeAssocie) <= 0)
+                //    {
+                //        if (OwnAction)
+                //            Request.Transaction.Rollback();
+                //        return -2;
+                //    }
 
                 instance.Id = id;
 
@@ -659,7 +659,6 @@ namespace FingerPrintManagerApp.Dao.Employe
                 { "id", reader["id"] },
                 { "employe_id", reader["employe_id"] },
                 { "fonction_id", reader["fonction_id"] },
-                { "acte_id", reader["acte_id"] },
                 { "type", reader["type"] },
                 { "state", reader["state"] },
                 { "date", reader["date"] },

@@ -947,7 +947,6 @@
                                         <StackPanel Orientation="Horizontal">
                                            
                                             <CheckBox Content="Affecté"
-                                                      IsEnabled="{Binding Employe.EstActif}"
                                                       VerticalAlignment="Center"
                                                       IsChecked="{Binding EstAffecte, Mode=TwoWay}"
                                                       Style="{DynamicResource WebCheckBoxStyle}"/>
@@ -971,28 +970,8 @@
                                     <Border Margin="0 10"/>
 
                                     <WrapPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Date d'engagement * " 
-                                                               VerticalAlignment="Center"
-                                                               Style="{StaticResource FieldLabel}"/>
 
 
-                                            <DatePicker Padding="8 10"
-                                                        Width="370"
-                                                        SelectedDate="{Binding DateEngagement, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                                        Background="{StaticResource WebControlBackground}"
-                                                        Foreground="{StaticResource WebControlForeground}"
-                                                        BorderBrush="{StaticResource WebControlBackground}"
-                                                        Validation.ErrorTemplate="{StaticResource BorderValidationFailedTemplate}"
-                                                        />
-                                        </StackPanel>
-
-                           
-                                    </WrapPanel>
-
-                                    <Border Margin="0 5" />
-
-                                    <WrapPanel>
                                         <StackPanel>
                                             <TextBlock Text="Grade statutaire d'engagement " 
                                                                VerticalAlignment="Center"
@@ -1002,7 +981,7 @@
                                             <ComboBox ItemsSource="{Binding InitGradesView}"
                                                       SelectedValue="{Binding InitGrade, Mode=TwoWay}"
                                                       DisplayMemberPath="Id"
-                                                      Width="370" 
+                                                      Width="240" 
                                                       IsSynchronizedWithCurrentItem="True"
                                                       FontWeight="DemiBold"
                                                       VerticalAlignment="Center" 
@@ -1012,26 +991,47 @@
                                                       />
                                         </StackPanel>
 
+                                    
+
+                                        <Border Width="20"/>
+                                        
+                                        <StackPanel>
+                                            <TextBlock Text="Date d'engagement * " 
+                                                               VerticalAlignment="Center"
+                                                               Style="{StaticResource FieldLabel}"/>
+
+
+                                            <DatePicker Padding="8 10"
+                                                        Width="240"
+                                                        SelectedDate="{Binding DateEngagement, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                                        Background="{StaticResource WebControlBackground}"
+                                                        Foreground="{StaticResource WebControlForeground}"
+                                                        BorderBrush="{StaticResource WebControlBackground}"
+                                                        Validation.ErrorTemplate="{StaticResource BorderValidationFailedTemplate}"
+                                                        />
+                                        </StackPanel>
+
                                         <Border Width="20" />
 
                                         <StackPanel>
                                             <TextBlock Text="Matricule " 
-                                                               VerticalAlignment="Center"
-                                                               Style="{StaticResource FieldLabel}"/>
+                                                VerticalAlignment="Center"
+                                                Style="{StaticResource FieldLabel}"/>
 
                                             <TextBox VerticalContentAlignment="Center" 
-                                                             Width="370" 
-                                                             Text="{Binding Employe.Matricule, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                                             HorizontalAlignment="Left" 
-                                                             HorizontalContentAlignment="Left"
-                                                             Style="{DynamicResource TextBoxWebStyle}" 
-                                                             Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                        />
+                                                Width="240" 
+                                                Text="{Binding Employe.Matricule, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                                HorizontalAlignment="Left" 
+                                                HorizontalContentAlignment="Left"
+                                                Style="{DynamicResource TextBoxWebStyle}" 
+                                                Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
+                                            />      
                                         </StackPanel>
 
 
                                     </WrapPanel>
 
+            
                                     <StackPanel Visibility="{Binding Employe.EstAffecte, Converter={StaticResource boolToVisibilityConverter}}">
                                         <Border Margin="0 10"
                                                     Height="1"
@@ -1090,7 +1090,7 @@
                                         <Border Margin="0 5" />
 
                                         <WrapPanel>
-                                            <StackPanel Visibility="{Binding IsSiege, Converter={StaticResource boolToVisibilityConverter}}">
+                                            <StackPanel Visibility="{Binding ShowDirection, Converter={StaticResource boolToVisibilityConverter}}">
                                                 <TextBlock Text="Direction " 
                                                                    VerticalAlignment="Center"
                                                                    Style="{StaticResource FieldLabel}"/>
@@ -1110,18 +1110,20 @@
 
                                                 
                                             </StackPanel>
-
-                                            <Border Width="20"
-                                                    Visibility="{Binding IsSiege, Converter={StaticResource boolToVisibilityConverter}}"/>
                                             
-                                            <StackPanel Visibility="{Binding ShowDivision, Converter={StaticResource boolToVisibilityConverter}}">
+                                            <Border Width="20" />
+
+                                            <!--<Border Width="20"
+                                                    Visibility="{Binding IsSiege, Converter={StaticResource boolToVisibilityConverter}}"/>-->
+                                            
+                                            <StackPanel Visibility="{Binding ShowDepartement, Converter={StaticResource boolToVisibilityConverter}}">
                                                 <TextBlock Text="Departement " 
                                                                    VerticalAlignment="Center"
                                                                    Style="{StaticResource FieldLabel}"/>
 
 
-                                                <ComboBox ItemsSource="{Binding DivisionsView}"
-                                                                  SelectedValue="{Binding SelectedDivision, Mode=TwoWay}"
+                                                <ComboBox ItemsSource="{Binding DepartementsView}"
+                                                                  SelectedValue="{Binding SelectedDepartement, Mode=TwoWay}"
                                                                   DisplayMemberPath="Denomination"
                                                                   Width="240" 
                                                                   IsSynchronizedWithCurrentItem="True"
@@ -1135,15 +1137,14 @@
 
                                             <Border Width="20" />
 
-                                            <StackPanel Visibility="{Binding ShowBureau, Converter={StaticResource boolToVisibilityConverter}}">
+                                            <StackPanel Visibility="{Binding ShowAgence, Converter={StaticResource boolToVisibilityConverter}}">
                                                 <TextBlock Text="Agence " 
                                                                    VerticalAlignment="Center"
                                                                    Style="{StaticResource FieldLabel}"/>
 
-
-                                                <ComboBox ItemsSource="{Binding BureauxView}"
-                                                          SelectedValue="{Binding SelectedBureau, Mode=TwoWay}"
-                                                          DisplayMemberPath="Denomination"
+                                                <ComboBox ItemsSource="{Binding AgencesView}"
+                                                          SelectedValue="{Binding SelectedAgence, Mode=TwoWay}"
+                                                          DisplayMemberPath="Description"
                                                           Width="240" 
                                                           IsSynchronizedWithCurrentItem="True"
                                                           FontWeight="DemiBold"
@@ -1153,8 +1154,7 @@
                                                           Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
                                                           />
                                             </StackPanel>
-                                            
-                                            
+
                                         </WrapPanel>
 
                                     </StackPanel>
@@ -1219,7 +1219,6 @@
                                                                VerticalAlignment="Center"
                                                                Style="{StaticResource FieldLabel}"/>
 
-
                                             <ComboBox ItemsSource="{Binding CurrentFonctionsView}"
                                                       SelectedValue="{Binding Employe.CurrentFonctionNomination.Fonction, Mode=TwoWay}"
                                                       DisplayMemberPath="Intitule"
@@ -1228,7 +1227,6 @@
                                                       FontWeight="DemiBold"
                                                       VerticalAlignment="Center" 
                                                       HorizontalAlignment="Stretch" 
-                                                      
                                                       Style="{DynamicResource ComboBoxWebStyle}"
                                                       Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
                                                             />
@@ -1703,47 +1701,6 @@
 
                                     <StackPanel Orientation="Horizontal"
                                                 IsEnabled="False">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Recensé   " 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                       TextBlock.Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                            <CheckBox IsChecked="{Binding Employe.EstRecense}"
-                                                          VerticalAlignment="Center"
-                                                          Style="{StaticResource WebCheckBoxStyle}" />
-                                        </StackPanel>
-
-                                        <Border Width="20" />
-
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Mécanisé pour salaire   " 
-                                                       TextBlock.Foreground="{StaticResource WebControlForeground}"
-                                                       VerticalAlignment="Center"
-                                                       FontStyle="Italic"
-                                                           />
-
-                                            <CheckBox IsChecked="{Binding Employe.EstMecaniseSalaire}"
-                                                          VerticalAlignment="Center"
-                                                          Style="{StaticResource WebCheckBoxStyle}" />
-                                        </StackPanel>
-
-                                        <Border Width="20" />
-
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Mécanisé pour prime   " 
-                                                       VerticalAlignment="Center"
-                                                       FontStyle="Italic"
-                                                       TextBlock.Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                            <CheckBox IsChecked="{Binding Employe.EstMecanisePrime}"
-                                                          VerticalAlignment="Center"
-                                                          Style="{StaticResource WebCheckBoxStyle}" />
-                                        </StackPanel>
-
-                                        <Border Width="20" />
 
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Affecté   " 
@@ -1772,19 +1729,7 @@
                                                FontWeight="DemiBold"
                                                Margin="0 0 0 10"/>
                                         
-                                        <StackPanel Orientation="Horizontal"
-                                                        TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                            <TextBlock Text="Numéro d'immatriculation CNSSAP " 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                           />
-
-                                            <TextBlock Text="{Binding Employe.ImmatriculationCNSSAP, FallbackValue='-'}" 
-                                                       FontWeight="DemiBold"
-                                                       VerticalAlignment="Center"
-                                                           />
-                                        </StackPanel>
-                                        <Border Height="3" />
+                          
                                         <StackPanel Orientation="Horizontal"
                                                         TextBlock.Foreground="{StaticResource WebControlForeground}">
                                             <TextBlock Text="Date d'engagement " 

@@ -476,14 +476,14 @@
                                         <Border Width="20"
                                                 Visibility="{Binding IsSiege, Converter={StaticResource boolToVisibilityConverter}}"/>
 
-                                        <StackPanel Visibility="{Binding ShowDivision, Converter={StaticResource boolToVisibilityConverter}}">
-                                            <TextBlock Text="Division " 
+                                        <StackPanel Visibility="{Binding ShowDepartement, Converter={StaticResource boolToVisibilityConverter}}">
+                                            <TextBlock Text="Departement " 
                                                        VerticalAlignment="Center"
                                                        Style="{StaticResource FieldLabel}"/>
 
 
-                                            <ComboBox ItemsSource="{Binding DivisionsView}"
-                                                      SelectedValue="{Binding SelectedDivision, Mode=TwoWay}"
+                                            <ComboBox ItemsSource="{Binding DepartementsView}"
+                                                      SelectedValue="{Binding SelectedDepartement, Mode=TwoWay}"
                                                       DisplayMemberPath="Denomination"
                                                       Width="{Binding ElementName=sep, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='50,20'}"
                                                       IsSynchronizedWithCurrentItem="True"
@@ -497,15 +497,15 @@
 
                                     </WrapPanel>
 
-                                    <StackPanel Visibility="{Binding ShowBureau, Converter={StaticResource boolToVisibilityConverter}}">
+                                    <StackPanel Visibility="{Binding ShowAgence, Converter={StaticResource boolToVisibilityConverter}}">
                                         <Border Height="5" />
-                                        <TextBlock Text="Bureau " 
+                                        <TextBlock Text="Agence " 
                                                        VerticalAlignment="Center"
                                                        Style="{StaticResource FieldLabel}"/>
 
 
-                                        <ComboBox ItemsSource="{Binding BureauxView}"
-                                                  SelectedValue="{Binding SelectedBureau, Mode=TwoWay}"
+                                        <ComboBox ItemsSource="{Binding AgencesView}"
+                                                  SelectedValue="{Binding SelectedAgence, Mode=TwoWay}"
                                                   DisplayMemberPath="Denomination"
                                                   Width="{Binding ElementName=sep, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='50,20'}"
                                                   IsSynchronizedWithCurrentItem="True"
@@ -517,112 +517,6 @@
                                                   />
                                     </StackPanel>
                                 </StackPanel>
-
-                                <Border Height="10" />
-
-                                <Border Height="10" />
-
-                                <StackPanel>
-                                    <TextBlock Text="Document"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Left"
-                                               FontSize="14"
-                                               FontWeight="DemiBold"
-                                               />
-
-                                    <Border Margin="0 10"/>
-
-                                    <Grid>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-
-                                        <StackPanel Grid.Column="0"
-                                                    Width="{Binding ElementName=sep, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='50,20'}"
-                                                     >
-                                            <TextBlock Text="Référence *" 
-                                                       Margin="0 5 0 3" 
-                                                       TextTrimming="CharacterEllipsis"
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-                                            <Grid>
-                                                <TextBox VerticalContentAlignment="Center" 
-                                                         Width="{Binding ElementName=sep, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='50,20'}"
-                                                         Text="{Binding Affectation.Acte.Reference, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                                         HorizontalAlignment="Left" 
-                                                         HorizontalContentAlignment="Left"
-                                                         IsEnabled="False"
-                                                         Style="{DynamicResource TextBoxWebStyle}" 
-                                                         Validation.ErrorTemplate="{DynamicResource BorderValidationFailedTemplate}"
-                                                     />
-                                            </Grid>
-
-                                        </StackPanel>
-
-                                        <Border Width="10"
-                                                Grid.Column="1"/>
-
-                                        <StackPanel Grid.Column="2"
-                                                    Width="{Binding ElementName=sep, Path=ActualWidth, Converter={StaticResource percentageConverter}, ConverterParameter='50,20'}"
-                                                     >
-                                            <TextBlock Text="Arrêté * " 
-                                                       Margin="0 5 0 7" 
-                                                       VerticalAlignment="Center"
-                                                       Style="{StaticResource FieldLabel}"/>
-
-                                            <Border CornerRadius="4"
-                                                    Height="60"
-                                                    Width="60"
-                                                    BorderBrush="#DADADA"
-                                                    BorderThickness="1"
-                                                    HorizontalAlignment="Left">
-                                                <Grid>
-                                                    <TextBlock Text="No doc !"
-                                                               VerticalAlignment="Center"
-                                                               HorizontalAlignment="Center"
-                                                               Foreground="#999" />
-                                                    <Border Background="#fff"
-                                                            Visibility="{Binding Affectation.Acte, Converter={StaticResource nullToVisibilityConverter}}"
-                                                            >
-                                                        <Path Stretch="Uniform"
-                                                              Fill="#90FF0000"
-                                                              Margin="10"
-                                                              Data="M15.199951,5.7999878L21.5,5.7999878 21.5,32 3.5,32C8.3999634,30.100006,14.599976,27,15,24.100006L15,23.899994 15.199951,23.899994z M0,5.7999878L0.099975586,5.7999878 4.5999756,5.7999878 4.6999512,19.399994C4.6999512,19.399994 10.599976,21 11,23.799988 11.399963,26.299988 4.5999756,29 0,30.100006z M6.8999634,0C10.5,0.70001221,12.699951,3.6000061,13.099976,4.2000122L13.099976,22.5C12,18.100006,7,17.899994,7,17.899994z"
-                                                            />
-                                                    </Border>
-
-                                                    <Button Height="20"
-                                                            Width="20"
-                                                            ToolTip="Importer un document"
-                                                            VerticalAlignment="Top"
-                                                            HorizontalAlignment="Right"
-                                                            Margin="0 -10 -10 0"
-                                                            Command="{Binding ImportDocumentCommand}"
-                                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-                                                            Tag="M0,22.691865L9.6958332,27.864942 0.24500618,32.000013z M8.8988495,6.3116251L18.869686,12.034729 11.211813,25.370919 10.644821,23.665877 7.7198686,23.364879 7.2188854,21.531844 4.3549361,21.429853 3.5479436,19.422835 1.2459807,19.647815z M13.690775,0.00052993685C13.965764,-0.0064584891,14.233765,0.055554115,14.474758,0.19355655L21.534634,4.2476002C22.392622,4.7375976,22.586618,6.0146238,21.968632,7.0966398L21.126636,8.5616571 10.95782,2.7255753 11.799801,1.2555529C12.243793,0.48054798,12.988775,0.017528671,13.690775,0.00052993685z"
-                                                            Style="{StaticResource ButtonFlatIconStyle}"/>
-
-                                                    <Button Height="20"
-                                                            Width="20"
-                                                            VerticalAlignment="Bottom"
-                                                            HorizontalAlignment="Right"
-                                                            ToolTip="Retirer ce document"
-                                                            Margin="0 0 -10 -10"
-                                                            Foreground="#AAFF0000"
-                                                            Command="{Binding RemoveDocumentCommand}"
-                                                            Tag="M0,12.568994L23.662999,12.568994 20.910989,31.999999 2.7520113,31.999999z M8.0689915,1.6269979L8.0689915,4.6679968 15.594984,4.6679968 15.594984,1.6269979z M6.4420097,0L17.221997,0 17.221997,4.6679968 23.662999,4.6679968 23.662999,8.7949938 0,8.7949938 0,4.6679968 6.4420097,4.6679968z" 
-                                                            Style="{StaticResource ButtonFlatIconStyle}"/>
-                                                </Grid>
-                                            </Border>
-                                        </StackPanel>
-                                    </Grid>
-                                </StackPanel>
-
-                                <Border Height="20" />
 
                                 <Grid Margin="0 20">
                                     <Grid.ColumnDefinitions>

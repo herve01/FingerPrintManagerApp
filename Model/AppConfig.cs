@@ -1,4 +1,5 @@
 ﻿//using FingerPrintManagerApp.Model.Employe;
+using FingerPrintManagerApp.Model.Presence;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,6 +32,9 @@ namespace FingerPrintManagerApp.Model
         //public static Entite CurrentUserEntite { get; set; }
         //public static Financial.Currency MainCurrency { get; set; }
         public static Admin.User CurrentUser { get; set; }
+        public static List<HoraireTravailSemaine> HoraireTravailSemaines { get; set; }
+        public static List<DateException> DateExceptions { get; set; }
+
         public static float SleepDelay = 15;
         public static int RetraiteAgeLimit = 65;
         public static int RetraiteServiceLimit = 35;
