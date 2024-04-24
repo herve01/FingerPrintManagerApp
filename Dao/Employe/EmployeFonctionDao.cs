@@ -19,50 +19,28 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                if (OwnAction)
-                    Request.Transaction = Connection.BeginTransaction();
-
                 var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, created_at, updated_at) " +
-                    "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, now(), now())";
+                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, state, created_at, updated_at) " +
+                        "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, @v_state, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_state", DbType.String, instance.State));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
-               
+
                 var feed = Request.ExecuteNonQuery();
 
-                if (feed <= 0)
-                {
-                    if (OwnAction)
-                        Request.Transaction.Rollback();
-                    return -1;
-                }
-
-                if (instance.Type == FonctionEmployeType.Officiel)
-                    if (new EmployeGradeDao().Add(Request, instance.GradeAssocie) <= 0)
-                    {
-                        if (OwnAction)
-                            Request.Transaction.Rollback();
-                        return -2;
-                    }
-
-                instance.Id = id;
-
-                if (OwnAction)
-                    Request.Transaction.Commit();
+                if (feed > 0)
+                    instance.Id = id;
 
                 return feed;
             }
             catch (Exception)
             {
-                if (OwnAction)
-                    Request.Transaction.Rollback();
-
-                return -3;
+                return -1;
             }
         }
 
@@ -80,49 +58,28 @@ namespace FingerPrintManagerApp.Dao.Employe
         {
             try
             {
-                if (OwnAction)
-                    Request.Transaction = Connection.BeginTransaction();
-
                 var id = Helper.TableKeyHelper.GenerateKey(TableName);
 
-                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, created_at, updated_at) " +
-                    "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, now(), now())";
+                Request.CommandText = "insert into employe_fonction(id, employe_id, fonction_id, date, type, state, created_at, updated_at) " +
+                    "values(@v_id, @v_employe_id, @v_fonction_id, @v_date, @v_type, @v_state, now(), now())";
 
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_id", DbType.String, id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_employe_id", DbType.String, instance.Employe.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_fonction_id", DbType.String, instance.Fonction.Id));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_type", DbType.String, instance.Type));
+                Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_state", DbType.String, instance.State));
                 Request.Parameters.Add(DbUtil.CreateParameter(Request, "@v_date", DbType.Date, instance.Date));
 
                 var feed = await Request.ExecuteNonQueryAsync();
 
-                if (feed <= 0)
-                {
-                    if (OwnAction)
-                        Request.Transaction.Rollback();
-                    return -1;
-                }
-
-                //if (instance.Type == FonctionEmployeType.Officiel)
-                //    if (await new EmployeGradeDao().AddAsync(Request, instance.GradeAssocie) <= 0)
-                //    {
-                //        if (OwnAction)
-                //            Request.Transaction.Rollback();
-                //        return -2;
-                //    }
-
-                instance.Id = id;
-
-                if (OwnAction)
-                    Request.Transaction.Commit();
+                if (feed > 0)
+                    instance.Id = id;
 
                 return feed;
             }
             catch (Exception)
             {
-                if (OwnAction)
-                    Request.Transaction.Rollback();
-                return -3;
+                return -1;
             }
         }
 

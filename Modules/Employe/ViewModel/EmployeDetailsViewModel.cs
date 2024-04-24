@@ -13,7 +13,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 {
     public class EmployeDetailsViewModel : DialogViewModelBase
     {
-        
+        ObservableCollection<EnfantEmploye> enfants;
         // Collection Views
         public ICollectionView EnfantsView { get; private set; }
 
@@ -24,7 +24,9 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
             this.reportViewer = reportView;
             Employe = employe;
 
-            
+            enfants = new ObservableCollection<EnfantEmploye>();
+            EnfantsView = (CollectionView)CollectionViewSource.GetDefaultView(enfants);
+            EnfantsView.SortDescriptions.Add(new SortDescription("DateNaissance", ListSortDirection.Descending));
         }
 
         Model.Employe.Employe _employe;
@@ -65,13 +67,29 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
         protected override async Task Load(object param)
         {
             EmployeLoading = true;
+            await LoadEnfants();
+            await LoadMissedInfo();
             EmployeLoading = false;
         }
+        async Task LoadEnfants()
+        {
+            if (Employe.Enfants.Count == 0)
+                Employe.Enfants = await Task.Run(() => new EnfantEmployeDao().GetAllAsync(Employe));
 
+            enfants.Clear();
 
+            Employe.Enfants.ForEach(e => enfants.Add(e));
 
+            EnfantsView.Refresh();
+        }
+        async Task LoadMissedInfo()
+        {
+            if (Employe.CurrentFonctionNomination.Fonction == null)
+                Employe.CurrentFonctionNomination = new EmployeFonctionDao().GetCurrent(Employe);
 
-
+            if (Employe.CurrentHighEtude.Niveau == null)
+                Employe.CurrentHighEtude = new EmployeEtudeDao().Get(Employe);
+        }
         protected override void Close(object param)
         {
             this.CloseDialogWithResult(param as Window, DialogResult.No);

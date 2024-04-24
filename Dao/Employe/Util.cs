@@ -184,6 +184,28 @@ namespace FingerPrintManagerApp.Dao.Employe
             }
         }
 
+        public static EtatCivil ToEtatCivil(string value)
+        {
+
+            switch (value.Trim())
+            {
+                case "Célibataire":
+                    return EtatCivil.Célibataire;
+
+                case "Marié":
+                    return EtatCivil.Marié;
+
+                case "Divorcé":
+                    return EtatCivil.Divorcé;
+
+                case "Veuf":
+                    return EtatCivil.Veuf;
+
+                default:
+                    return EtatCivil.Célibataire;
+
+            }
+        }
         public static MecanisationType ToMecanisationType(string value)
         {
 

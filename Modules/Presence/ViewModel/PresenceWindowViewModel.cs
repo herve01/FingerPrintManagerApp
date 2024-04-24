@@ -544,8 +544,8 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
 
             var horaire = AppConfig.HoraireTravailSemaines.Find(h => h.Jour == jour);
 
-            Salutation = DateTime.Now.Hour < horaire.ClotureHeureMatin ? "Bienvenu" : "Au revoir";
-            var endWord = DateTime.Now.Hour < horaire.ClotureHeureMatin ? "Bon service." : "Bonne soirée.";
+            Salutation = DateTime.Now.Hour <= horaire.ClotureHeureMatin ? "Bienvenu" : "Au revoir";
+            var endWord = DateTime.Now.Hour <= horaire.ClotureHeureMatin ? "Bon service." : "Bonne soirée.";
             var civility = employe.Sexe == Model.Sex.Femme ? "Madame" : "Monsieur";
 
             Employe = employe;

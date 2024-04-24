@@ -19,6 +19,7 @@ namespace FingerPrintManagerApp.Model.Employe
             Id = string.Empty;
             GradeAssocie = new EmployeGrade();
             IsRequired = true;
+            State = FonctionState.Running;
         }
 
         public Employe Employe

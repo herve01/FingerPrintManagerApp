@@ -106,7 +106,7 @@
                                >
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{2} • {0} • {1}">
-                                    <Binding Path="Employe.CurrentGrade.Id" />
+                                    <Binding Path="Employe.CurrentGradeNomination.Grade.Id" />
                                     <Binding Path="Employe.Matricule" />
                                     <Binding Path="Employe.Sexe" />
                                 </MultiBinding>
@@ -315,7 +315,7 @@
                                                     <TextBlock.Text>
                                                         <MultiBinding StringFormat="{}{0} • {1} • {2}" FallbackValue="Sexe • Etat civil • Matricule">
                                                             <Binding Path="Affectation.Employe.Sexe" />
-                                                            <Binding Path="Affectation.Employe.CurrentGrade.Id" />
+                                                            <Binding Path="Affectation.Employe.CurrentGradeNomination.Grade.Id" />
                                                             <Binding Path="Affectation.Employe.Matricule" />
                                                         </MultiBinding>
                                                     </TextBlock.Text>

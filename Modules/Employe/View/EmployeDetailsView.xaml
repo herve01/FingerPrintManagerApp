@@ -124,7 +124,7 @@
                                 Grid.Column="2"
                                 Visibility="{Binding EmployeLoading, Converter={StaticResource boolToVisibilityConverter}}"
                             >
-                        <Image gif:ImageBehavior.AnimatedSource="/Humager;component/View/Image/preloader.gif"
+                        <Image gif:ImageBehavior.AnimatedSource="/FingerPrintManagerApp;component/View/Image/preloader.gif"
                                    Height="20"
                                    Width="20"
                                    VerticalAlignment="Center"
@@ -374,7 +374,7 @@
                                                        />
 
                                             <Border Width="5" />
-                                            
+
                                             <TextBlock Text="{Binding Employe.CurrentHighEtude.Niveau.Intitule, FallbackValue='-'}" 
                                                        FontWeight="DemiBold"
                                                        VerticalAlignment="Center"
@@ -537,69 +537,11 @@
                                                FontWeight="DemiBold"
                                                 />
 
-                                <Border Margin="0 10"/>
-
-                                <StackPanel Orientation="Horizontal"
-                                                        TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                    <TextBlock Text="Position administrative" 
-                                                   VerticalAlignment="Center"
-                                                   FontStyle="Italic"
-                                                   />
-
-                                    <Border Width="5" />
-                                    
-                                    <TextBlock Text="{Binding Employe.Etat.Intitule, FallbackValue='-'}" 
-                                                   FontWeight="DemiBold"
-                                                   VerticalAlignment="Center"
-                                                   />
-                                </StackPanel>
-
                                 <Border Height="3" />
 
                                 <StackPanel Orientation="Horizontal"
                                             IsEnabled="False">
-                                    <StackPanel Orientation="Horizontal"
-                                                >
-                                        <TextBlock Text="Recensé   " 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                       TextBlock.Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                        <CheckBox IsChecked="{Binding Employe.EstRecense}"
-                                                          VerticalAlignment="Center"
-                                                          Style="{StaticResource WebCheckBoxStyle}" />
-                                    </StackPanel>
-
-                                    <Border Width="20" />
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Mécanisé pour salaire   " 
-                                                       TextBlock.Foreground="{StaticResource WebControlForeground}"
-                                                       VerticalAlignment="Center"
-                                                       FontStyle="Italic"
-                                                           />
-
-                                        <CheckBox IsChecked="{Binding Employe.EstMecaniseSalaire}"
-                                                          VerticalAlignment="Center"
-                                                          Style="{StaticResource WebCheckBoxStyle}" />
-                                    </StackPanel>
-
-                                    <Border Width="20" />
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Mécanisé pour prime   " 
-                                                       VerticalAlignment="Center"
-                                                       FontStyle="Italic"
-                                                       TextBlock.Foreground="{StaticResource WebControlForeground}"
-                                                           />
-
-                                        <CheckBox IsChecked="{Binding Employe.EstMecanisePrime}"
-                                                          VerticalAlignment="Center"
-                                                          Style="{StaticResource WebCheckBoxStyle}" />
-                                    </StackPanel>
-
-                                    <Border Width="20" />
+                           
 
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Affecté   " 
@@ -628,20 +570,7 @@
                                                FontSize="14"
                                                FontWeight="DemiBold"
                                                Margin="0 0 0 10"/>
-                                    <StackPanel Orientation="Horizontal"
-                                                        TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                        <TextBlock Text="Numéro d'immatriculation CNSSAP" 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                           />
-
-                                        <Border Width="5" />
-                                        <TextBlock Text="{Binding Employe.ImmatriculationCNSSAP, FallbackValue='-'}" 
-                                                       FontWeight="DemiBold"
-                                                       VerticalAlignment="Center"
-                                                           />
-                                    </StackPanel>
-                                    <Border Height="3" />
+                                   
                                     <StackPanel Orientation="Horizontal"
                                                         TextBlock.Foreground="{StaticResource WebControlForeground}">
                                         <TextBlock Text="Date d'engagement" 
@@ -650,22 +579,7 @@
                                                            />
                                         <Border Width="5" />
                                         
-                                        <TextBlock Text="{Binding Employe.GradeEngagement.Date, StringFormat={}{0:dd/MM/yyyy}, FallbackValue='-'}" 
-                                                           FontWeight="DemiBold"
-                                                           VerticalAlignment="Center"
-                                                           />
-                                    </StackPanel>
-                                    <Border Height="3" />
-                                    <StackPanel Orientation="Horizontal"
-                                                        TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                        <TextBlock Text="Référence de l'acte d'engagement" 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                           />
-
-                                        <Border Width="5" />
-                                        
-                                        <TextBlock Text="{Binding Employe.GradeEngagement.Acte.Reference, FallbackValue='-'}" 
+                                        <TextBlock Text="{Binding Employe.CurrentGrade.Date, StringFormat={}{0:dd/MM/yyyy}, FallbackValue='-'}" 
                                                            FontWeight="DemiBold"
                                                            VerticalAlignment="Center"
                                                            />
@@ -680,8 +594,8 @@
                                                    />
 
                                         <Border Width="5" />
-                                        
-                                        <TextBlock Text="{Binding Employe.GradeEngagement.Grade.Id, StringFormat={}{0:dd/MM/yyyy}, FallbackValue='-'}" 
+
+                                        <TextBlock Text="{Binding Employe.CurrentGrade.Grade.Id, StringFormat={}{0:dd/MM/yyyy}, FallbackValue='-'}" 
                                                    FontWeight="DemiBold"
                                                    VerticalAlignment="Center"
                                                            />
@@ -702,63 +616,7 @@
                                                            />
                                     </StackPanel>
 
-                                    <Line Margin="0 5"
-                                              X1="0"
-                                              X2="{Binding ElementName=stpInfoPro, Path=ActualWidth}"
-                                              StrokeThickness="1"
-                                              StrokeDashArray="1 2"
-                                              Stroke="#DDD"/>
-
-                                    <TextBlock Text="Grade statutaire actuel"
-                                               FontSize="14"
-                                               FontWeight="DemiBold"
-                                               Margin="0 0 0 10"/>
-                                    
-                                    <StackPanel Orientation="Horizontal"
-                                                TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                        <TextBlock Text="Grade" 
-                                                   VerticalAlignment="Center"
-                                                   FontStyle="Italic"
-                                                   />
-
-                                        <Border Width="5" />
-
-                                        <TextBlock Text="{Binding Employe.CurrentStatutaireGradeNomination.Grade.Id, StringFormat={}{0:dd/MM/yyyy}, FallbackValue='-'}" 
-                                                           FontWeight="DemiBold"
-                                                           VerticalAlignment="Center"
-                                                           />
-                                    </StackPanel>
-                                    <Border Height="3" />
-                                    <StackPanel Orientation="Horizontal"
-                                                        TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                        <TextBlock Text="Date de nomination au grade" 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                           />
-
-                                        <Border Width="5" />
-
-                                        <TextBlock Text="{Binding Employe.CurrentStatutaireGradeNomination.Date, StringFormat={}{0:dd/MM/yyyy}, FallbackValue='-'}" 
-                                                           FontWeight="DemiBold"
-                                                           VerticalAlignment="Center"
-                                                           />
-                                    </StackPanel>
-                                    <Border Height="3" />
-                                    <StackPanel Orientation="Horizontal"
-                                                        TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                        <TextBlock Text="Référence de l'acte de nomination" 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                           />
-
-                                        <Border Width="5" />
-
-                                        <TextBlock Text="{Binding Employe.CurrentStatutaireGradeNomination.Acte.Reference, FallbackValue='-'}" 
-                                                           FontWeight="DemiBold"
-                                                           VerticalAlignment="Center"
-                                                           />
-                                    </StackPanel>
-
+                                       
                                     <Line Margin="0 5"
                                               X1="0"
                                               X2="{Binding ElementName=stpInfoPro, Path=ActualWidth}"
@@ -801,21 +659,7 @@
                                                            />
                                     </StackPanel>
                                     <Border Height="3" />
-                                    <StackPanel Orientation="Horizontal"
-                                                        TextBlock.Foreground="{StaticResource WebControlForeground}">
-                                        <TextBlock Text="Référence de l'acte de nomination" 
-                                                           VerticalAlignment="Center"
-                                                           FontStyle="Italic"
-                                                           />
 
-                                        <Border Width="5" />
-
-                                        <TextBlock Text="{Binding Employe.CurrentGradeNomination.Acte.Reference, FallbackValue='-'}" 
-                                                           FontWeight="DemiBold"
-                                                           VerticalAlignment="Center"
-                                                           />
-                                    </StackPanel>
-                                    <Border Height="3" />
                                     <StackPanel Orientation="Horizontal"
                                                         TextBlock.Foreground="{StaticResource WebControlForeground}">
                                         <TextBlock Text="Fonction" 

@@ -194,6 +194,9 @@
     <Compile Include="Dao\ProvinceDao.cs" />
     <Compile Include="Dao\util.cs" />
     <Compile Include="Dao\ZoneDao.cs" />
+    <Compile Include="Dialog\View\CaptureView.xaml.cs">
+      <DependentUpon>CaptureView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IoC\Container.cs" />
     <Compile Include="IoC\Module.cs" />
     <Compile Include="Model\Address.cs" />
@@ -653,9 +656,6 @@
     <Compile Include="Dialog\Service\PrinterProvider.cs" />
     <Compile Include="Dialog\Service\ReportViewer.cs" />
     <Compile Include="Dialog\Service\WebCam.cs" />
-    <Compile Include="Dialog\View\CaptureView.xaml.cs">
-      <DependentUpon>CaptureView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialog\View\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>

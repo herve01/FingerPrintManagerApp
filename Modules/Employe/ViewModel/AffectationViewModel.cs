@@ -727,29 +727,21 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
         public void Choose(object obj)
         {
-            //if (obj is ActeNomination)
-            //{
-            //    var acte = (ActeNomination)obj;
-            //    Affectation.Acte = acte;
+            if (obj is Model.Employe.Employe)
+            {
+                var employe = (Model.Employe.Employe)obj;
 
-            //    return;
-            //}
+                employe.CurrentFonctionNomination = new EmployeFonctionDao().GetCurrent(employe);
 
-            //if (obj is Model.Employe.Employe)
-            //{
-            //    var employe = (Model.Employe.Employe)obj;
+                Affectation.Employe = employe;
 
-            //    employe.CurrentFonctionNomination = new EmployeFonctionDao().GetCurrent(employe);
+                //LoadFonctions();
 
-            //    Affectation.Employe = employe;
+                EntitesView.Refresh();
+                UniteTypesView.Refresh();
 
-            //    LoadFonctions();
-
-            //    EntitesView.Refresh();
-            //    UniteTypesView.Refresh();
-
-            //    return;
-            //}
+                return;
+            }
 
         }
 

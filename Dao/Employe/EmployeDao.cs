@@ -211,7 +211,7 @@ namespace FingerPrintManagerApp.Dao.Employe
                     return -3;
                 }
 
-                if (instance.CurrentFonctionNomination.IsRequired && await new EmployeFonctionDao().AddAsync(Request, instance.CurrentFonctionNomination) <= 0)
+                if (await new EmployeFonctionDao().AddAsync(Request, instance.CurrentFonctionNomination) <= 0)
                 {
                     instance.Id = null;
                     Request.Transaction.Rollback();
@@ -588,7 +588,8 @@ namespace FingerPrintManagerApp.Dao.Employe
             instance.PostNom = row["post_nom"].ToString();
             instance.Prenom = row["prenom"].ToString();
             instance.Sexe = Util.ToSexeType(row["sexe"].ToString());
-            
+            instance.EtatCivil = Util.ToEtatCivil(row["etat_civil"].ToString());
+
             instance.LieuNaissance = row["lieu_naissance"].ToString();
             instance.DateNaissance = DateTime.Parse(row["date_naissance"].ToString());
 
@@ -611,7 +612,8 @@ namespace FingerPrintManagerApp.Dao.Employe
             if (instance.EstAffecte)
             {
                 instance.CurrentAffectation = instance.LastAffectation;
-                instance.FonctionsInterim = new EmployeFonctionDao().GetAllInterim(instance);
+                //instance.CurrentFonctionNomination = new EmployeFonctionDao().GetCurrent(instance);
+                instance.FonctionsInterim = new EmployeFonctionDao().GetAllInterim(instance);             
             }
 
             if (!(row["photo"] is DBNull))

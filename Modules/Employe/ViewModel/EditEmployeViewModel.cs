@@ -487,7 +487,7 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
                     _dateCurrentGrade = value;
 
-                    //Employe.CurrentGradeNomination.Date = _dateCurrentGrade;
+                    Employe.CurrentGradeNomination.Date = _dateCurrentGrade;
 
                     RaisePropertyChanged(() => DateCurrentGrade);
                 }
