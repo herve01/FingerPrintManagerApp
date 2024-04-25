@@ -436,10 +436,10 @@ namespace FingerPrintManagerApp.Modules.Employe.ViewModel
 
             if (employe.Empreintes.Count > 0)
             {
-                //var feed = new EmployeEmpreinteDao().AddAsync(employe.Empreintes);
+                var feed = new EmployeEmpreinteDao().AddAsync(employe.Empreintes);
 
-                //if (feed.Result > 0)
-                //    Status = "Alright!";
+                if (feed.Result > 0)
+                    Status = "Alright!";
             }
         }
 

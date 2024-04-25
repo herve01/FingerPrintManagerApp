@@ -22,7 +22,7 @@ namespace FingerPrintManagerApp.Modules.Presence.ViewModel
         void LoadViewModels()
         {
             pageViewModels.Add(IoC.Container.Instance.Kernel.Get<PresenceEmployeViewModel>());
-            pageViewModels.Add(IoC.Container.Instance.Kernel.Get<SuiviViewModel>());
+            //pageViewModels.Add(IoC.Container.Instance.Kernel.Get<SuiviViewModel>());
 
             foreach (var vm in pageViewModels)
                 vm.Parent = this;
